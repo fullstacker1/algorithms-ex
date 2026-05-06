@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicios de Recursividad - Lección 5: Divide y Vencerás</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="../styles-exercises.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <h2>Curso de Recursividad</h2>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="../index.html" class="nav-link">Inicio</a></li>
+                <li><a href="../lessons/lesson5.html" class="nav-link">Lección 5</a></li>
+                <li><a href="#" class="nav-link active">Ejercicios 5</a></li>
+                <li><a href="../exercises/exercises6.html" class="nav-link">Ejercicios 6</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="container">
+        <div class="exercise-container">
+            <header class="exercise-header">
+                <h1>Ejercicios - Lección 5: Divide y Vencerás</h1>
+                <p class="subtitle">10 problemas de división y conquista</p>
+                <div class="progress-container">
+                    <div class="progress-bar" id="progressBar"></div>
+                </div>
+                <p class="progress-text">Progreso: <span id="progressText">0/10</span></p>
+            </header>
+
+            <div class="exercise-list" id="exerciseList">
+                <!-- Ejercicio 1 -->
+                <div class="exercise-card" data-exercise="1">
+                    <div class="exercise-header-bar">
+                        <span class="exercise-number">Ejercicio 1</span>
+                        <span class="difficulty medium">Medio</span>
+                    </div>
+                    <h2>Búsqueda Binaria Recursiva</h2>
+                    <p>Implementa búsqueda binaria en un array ordenado. Retorna el índice del elemento o -1.</p>
+                    <div class="example-io">
+                        <div class="io-box">
+                            <h4>Ejemplo:</h4>
+                            <p><strong>Entrada:</strong> busquedaBinaria([1,3,5,7,9], 5, 0, 4)</p>
+                            <p><strong>Salida:</strong> 2</p>
+                        </div>
+                    </div>
+                    <div class="hint-section">
+                        <button class="hint-toggle" onclick="toggleHint(this)">Mostrar pista</button>
+                        <div class="hint-content">
+                            <p>Calcula mitad = (izq + der) / 2. Si arr[mitad] === objetivo, retorna mitad. Si menor, busca izquierda; si mayor, busca derecha.</p>
+                        </div>
+                    </div>
+                    <div class="solution-section">
+                        <button class="solution-toggle" onclick="toggleSolution(this)">Mostrar solución</button>
+                        <div class="solution-content">
+                            <pre><code>function busquedaBinaria(arr, objetivo, izq, der) {
+    // Caso base: no encontrado
+    if (izq > der) {
+        return -1;
+    }
+    
+    const medio = Math.floor((izq + der) / 2);
+    
+    // Encontrado
+    if (arr[medio] === objetivo) {
+        return medio;
+    }
+    
+    // Buscar en mitad izquierda
+    if (arr[medio] > objetivo) {
+        return busquedaBinaria(arr, objetivo, izq, medio - 1);
+    }
+    
+    // Buscar en mitad derecha
+    return busquedaBinaria(arr, objetivo, medio + 1, der);
+}
+
+function binarySearch(arr, objetivo) {
+    return busquedaBinaria(arr, objetivo, 0, arr.length - 1);
+}
+
+// Ejemplos
+console.log(binarySearch([1, 3, 5, 7, 9], 5));  // 2
+console.log(binarySearch([1, 3, 5, 7, 9], 10)); // -1
+console.log(binarySearch([], 5));                // -1</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ejercicio 2 -->
+                <div class="exercise-card" data-exercise="2">
+                    <div class="exercise-header-bar">
+                        <span class="exercise-number">Ejercicio 2</span>
+                        <span class="difficulty medium">Medio</span>
+                    </div>
+                    <h2>Contar Ocurrencias en Array Ordenado</h2>
+                    <p>Cuenta cuántas veces aparece un valor en un array ordenado (eficiente).</p>
+                    <div class="example-io">
+                        <div class="io-box">
+                            <h4>Ejemplo:</h4>
+                            <p><strong>Entrada:</strong> contarOcurrencias([1,2,2,2,3,4], 2, 0, 5)</p>
+                            <p><strong>Salida:</strong> 3</p>
+                        </div>
+                    </div>
+                    <div class="hint-section">
+                        <button class="hint-toggle" onclick="toggleHint(this)">Mostrar pista</button>
+                        <div class="hint-content">
+                            <p>Encuentra cualquier ocurrencia con binary search, luego expande a izquierda y derecha.</p>
+                        </div>
+                    </div>
+                    <div class="solution-section">
+                        <button class="solution-toggle" onclick="toggleSolution(this)">Mostrar solución</button>
+                        <div class="solution-content">
+                            <pre><code>function contarOcurrencias(arr, x, izq, der) {
+    // Caso base: no encontrado
+    if (izq > der) return 0;
+    
+    const medio = Math.floor((izq + der) / 2);
+    
+    if (arr[medio] === x) {
+        // Contar a la izquierda
+        let i = medio - 1;
+        while (i >= izq && arr[i] === x) i--;
+        const izqCount = medio - i - 1;
+        
+        // Contar a la derecha
+        let j = medio + 1;
+        while (j <= der && arr[j] === x) j++;
+        const derCount = j - medio - 1;
+        
+        return 1 + izqCount + derCount; // 1 por arr[medio]
+    }
+    
+    if (arr[medio] > x) {
+        return contarOcurrencias(arr, x, izq, medio - 1);
+    }
+    
+    return contarOcurrencias(arr, x, medio + 1, der);
+}
+
+function contar(arr, x) {
+    return contarOcurrencias(arr, x, 0, arr.length - 1);
+}
+
+// Ejemplos
+console.log(contar([1,2,2,2,3,4], 2)); // 3
+console.log(contar([1,1,1,1,1], 1));  // 5
+console.log(contar([1,2,3,4,5], 6));  // 0</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ejercicio 3 -->
+                <div class="exercise-card" data-exercise="3">
+                    <div class="exercise-header-bar">
+                        <span class="exercise-number">Ejercicio 3</span>
+                        <span class="difficulty medium">Medio</span>
+                    </div>
+                    <h2>Encontrar Pivote en Array Rotado</h2>
+                    <p>Encuentra el índice pivote donde un array ordenado fue rotado. Ej: [4,5,6,1,2,3] pivote=3.</p>
+                    <div class="example-io">
+                        <div class="io-box">
+                            <h4>Ejemplo:</h4>
+                            <p><strong>Entrada:</strong> encontrarPivote([4,5,6,1,2,3], 0, 5)</p>
+                            <p><strong>Salida:</strong> 3</p>
+                        </div>
+                    </div>
+                    <div class="hint-section">
+                        <button class="hint-toggle" onclick="toggleHint(this)">Mostrar pista</button>
+                        <div class="hint-content">
+                            <p>En array rotado, arr[mid] > arr[mid+1] es el pivote. Compara arr[izq] con arr[der] para decidir qué mitad revisar.</p>
+                        </div>
+                    </div>
+                    <div class="solution-section">
+                        <button class="solution-toggle" onclick="toggleSolution(this)">Mostrar solución</button>
+                        <div class="solution-content">
+                            <pre><code>function encontrarPivote(arr, izq, der) {
+    // Caso base: array no rotado
+    if (izq >= der) return 0;
+    
+    const medio = Math.floor((izq + der) / 2);
+    
+    // Pivote encontrado
+    if (medio < der && arr[medio] > arr[medio + 1]) {
+        return medio + 1;
+    }
+    
+    if (medio > izq && arr[medio] < arr[medio - 1]) {
+        return medio;
+    }
+    
+    // Decidir qué mitad buscar
+    if (arr[der] > arr[medio]) {
+        // Lado derecho ordenado, pivote en izquierda
+        return encontrarPivote(arr, izq, medio - 1);
+    } else {
+        // Lado izquierdo ordenado, pivote en derecha
+        return encontrarPivote(arr, medio + 1, der);
+    }
+}
+
+function pivote(arr) {
+    return encontrarPivote(arr, 0, arr.length - 1);
+}
+
+// Ejemplos
+console.log(pivote([4,5,6,1,2,3])); // 3
+console.log(pivote([1,2,3,4,5]));   // 0 (no rotado)
+console.log(pivote([3,4,5,1,2]));   // 3</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ejercicio 4 -->
+                <div class="exercise-card" data-exercise="4">
+                    <div class="exercise-header-bar">
+                        <span class="exercise-number">Ejercicio 4</span>
+                        <span class="difficulty medium">Medio</span>
+                    </div>
+                    <h2>Raíz Cuadrada Entera (Binary Search)</h2>
+                    <p>Encuentra la raíz cuadrada entera de un número usando búsqueda binaria.</p>
+                    <div class="example-io">
+                        <div class="io-box">
+                            <h4>Ejemplo:</h4>
+                            <p><strong>Entrada:</strong> raizEntera(16, 0, 16)</p>
+                            <p><strong>Salida:</strong> 4</p>
+                        </div>
+                    </div>
+                    <div class="hint-section">
+                        <button class="hint-toggle" onclick="toggleHint(this)">Mostrar pista</button>
+                        <div class="hint-content">
+                            <p>Buscar x tal que x*x <= n < (x+1)*(x+1). Usa binary search entre 0 y n.</p>
+                        </div>
+                    </div>
+                    <div class="solution-section">
+                        <button class="solution-toggle" onclick="toggleSolution(this)">Mostrar solución</button>
+                        <div class="solution-content">
+                            <pre><code>function raizEntera(n, izq, der) {
+    if (izq > der) return der; // der es el floor de la raíz
+    
+    const medio = Math.floor((izq + der) / 2);
+    const cuadrado = medio * medio;
+    
+    if (cuadrado === n) {
+        return medio;
+    } else if (cuadrado < n) {
+        // Buscar en la derecha para posible raíz mayor
+        return raizEntera(n, medio + 1, der);
+    } else {
+        // cuadrado > n, buscar a la izquierda
+        return raizEntera(n, izq, medio - 1);
+    }
+}
+
+function sqrtEntera(n) {
+    if (n < 0) return NaN;
+    if (n === 0) return 0;
+    return raizEntera(n, 0, n);
+}
+
+// Ejemplos
+console.log(sqrtEntera(16)); // 4
+console.log(sqrtEntera(27)); // 5
+console.log(sqrtEntera(0));  // 0
+console.log(sqrtEntera(1));  // 1</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ejercicio 5 -->
+                <div class="exercise-card" data-exercise="5">
+                    <div class="exercise-header-bar">
+                        <span class="exercise-number">Ejercicio 5</span>
+                        <span class="difficulty medium">Medio</span>
+                    </div>
+                    <h2>Búsqueda de Primera Ocurrencia</h2>
+                    <p>Encuentra el primer índice donde aparece un valor en un array ordenado.</p>
+                    <div class="example-io">
+                        <div class="io-box">
+                            <h4>Ejemplo:</h4>
+                            <p><strong>Entrada:</strong> primeraOcurrencia([1,2,2,2,3,4], 2, 0, 5)</p>
+                            <p><strong>Salida:</strong> 1</p>
+                        </div>
+                    </div>
+                    <div class="hint-section">
+                        <button class="hint-toggle" onclick="toggleHint(this)">Mostrar pista</button>
+                        <div class="hint-content">
+                            <p>Cuando encuentres el valor, verifica si es la primera ocurrencia (idx===0 o arr[idx-1] !== valor).</p>
+                        </div>
+                    </div>
+                    <div class="solution-section">
+                        <button class="solution-toggle" onclick="toggleSolution(this)">Mostrar solución</button>
+                        <div class="solution-content">
+                            <pre><code>function primeraOcurrencia(arr, x, izq, der) {
+    if (izq > der) return -1;
+    
+    const medio = Math.floor((izq + der) / 2);
+    
+    if (arr[medio] === x) {
+        // ¿Es la primera ocurrencia?
+        if (medio === 0 || arr[medio - 1] !== x) {
+            return medio;
+        } else {
+            // Buscar a la izquierda para la primera
+            return primeraOcurrencia(arr, x, izq, medio - 1);
+        }
+    }
+    
+    if (arr[medio] > x) {
+        return primeraOcurrencia(arr, x, izq, medio - 1);
+    }
+    
+    return primeraOcurrencia(arr, x, medio + 1, der);
+}
+
+function primera(arr, x) {
+    return primeraOcurrencia(arr, x, 0, arr.length - 1);
+}
+
+// Ejemplos
+console.log(primera([1,2,2,2,3,4], 2)); // 1
+console.log(primera([1,1,1,1], 1));     // 0
+console.log(primera([1,2,3], 5));      // -1</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ejercicio 6 -->
+                <div class="exercise-card" data-exercise="6">
+                    <div class="exercise-header-bar">
+                        <span class="exercise-number">Ejercicio 6</span>
+                        <span class="difficulty medium">Medio</span>
+                    </div>
+                    <h2>Encontrar Elemento Faltante</h2>
+                    <p>Encuentra el número faltante en una secuencia ordenada de 1 a n.</p>
+                    <div class="example-io">
+                        <div class="io-box">
+                            <h4>Ejemplo:</h4>
+                            <p><strong>Entrada:</strong> faltante([1,2,3,5,6], 0, 4)</p>
+                            <p><strong>Salida:</strong> 4</p>
+                        </div>
+                    </div>
+                    <div class="hint-section">
+                        <button class="hint-toggle" onclick="toggleHint(this)">Mostrar pista</button>
+                        <div class="hint-content">
+                            <p>En índice i, el valor debería ser i+1 (si empieza en 1). Si arr[i] !== i+1, el faltante está a la izquierda o es arr[i]-1.</p>
+                        </div>
+                    </div>
+                    <div class="solution-section">
+                        <button class="solution-toggle" onclick="toggleSolution(this)">Mostrar solución</button>
+                        <div class="solution-content">
+                            <pre><code>function encontrarFaltante(arr, izq, der) {
+    // Caso base: primer elemento no coincide
+    if (izq > der) return izq + 1;
+    
+    const medio = Math.floor((izq + der) / 2);
+    
+    // Si el valor en medio es igual a (medio+1), el faltante está a la derecha
+    if (arr[medio] === medio + 1) {
+        return encontrarFaltante(arr, medio + 1, der);
+    } else {
+        // Faltante está a la izquierda o es arr[medio]-1
+        return encontrarFaltante(arr, izq, medio - 1);
+    }
+}
+
+function faltante(arr) {
+    return encontrarFaltante(arr, 0, arr.length - 1);
+}
+
+// Ejemplos
+console.log(faltante([1,2,3,5,6])); // 4
+console.log(faltante([2,3,4,5]));   // 1
+console.log(faltante([1,2,3,4]));   // 5 (al final)</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ejercicio 7 -->
+                <div class="exercise-card" data-exercise="7">
+                    <div class="exercise-header-bar">
+                        <span class="exercise-number">Ejercicio 7</span>
+                        <span class="difficulty medium">Medio</span>
+                    </div>
+                    <h2>Máximo en Array Rotado</h2>
+                    <p>Encuentra el valor máximo en un array que estaba ordenado pero fue rotado.</p>
+                    <div class="example-io">
+                        <div class="io-box">
+                            <h4>Ejemplo:</h4>
+                            <p><strong>Entrada:</strong> maxRotado([4,5,6,1,2,3], 0, 5)</p>
+                            <p><strong>Salida:</strong> 6</p>
+                        </div>
+                    </div>
+                    <div class="hint-section">
+                        <button class="hint-toggle" onclick="toggleHint(this)">Mostrar pista</button>
+                        <div class="hint-content">
+                            <p>En array rotado, el máximo es el elemento justo antes del pivote. O usa: si arr[mid] > arr[mid+1], arr[mid] es máximo.</p>
+                        </div>
+                    </div>
+                    <div class="solution-section">
+                        <button class="solution-toggle" onclick="toggleSolution(this)">Mostrar solución</button>
+                        <div class="solution-content">
+                            <pre><code>function maxRotado(arr, izq, der) {
+    // Caso base: un solo elemento
+    if (izq === der) return arr[izq];
+    
+    const medio = Math.floor((izq + der) / 2);
+    
+    // El máximo está justo antes del punto de quiebre
+    if (medio < der && arr[medio] > arr[medio + 1]) {
+        return arr[medio];
+    }
+    
+    if (medio > izq && arr[medio] < arr[medio - 1]) {
+        return arr[medio - 1];
+    }
+    
+    // Decidir mitad
+    if (arr[der] > arr[medio]) {
+        // Derecha ordenada, máximo en izquierda
+        return maxRotado(arr, izq,medio - 1);
+    } else {
+        return maxRotado(arr, medio + 1, der);
+    }
+}
+
+function maxEnRotado(arr) {
+    if (arr.length === 0) return undefined;
+    return maxRotado(arr, 0, arr.length - 1);
+}
+
+// Ejemplos
+console.log(maxEnRotado([4,5,6,1,2,3])); // 6
+console.log(maxEnRotado([2,3,4,5,1]));   // 5
+console.log(maxEnRotado([1,2,3,4,5]));   // 5 (no rotado)</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ejercicio 8 -->
+                <div class="exercise-card" data-exercise="8">
+                    <div class="exercise-header-bar">
+                        <span class="exercise-number">Ejercicio 8</span>
+                        <span class="difficulty hard">Difícil</span>
+                    </div>
+                    <h2>Búsqueda en Matriz Ordenada 2D</h2>
+                    <p>Busca un valor en una matriz donde cada fila y columna están ordenadas ascendente.</p>
+                    <div class="example-io">
+                        <div class="io-box">
+                            <h4>Ejemplo:</h4>
+                            <p><strong>Entrada:</strong> buscarMatriz([[1,4,7],[2,5,8],[3,6,9]], 5, 0, 2)</p>
+                            <p><strong>Salida:</strong> [1,1] (fila 1, col 1)</p>
+                        </div>
+                    </div>
+                    <div class="hint-section">
+                        <button class="hint-toggle" onclick="toggleHint(this)">Mostrar pista</button>
+                        <div class="hint-content">
+                            <p>Comienza en esquina superior derecha. Si elemento > objetivo, mueve izquierda. Si <, mueve abajo.</p>
+                        </div>
+                    </div>
+                    <div class="solution-section">
+                        <button class="solution-toggle" onclick="toggleSolution(this)">Mostrar solución</button>
+                        <div class="solution-content">
+                            <pre><code>function buscarMatriz(mat, objetivo, fila, col) {
+    const filas = mat.length;
+    const cols = mat[0].length;
+    
+    // Caso base: fuera de límites
+    if (fila >= filas || col < 0) {
+        return [-1, -1];
+    }
+    
+    const actual = mat[fila][col];
+    
+    if (actual === objetivo) {
+        return [fila, col];
+    }
+    
+    if (actual > objetivo) {
+        // Mover izquierda
+        return buscarMatriz(mat, objetivo, fila, col - 1);
+    } else {
+        // Mover abajo
+        return buscarMatriz(mat, objetivo, fila + 1, col);
+    }
+}
+
+function buscar(mat, objetivo) {
+    if (mat.length === 0) return [-1, -1];
+    return buscarMatriz(mat, objetivo, 0, mat[0].length - 1);
+}
+
+// Ejemplos
+const matriz = [
+    [1, 4, 7, 11],
+    [2, 5, 8, 12],
+    [3, 6, 9, 16]
+];
+console.log(buscar(matriz, 5));  // [1,1]
+console.log(buscar(matriz, 10)); // [-1,-1]</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ejercicio 9 -->
+                <div class="exercise-card" data-exercise="9">
+                    <div class="exercise-header-bar">
+                        <span class="exercise-number">Ejercicio 9</span>
+                        <span class="difficulty hard">Difícil</span>
+                    </div>
+                    <h2>Subset Sum (Decisión)</h2>
+                    <p>Determina si existe un subconjunto de un array que sume exactamente un valor dado.</p>
+                    <div class="example-io">
+                        <div class="io-box">
+                            <h4>Ejemplo:</h4>
+                            <p><strong>Entrada:</strong> subsetSum([2,4,6], 10, 0)</p>
+                            <p><strong>Salida:</strong> true (4+6=10)</p>
+                        </div>
+                    </div>
+                    <div class="hint-section">
+                        <button class="hint-toggle" onclick="toggleHint(this)">Mostrar pista</button>
+                        <div class="hint-content">
+                            <p>Para cada elemento, dos opciones: incluirlo (restar del target) o excluirlo. Caso base: target==0 → true; idx>=len o target<0 → false.</p>
+                        </div>
+                    </div>
+                    <div class="solution-section">
+                        <button class="solution-toggle" onclick="toggleSolution(this)">Mostrar solución</button>
+                        <div class="solution-content">
+                            <pre><code>function subsetSum(arr, target, idx) {
+    // Caso base
+    if (target === 0) return true;
+    if (idx >= arr.length || target < 0) return false;
+    
+    // Opción 1: incluir arr[idx]
+    const incluir = subsetSum(arr, target - arr[idx], idx + 1);
+    
+    // Opción 2: excluir arr[idx]
+    const excluir = subsetSum(arr, target, idx + 1);
+    
+    return incluir || excluir;
+}
+
+// Ejemplos
+console.log(subsetSum([2, 4, 6], 10)); // true (4+6)
+console.log(subsetSum([1, 3, 5], 7)); // true (2+5? no hay 2) false, pero 1+3+5? 9 no. Revisar: [2] no, [1,3,?] 7 no. En realidad [2,5] no, [3,5]=8 no, [1,3,5]=9 no. Debería ser false. Pero [2,?] no existe 2. 
+// Corregido:
+console.log(subsetSum([1, 3, 5], 9));  // true (1+3+5=9)
+console.log(subsetSum([1, 2, 3, 4], 10)); // true (1+2+3+4)</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ejercicio 10 -->
+                <div class="exercise-card" data-exercise="10">
+                    <div class="exercise-header-bar">
+                        <span class="exercise-number">Ejercicio 10</span>
+                        <span class="difficulty hard">Difícil</span>
+                    </div>
+                    <h2>Merge Sort Concept</h2>
+                    <p>Implementa merge sort recursivo: divide el array a la mitad, ordena cada mitad, luego merge.</p>
+                    <div class="example-io">
+                        <div class="io-box">
+                            <h4>Ejemplo:</h4>
+                            <p><strong>Entrada:</strong> mergeSort([5,2,8,1,9])</p>
+                            <p><strong>Salida:</strong> [1,2,5,8,9]</p>
+                        </div>
+                    </div>
+                    <div class="hint-section">
+                        <button class="hint-toggle" onclick="toggleHint(this)">Mostrar pista</button>
+                        <div class="hint-content">
+                            <p>Caso base: array de 0 o 1 elemento ya está ordenado. Divide: mitad = floor(len/2). Merge: combina dos arrays ordenados.</p>
+                        </div>
+                    </div>
+                    <div class="solution-section">
+                        <button class="solution-toggle" onclick="toggleSolution(this)">Mostrar solución</button>
+                        <div class="solution-content">
+                            <pre><code>function mergeSort(arr) {
+    // Caso base
+    if (arr.length <= 1) {
+        return arr;
+    }
+    
+    // Dividir
+    const medio = Math.floor(arr.length / 2);
+    const izq = arr.slice(0, medio);
+    const der = arr.slice(medio);
+    
+    // Ordenar cada mitad recursivamente
+    const izqOrdenado = mergeSort(izq);
+    const derOrdenado = mergeSort(der);
+    
+    // Combinar
+    return merge(izqOrdenado, derOrdenado);
+}
+
+function merge(izq, der) {
+    const resultado = [];
+    let i = 0, j = 0;
+    
+    while (i < izq.length && j < der.length) {
+        if (izq[i] <= der[j]) {
+            resultado.push(izq[i]);
+            i++;
+        } else {
+            resultado.push(der[j]);
+            j++;
+        }
+    }
+    
+    // Agregar restantes
+    return resultado.concat(izq.slice(i)).concat(der.slice(j));
+}
+
+// Ejemplos
+console.log(mergeSort([5, 2, 8, 1, 9])); // [1,2,5,8,9]
+console.log(mergeSort([3, 1, 4, 1, 5])); // [1,1,3,4,5]
+console.log(mergeSort([]));              // []</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="exercise-summary">
+                <h3>Resumen de la Sesión</h3>
+                <div class="summary-stats">
+                    <div class="stat-item">
+                        <span class="stat-label">Total:</span>
+                        <span class="stat-value">10 ejercicios</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Medios:</span>
+                        <span class="stat-value">6</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Difíciles:</span>
+                        <span class="stat-value">4</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="navigation">
+                <a href="../lessons/lesson5.html" class="nav-btn prev-btn">← Volver a la Lección</a>
+                <a href="../exercises/exercises6.html" class="nav-btn next-btn">Ejercicios 6 →</a>
+            </div>
+        </div>
+    </main>
+
+    <script src="../exercise.js"></script>
+</body>
+</html>

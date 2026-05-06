@@ -1,0 +1,331 @@
+/* Estilos específicos para páginas de ejercicios */
+
+.exercise-container {
+    animation: fadeIn 0.5s ease;
+}
+
+.exercise-header {
+    text-align: center;
+    margin-bottom: 3rem;
+    padding: 2rem;
+    background: var(--surface-color);
+    border-radius: 1rem;
+    border: 1px solid var(--border-color);
+}
+
+.exercise-header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+    background: var(--accent-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.exercise-header .subtitle {
+    color: var(--text-secondary);
+    margin-bottom: 1.5rem;
+}
+
+/* Barra de progreso */
+.progress-container {
+    max-width: 400px;
+    height: 8px;
+    background: var(--surface-light);
+    border-radius: 9999px;
+    margin: 1.5rem auto;
+    overflow: hidden;
+}
+
+.progress-bar {
+    height: 100%;
+    background: var(--accent-gradient);
+    width: 0%;
+    transition: width 0.4s ease;
+    border-radius: 9999px;
+}
+
+.progress-text {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+/* Lista de ejercicios */
+.exercise-list {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+/* Tarjeta de ejercicio */
+.exercise-card {
+    background: var(--surface-color);
+    border-radius: 1rem;
+    border: 1px solid var(--border-color);
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.exercise-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px rgba(99, 102, 241, 0.15);
+}
+
+.exercise-header-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 1.5rem;
+    background: var(--surface-light);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.exercise-number {
+    font-weight: 700;
+    color: var(--primary-color);
+    font-size: 1.1rem;
+}
+
+.exercise-card h2 {
+    padding: 1.5rem 1.5rem 0 1.5rem;
+    font-size: 1.5rem;
+    color: var(--text-primary);
+}
+
+.exercise-card > p {
+    padding: 1rem 1.5rem;
+    color: var(--text-secondary);
+}
+
+.exercise-card code {
+    background: var(--code-bg);
+    padding: 0.2rem 0.5rem;
+    border-radius: 0.25rem;
+    font-family: 'Consolas', monospace;
+    font-size: 0.9em;
+    color: var(--secondary-color);
+}
+
+/* Ejemplo de entrada/salida */
+.example-io {
+    margin: 1rem 1.5rem;
+}
+
+.io-box {
+    background: rgba(34, 211, 239, 0.1);
+    border-left: 4px solid var(--secondary-color);
+    padding: 1rem;
+    border-radius: 0.5rem;
+}
+
+.io-box h4 {
+    color: var(--secondary-color);
+    margin-bottom: 0.5rem;
+    font-size: 0.95rem;
+}
+
+.io-box p {
+    margin: 0.25rem 0;
+    font-size: 0.9rem;
+}
+
+/* Dificultad */
+.difficulty {
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
+.difficulty.easy {
+    background: rgba(16, 185, 129, 0.2);
+    color: var(--success-color);
+}
+
+.difficulty.medium {
+    background: rgba(245, 158, 11, 0.2);
+    color: var(--warning-color);
+}
+
+.difficulty.hard {
+    background: rgba(239, 68, 68, 0.2);
+    color: var(--danger-color);
+}
+
+/* Sección de pista */
+.hint-section {
+    margin: 1.5rem;
+    border-top: 1px solid var(--border-color);
+    padding-top: 1rem;
+}
+
+.hint-toggle {
+    background: transparent;
+    border: 1px solid var(--border-color);
+    color: var(--text-secondary);
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+}
+
+.hint-toggle:hover {
+    background: var(--surface-light);
+    color: var(--text-primary);
+}
+
+.hint-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease;
+    background: var(--surface-light);
+    margin-top: 0.5rem;
+    border-radius: 0.5rem;
+}
+
+.hint-content.show {
+    max-height: 200px;
+    padding: 1rem;
+}
+
+.hint-content p {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    margin: 0;
+}
+
+/* Sección de solución */
+.solution-section {
+    margin: 1.5rem;
+    border-top: 1px solid var(--border-color);
+    padding-top: 1rem;
+}
+
+.solution-toggle {
+    background: transparent;
+    border: 1px solid var(--border-color);
+    color: var(--text-secondary);
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+}
+
+.solution-toggle:hover {
+    background: rgba(99, 102, 241, 0.1);
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+}
+
+.solution-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease;
+    margin-top: 0.5rem;
+    border-radius: 0.5rem;
+}
+
+.solution-content.show {
+    max-height: 2000px;
+    padding: 1rem;
+}
+
+.solution-content pre {
+    background: var(--code-bg);
+    padding: 1.5rem;
+    border-radius: 0.75rem;
+    overflow-x: auto;
+    border: 1px solid var(--border-color);
+}
+
+.solution-content code {
+    color: #e2e8f0;
+    font-family: 'Consolas', monospace;
+    font-size: 0.9rem;
+    line-height: 1.6;
+}
+
+/* Resumen de la sesión */
+.exercise-summary {
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(34, 211, 239, 0.1) 100%);
+    padding: 2rem;
+    border-radius: 1rem;
+    margin: 2rem 0;
+    border: 1px solid var(--border-color);
+}
+
+.exercise-summary h3 {
+    color: var(--primary-color);
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.summary-stats {
+    display: flex;
+    justify-content: center;
+    gap: 3rem;
+    flex-wrap: wrap;
+}
+
+.stat-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.stat-label {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+}
+
+.stat-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--secondary-color);
+}
+
+/* Navegación */
+.navigation {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 2px solid var(--border-color);
+}
+
+.nav-btn {
+    background: var(--accent-gradient);
+    color: white;
+    padding: 1rem 2rem;
+    border-radius: 0.5rem;
+    text-decoration: none;
+    font-weight: 500;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.nav-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 20px rgba(99, 102, 241, 0.4);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .exercise-header h1 {
+        font-size: 1.75rem;
+    }
+    
+    .exercise-card h2 {
+        font-size: 1.25rem;
+    }
+    
+    .summary-stats {
+        gap: 1.5rem;
+    }
+    
+    .stat-value {
+        font-size: 1.2rem;
+    }
+}

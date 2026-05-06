@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicios de Recursividad - Lección 1</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="../exercise-styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <h2>Curso de Recursividad</h2>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="../index.html" class="nav-link">Inicio</a></li>
+                <li><a href="../lessons/lesson1.html" class="nav-link">Lección 1</a></li>
+                <li><a href="#" class="nav-link active">Ejercicios 1</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="container">
+        <div class="exercise-container">
+            <header class="exercise-header">
+                <h1>Ejercicios - Lección 1</h1>
+                <p class="subtitle">10 problemas para dominar los fundamentos de la recursividad</p>
+                <div class="progress-container">
+                    <div class="progress-bar" id="progressBar"></div>
+                </div>
+                <p class="progress-text">Progreso: <span id="progressText">0/10</span></p>
+            </header>
+
+            <div class="exercise-list" id="exerciseList">
+                <!-- Ejercicio 1 -->
+                <div class="exercise-card" data-exercise="1">
+                    <div class="exercise-header-bar">
+                        <span class="exercise-number">Ejercicio 1</span>
+                        <span class="difficulty easy">Fácil</span>
+                    </div>
+                    <h2>Contador Personalizado</h2>
+                    <p>Crea una función recursiva <code>contadorPersonalizado(inicio, fin)</code> que imprima los números desde <code>inicio</code> hasta <code>fin</code> (inclusive).</p>
+                    <div class="example-io">
+                        <div class="io-box">
+                            <h4>Ejemplo:</h4>
+                            <p><strong>Entrada:</strong> contadorPersonalizado(3, 7)</p>
+                            <p><strong>Salida:</strong> 3, 4, 5, 6, 7</p>
+                        </div>
+                    </div>
+                    <div class="hint-section">
+                        <button class="hint-toggle" onclick="toggleHint(this)">Mostrar pista</button>
+                        <div class="hint-content">
+                            <p>Necesitas DOS casos base: cuando inicio > fin (no hacer nada) y cuando inicio === fin (imprimir solo ese número).</p>
+                        </div>
+                    </div>
+                    <div class="solution-section">
+                        <button class="solution-toggle" onclick="toggleSolution(this)">Mostrar solución</button>
+                        <div class="solution-content">
+                            <pre><code>function contadorPersonalizado(inicio, fin) {
+    // Caso base: si inicio es mayor que fin, no hacemos nada
+    if (inicio > fin) {
+        return;
+    }
+    
+    console.log(inicio);
+    
+    // Paso recursivo: llamar con siguiente número
+    contadorPersonalizado(inicio + 1, fin);
+}
+
+// Ejemplo: contadorPersonalizado(3, 7)
+// Salida: 3, 4, 5, 6, 7</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ejercicio 2 -->
+                <div class="exercise-card" data-exercise="2">
+                    <div class="exercise-header-bar">
+                        <span class="exercise-number">Ejercicio 2</span>
+                        <span class="difficulty easy">Fácil</span>
+                    </div>
+                    <h2>Suma de Dígitos</h2>
+                    <p>Escribe una función recursiva <code>sumaDigitos(n)</code> que calcule la suma de todos los dígitos de un número entero positivo.</p>
+                    <div class="example-io">
+                        <div class="io-box">
+                            <h4>Ejemplo:</h4>
+                            <p><strong>Entrada:</strong> sumaDigitos(1234)</p>
+                            <p><strong>Salida:</strong> 10 (porque 1+2+3+4=10)</p>
+                        </div>
+                    </div>
+                    <div class="hint-section">
+                        <button class="hint-toggle" onclick="toggleHint(this)">Mostrar pista</button>
+                        <div class="hint-content">
+                            <p>Usa el operador módulo (%) para obtener el último dígito y división entera (Math.floor o ~~) para eliminar el último dígito.</p>
+                        </div>
+                    </div>
+                    <div class="solution-section">
+                        <button class="solution-toggle" onclick="toggleSolution(this)">Mostrar solución</button>
+                        <div class="solution-content">
+                            <pre><code>function sumaDigitos(n) {
+    // Convertir a positivo si es negativo
+    n = Math.abs(n);
+    
+    // Caso base: número de un dígito
+    if (n < 10) {
+        return n;
+    }
+    
+    // Paso recursivo: último dígito + suma del resto
+    return (n % 10) + sumaDigitos(Math.floor(n / 10));
+}
+
+// Ejemplos
+console.log(sumaDigitos(1234)); // 10
+console.log(sumaDigitos(999));  // 27
+console.log(sumaDigitos(5));    // 5</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ejercicio 3 -->
+                <div class="exercise-card" data-exercise="3">
+                    <div class="exercise-header-bar">
+                        <span class="exercise-number">Ejercicio 3</span>
+                        <span class="difficulty easy">Fácil</span>
+                    </div>
+                    <h2>Potencia con Recursividad</h2>
+                    <p>Implementa <code>potencia(base, exponente)</code> que calcule base^exponente usando recursividad. Asume exponente ≥ 0.</p>
+                    <div class="example-io">
+                        <div class="io-box">
+                            <h4>Ejemplo:</h4>
+                            <p><strong>Entrada:</strong> potencia(2, 5)</p>
+                            <p><strong>Salida:</strong> 32</p>
+                        </div>
+                    </div>
+                    <div class="hint-section">
+                        <button class="hint-toggle" onclick="toggleHint(this)">Mostrar pista</button>
+                        <div class="hint-content">
+                            <p>base^0 = 1 (caso base). base^exp = base × base^(exp-1).</p>
+                        </div>
+                    </div>
+                    <div class="solution-section">
+                        <button class="solution-toggle" onclick="toggleSolution(this)">Mostrar solución</button>
+                        <div class="solution-content">
+                            <pre><code>function potencia(base, exponente) {
+    // Caso base: cualquier número a la 0 es 1
+    if (exponente === 0) {
+        return 1;
+    }
+    
+    // Paso recursivo: base * base^(exponente-1)
+    return base * potencia(base, exponente - 1);
+}
+
+// Ejemplos
+console.log(potencia(2, 5));  // 32
+console.log(potencia(3, 3));  // 27
+console.log(potencia(5, 0));  // 1
+console.log(potencia(2, 10)); // 1024</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ejercicio 4 -->
+                <div class="exercise-card" data-exercise="4">
+                    <div class="exercise-header-bar">
+                        <span class="exercise-number">Ejercicio 4</span>
+                        <span class="difficulty easy">Fácil</span>
+                    </div>
+                    <h2>Producto de Números</h2>
+                    <p>Crea <code>productoRango(inicio, fin)</code> que retorne el producto de todos los números enteros desde <code>inicio</code> hasta <code>fin</code> (inclusive).</p>
+                    <div class="example-io">
+                        <div class="io-box">
+                            <h4>Ejemplo:</h4>
+                            <p><strong>Entrada:</strong> productoRango(2, 5)</p>
+                            <p><strong>Salida:</strong> 120 (porque 2×3×4×5=120)</p>
+                        </div>
+                    </div>
+                    <div class="hint-section">
+                        <button class="hint-toggle" onclick="toggleHint(this)">Mostrar pista</button>
+                        <div class="hint-content">
+                            <p>Similar al factorial, pero el inicio no siempre es 1. Caso base: inicio > fin retorna 1.</p>
+                        </div>
+                    </div>
+                    <div class="solution-section">
+                        <button class="solution-toggle" onclick="toggleSolution(this)">Mostrar solución</button>
+                        <div class="solution-content">
+                            <pre><code>function productoRango(inicio, fin) {
+    // Caso base: rango vacío
+    if (inicio > fin) {
+        return 1;
+    }
+    
+    // Caso base: un solo número
+    if (inicio === fin) {
+        return inicio;
+    }
+    
+    // Paso recursivo: inicio * producto del resto
+    return inicio * productoRango(inicio + 1, fin);
+}
+
+// Ejemplos
+console.log(productoRango(2, 5));  // 120
+console.log(productoRango(1, 5));  // 120 (igual que factorial(5))
+console.log(productoRango(3, 3));  // 3</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ejercicio 5 -->
+                <div class="exercise-card" data-exercise="5">
+                    <div class="exercise-header-bar">
+                        <span class="exercise-number">Ejercicio 5</span>
+                        <span class="difficulty easy">Fácil</span>
+                    </div>
+                    <h2>Cuenta Vocales</h2>
+                    <p>Escribe <code>contarVocales(str)</code> que retorne el número de vocales (a, e, i, o, u) en un string, usando recursividad.</p>
+                    <div class="example-io">
+                        <div class="io-box">
+                            <h4>Ejemplo:</h4>
+                            <p><strong>Entrada:</strong> contarVocales("recursividad")</p>
+                            <p><strong>Salida:</strong> 5 (e, u, i, a, ? revisa)</p>
+                        </div>
+                    </div>
+                    <div class="hint-section">
+                        <button class="hint-toggle" onclick="toggleHint(this)">Mostrar pista</button>
+                        <div class="hint-content">
+                            <p>Revisa el primer carácter con un conjunto de vocales. Luego cuenta en el resto del string.</p>
+                        </div>
+                    </div>
+                    <div class="solution-section">
+                        <button class="solution-toggle" onclick="toggleSolution(this)">Mostrar solución</button>
+                        <div class="solution-content">
+                            <pre><code>function contarVocales(str) {
+    const vocales = 'aeiouAEIOU';
+    
+    // Caso base: string vacío
+    if (str.length === 0) {
+        return 0;
+    }
+    
+    // Verificar primer carácter
+    const primeraEsVocal = vocales.includes(str[0]) ? 1 : 0;
+    
+    // Paso recursivo: cuenta primera + resto del string
+    return primeraEsVocal + contarVocales(str.slice(1));
+}
+
+// Ejemplos
+console.log(contarVocales("recursividad")); // 5
+console.log(contarVocales("Hola Mundo"));    // 4
+console.log(contarVocales("xyz"));           // 0
+console.log(contarVocales(""));              // 0</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ejercicio 6 -->
+                <div class="exercise-card" data-exercise="6">
+                    <div class="exercise-header-bar">
+                        <span class="exercise-number">Ejercicio 6</span>
+                        <span class="difficulty easy">Fácil</span>
+                    </div>
+                    <h2>Invertir Array</h2>
+                    <p>Crea <code>invertirArray(arr)</code> que retorne un nuevo array con los elementos en orden inverso usando recursividad.</p>
+                    <div class="example-io">
+                        <div class="io-box">
+                            <h4>Ejemplo:</h4>
+                            <p><strong>Entrada:</strong> invertirArray([1, 2, 3, 4])</p>
+                            <p><strong>Salida:</strong> [4, 3, 2, 1]</p>
+                        </div>
+                    </div>
+                    <div class="hint-section">
+                        <button class="hint-toggle" onclick="toggleHint(this)">Mostrar pista</button>
+                        <div class="hint-content">
+                            <p>Último elemento + invertir del resto. Caso base: array vacío retorna array vacío.</p>
+                        </div>
+                    </div>
+                    <div class="solution-section">
+                        <button class="solution-toggle" onclick="toggleSolution(this)">Mostrar solución</button>
+                        <div class="solution-content">
+                            <pre><code>function invertirArray(arr) {
+    // Caso base: array vacío
+    if (arr.length === 0) {
+        return [];
+    }
+    
+    // Tomar último elemento + invertir el resto
+    const ultimo = arr[arr.length - 1];
+    const resto = arr.slice(0, -1);
+    
+    return [ultimo].concat(invertirArray(resto));
+}
+
+// Versión más elegante (sin slice)
+function invertirArray2(arr) {
+    if (arr.length === 0) return [];
+    return [arr.pop()].concat(invertirArray2(arr));
+}
+
+// Ejemplos
+console.log(invertirArray([1, 2, 3, 4])); // [4, 3, 2, 1]
+console.log(invertirArray(['a', 'b', 'c'])); // ['c', 'b', 'a']
+console.log(invertirArray([])); // []</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ejercicio 7 -->
+                <div class="exercise-card" data-exercise="7">
+                    <div class="exercise-header-bar">
+                        <span class="exercise-number">Ejercicio 7</span>
+                        <span class="difficulty easy">Fácil</span>
+                    </div>
+                    <h2>Múltiplos de 3</h2>
+                    <p>Escribe <code>contarMultiplos3(n)</code> que cuente cuántos múltiplos de 3 hay desde 1 hasta n (inclusive) usando recursividad.</p>
+                    <div class="example-io">
+                        <div class="io-box">
+                            <h4>Ejemplo:</h4>
+                            <p><strong>Entrada:</strong> contarMultiplos3(10)</p>
+                            <p><strong>Salida:</strong> 3 (3, 6, 9)</p>
+                        </div>
+                    </div>
+                    <div class="hint-section">
+                        <button class="hint-toggle" onclick="toggleHint(this)">Mostrar pista</button>
+                        <div class="hint-content">
+                            <p>¿Es n divisible por 3? (n % 3 === 0). Luego cuenta desde 1 hasta n-1 recursivamente.</p>
+                        </div>
+                    </div>
+                    <div class="solution-section">
+                        <button class="solution-toggle" onclick="toggleSolution(this)">Mostrar solución</button>
+                        <div class="solution-content">
+                            <pre><code>function contarMultiplos3(n) {
+    // Caso base: no hay números positivos
+    if (n <= 0) {
+        return 0;
+    }
+    
+    // ¿Es n múltiplo de 3?
+    const esMultiplo = (n % 3 === 0) ? 1 : 0;
+    
+    // Paso recursivo: contar n si es múltiplo + contar hasta n-1
+    return esMultiplo + contarMultiplos3(n - 1);
+}
+
+// Ejemplos
+console.log(contarMultiplos3(10)); // 3
+console.log(contarMultiplos3(15)); // 5
+console.log(contarMultiplos3(2));  // 0
+console.log(contarMultiplos3(3));  // 1</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ejercicio 8 -->
+                <div class="exercise-card" data-exercise="8">
+                    <div class="exercise-header-bar">
+                        <span class="exercise-number">Ejercicio 8</span>
+                        <span class="difficulty medium">Medio</span>
+                    </div>
+                    <h2>Números Pares en un Array</h2>
+                    <p>Escribe <code>contarPares(arr, indice)</code> que cuente cuántos números pares hay en un array usando recursividad.</p>
+                    <div class="example-io">
+                        <div class="io-box">
+                            <h4>Ejemplo:</h4>
+                            <p><strong>Entrada:</strong> contarPares([1, 2, 3, 4, 5, 6], 0)</p>
+                            <p><strong>Salida:</strong> 3 (2, 4, 6)</p>
+                        </div>
+                    </div>
+                    <div class="hint-section">
+                        <button class="hint-toggle" onclick="toggleHint(this)">Mostrar pista</button>
+                        <div class="hint-content">
+                            <p>Usa un parámetro <code>indice</code> para recorrer el array. Caso base: indice >= arr.length.</p>
+                        </div>
+                    </div>
+                    <div class="solution-section">
+                        <button class="solution-toggle" onclick="toggleSolution(this)">Mostrar solución</button>
+                        <div class="solution-content">
+                            <pre><code>function contarPares(arr, indice) {
+    // Caso base: fin del array
+    if (indice >= arr.length) {
+        return 0;
+    }
+    
+    // ¿Es el elemento actual par?
+    const esPar = (arr[indice] % 2 === 0) ? 1 : 0;
+    
+    // Paso recursivo: cuenta actual + resto del array
+    return esPar + contarPares(arr, indice + 1);
+}
+
+// Función envoltorio para no pasar índice manualmente
+function contarParesFacil(arr) {
+    return contarPares(arr, 0);
+}
+
+// Ejemplos
+console.log(contarParesFacil([1, 2, 3, 4, 5, 6])); // 3
+console.log(contarParesFacil([2, 4, 6, 8]));        // 4
+console.log(contarParesFacil([1, 3, 5]));           // 0</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ejercicio 9 -->
+                <div class="exercise-card" data-exercise="9">
+                    <div class="exercise-header-bar">
+                        <span class="exercise-number">Ejercicio 9</span>
+                        <span class="difficulty medium">Medio</span>
+                    </div>
+                    <h2>Palindrome Checker</h2>
+                    <p>Crea <code>esPalindrome(str)</code> que determine si un string es un palíndromo (se lee igual hacia adelante y atrás).</p>
+                    <div class="example-io">
+                        <div class="io-box">
+                            <h4>Ejemplo:</h4>
+                            <p><strong>Entrada:</strong> esPalindrome("reconocer")</p>
+                            <p><strong>Salida:</strong> true</p>
+                        </div>
+                    </div>
+                    <div class="hint-section">
+                        <button class="hint-toggle" onclick="toggleHint(this)">Mostrar pista</button>
+                        <div class="hint-content">
+                            <p>Compara el primer y último carácter. Si son iguales, verifica el substring interno. Casos base: string vacío o de 1 carácter es palindrome.</p>
+                        </div>
+                    </div>
+                    <div class="solution-section">
+                        <button class="solution-toggle" onclick="toggleSolution(this)">Mostrar solución</button>
+                        <div class="solution-content">
+                            <pre><code>function esPalindrome(str) {
+    // Normalizar: quitar espacios y convertir a minúsculas
+    str = str.toLowerCase().replace(/\s/g, '');
+    
+    // Caso base: string vacío o de 1 carácter
+    if (str.length <= 1) {
+        return true;
+    }
+    
+    // Comparar primer y último carácter
+    if (str[0] !== str[str.length - 1]) {
+        return false;
+    }
+    
+    // Paso recursivo: verificar substring interno
+    return esPalindrome(str.slice(1, -1));
+}
+
+// Ejemplos
+console.log(esPalindrome("reconocer"));    // true
+console.log(esPalindrome("ana"));           // true
+console.log(esPalindrome("hola"));          // false
+console.log(esPalindrome("A man a plan"));  // true (ignora espacios)</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ejercicio 10 -->
+                <div class="exercise-card" data-exercise="10">
+                    <div class="exercise-header-bar">
+                        <span class="exercise-number">Ejercicio 10</span>
+                        <span class="difficulty medium">Medio</span>
+                    </div>
+                    <h2>Suma Acumulativa</h2>
+                    <p>Crea <code>sumaAcumulativa(n)</code> que calcule Σ(i=1 to n) de i usando recursividad (sin usar la fórmula n(n+1)/2).</p>
+                    <div class="example-io">
+                        <div class="io-box">
+                            <h4>Ejemplo:</h4>
+                            <p><strong>Entrada:</strong> sumaAcumulativa(5)</p>
+                            <p><strong>Salida:</strong> 15 (1+2+3+4+5)</p>
+                        </div>
+                    </div>
+                    <div class="hint-section">
+                        <button class="hint-toggle" onclick="toggleHint(this)">Mostrar pista</button>
+                        <div class="hint-content">
+                            <p>Similar a sumaNaturales. ¿Cuál es el caso base? ¿Cómo reduces n en cada llamada?</p>
+                        </div>
+                    </div>
+                    <div class="solution-section">
+                        <button class="solution-toggle" onclick="toggleSolution(this)">Mostrar solución</button>
+                        <div class="solution-content">
+                            <pre><code>function sumaAcumulativa(n) {
+    // Caso base
+    if (n <= 0) {
+        return 0;
+    }
+    
+    // Paso recursivo: n + suma de los anteriores
+    return n + sumaAcumulativa(n - 1);
+}
+
+// Bonus: versión con acumulador (tail recursion)
+function sumaAcumulativaTail(n, acumulador = 0) {
+    if (n <= 0) {
+        return acumulador;
+    }
+    return sumaAcumulativaTail(n - 1, acumulador + n);
+}
+
+// Ejemplos
+console.log(sumaAcumulativa(5));   // 15
+console.log(sumaAcumulativa(10));  // 55
+console.log(sumaAcumulativa(100)); // 5050</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="exercise-summary">
+                <h3>Resumen de la Sesión</h3>
+                <div class="summary-stats">
+                    <div class="stat-item">
+                        <span class="stat-label">Total:</span>
+                        <span class="stat-value">10 ejercicios</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Fáciles:</span>
+                        <span class="stat-value">7</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Medios:</span>
+                        <span class="stat-value">3</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="navigation">
+                <a href="../lessons/lesson1.html" class="nav-btn prev-btn">← Volver a la Lección</a>
+                <a href="../lessons/lesson2.html" class="nav-btn next-btn">Siguiente Lección →</a>
+            </div>
+        </div>
+    </main>
+
+    <script src="../exercise.js"></script>
+</body>
+</html>

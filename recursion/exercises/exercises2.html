@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicios de Recursividad - Lección 2</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="../styles-exercises.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <h2>Curso de Recursividad</h2>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="../index.html" class="nav-link">Inicio</a></li>
+                <li><a href="../lessons/lesson2.html" class="nav-link">Lección 2</a></li>
+                <li><a href="#" class="nav-link active">Ejercicios 2</a></li>
+                <li><a href="../exercises/exercises3.html" class="nav-link">Ejercicios 3</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="container">
+        <div class="exercise-container">
+            <header class="exercise-header">
+                <h1>Ejercicios - Lección 2: Análisis de Problemas</h1>
+                <p class="subtitle">10 problemas para aplicar el framework de 4 pasos</p>
+                <div class="progress-container">
+                    <div class="progress-bar" id="progressBar"></div>
+                </div>
+                <p class="progress-text">Progreso: <span id="progressText">0/10</span></p>
+            </header>
+
+            <div class="exercise-list" id="exerciseList">
+                <!-- Ejercicio 1 -->
+                <div class="exercise-card" data-exercise="1">
+                    <div class="exercise-header-bar">
+                        <span class="exercise-number">Ejercicio 1</span>
+                        <span class="difficulty easy">Fácil</span>
+                    </div>
+                    <h2>Hallar el Máximo en Array</h2>
+                    <p>Escribe <code>encontrarMaximo(arr, indice)</code> que retorne el valor máximo en un array usando recursividad.</p>
+                    <div class="example-io">
+                        <div class="io-box">
+                            <h4>Ejemplo:</h4>
+                            <p><strong>Entrada:</strong> encontrarMaximo([3, 7, 2, 9, 5], 0)</p>
+                            <p><strong>Salida:</strong> 9</p>
+                        </div>
+                    </div>
+                    <div class="hint-section">
+                        <button class="hint-toggle" onclick="toggleHint(this)">Mostrar pista</button>
+                        <div class="hint-content">
+                            <p>Caso base: indice >= arr.length retorna -Infinity. Compara arr[indice] con máximo del resto.</p>
+                        </div>
+                    </div>
+                    <div class="solution-section">
+                        <button class="solution-toggle" onclick="toggleSolution(this)">Mostrar solución</button>
+                        <div class="solution-content">
+                            <pre><code>function encontrarMaximo(arr, indice) {
+    // Caso base: fin del array
+    if (indice >= arr.length) {
+        return -Infinity;
+    }
+    
+    // Máximo del resto
+    const maxResto = encontrarMaximo(arr, indice + 1);
+    
+    // Retornar el mayor entre el actual y el resto
+    return Math.max(arr[indice], maxResto);
+}
+
+// Función envoltorio
+function maxArray(arr) {
+    return encontrarMaximo(arr, 0);
+}
+
+// Ejemplos
+console.log(maxArray([3, 7, 2, 9, 5])); // 9
+console.log(maxArray([-1, -5, -3]));    // -1
+console.log(maxArray([42]));            // 42</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ejercicio 2 -->
+                <div class="exercise-card" data-exercise="2">
+                    <div class="exercise-header-bar">
+                        <span class="exercise-number">Ejercicio 2</span>
+                        <span class="difficulty easy">Fácil</span>
+                    </div>
+                    <h2>Hallar el Mínimo en Array</h2>
+                    <p>Crea <code>encontrarMinimo(arr, indice)</code> similar al máximo pero retornando el valor mínimo.</p>
+                    <div class="example-io">
+                        <div class="io-box">
+                            <h4>Ejemplo:</h4>
+                            <p><strong>Entrada:</strong> encontrarMinimo([8, 3, 11, 1, 6], 0)</p>
+                            <p><strong>Salida:</strong> 1</p>
+                        </div>
+                    </div>
+                    <div class="hint-section">
+                        <button class="hint-toggle" onclick="toggleHint(this)">Mostrar pista</button>
+                        <div class="hint-content">
+                            <p>Igual que el máximo pero usando Math.min y retornando Infinity en el caso base.</p>
+                        </div>
+                    </div>
+                    <div class="solution-section">
+                        <button class="solution-toggle" onclick="toggleSolution(this)">Mostrar solución</button>
+                        <div class="solution-content">
+                            <pre><code>function encontrarMinimo(arr, indice) {
+    // Caso base
+    if (indice >= arr.length) {
+        return Infinity;
+    }
+    
+    const minResto = encontrarMinimo(arr, indice + 1);
+    return Math.min(arr[indice], minResto);
+}
+
+function minArray(arr) {
+    return encontrarMinimo(arr, 0);
+}
+
+// Ejemplos
+console.log(minArray([8, 3, 11, 1, 6])); // 1
+console.log(minArray([-3, -1, -7]));    // -7
+console.log(minArray([99]));            // 99</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ejercicio 3 -->
+                <div class="exercise-card" data-exercise="3">
+                    <div class="exercise-header-bar">
+                        <span class="exercise-number">Ejercicio 3</span>
+                        <span class="difficulty easy">Fácil</span>
+                    </div>
+                    <h2>Suma Recursiva de Array</h2>
+                    <p>Calcula la suma de todos los elementos de un array recursivamente.</p>
+                    <div class="example-io">
+                        <div class="io-box">
+                            <h4>Ejemplo:</h4>
+                            <p><strong>Entrada:</strong> sumaArray([1, 2, 3, 4, 5], 0)</p>
+                            <p><strong>Salida:</strong> 15</p>
+                        </div>
+                    </div>
+                    <div class="hint-section">
+                        <button class="hint-toggle" onclick="toggleHint(this)">Mostrar pista</button>
+                        <div class="hint-content">
+                            <p>Caso base: indice >= length retorna 0. Paso: arr[indice] + sumaArray(indice+1).</p>
+                        </div>
+                    </div>
+                    <div class="solution-section">
+                        <button class="solution-toggle" onclick="toggleSolution(this)">Mostrar solución</button>
+                        <div class="solution-content">
+                            <pre><code>function sumaArray(arr, indice) {
+    // Caso base
+    if (indice >= arr.length) {
+        return 0;
+    }
+    
+    return arr[indice] + sumaArray(arr, indice + 1);
+}
+
+function sumar(arr) {
+    return sumaArray(arr, 0);
+}
+
+// Ejemplos
+console.log(sumar([1, 2, 3, 4, 5])); // 15
+console.log(sumar([10, 20, 30]));    // 60
+console.log(sumar([]));              // 0</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ejercicio 4 -->
+                <div class="exercise-card" data-exercise="4">
+                    <div class="exercise-header-bar">
+                        <span class="exercise-number">Ejercicio 4</span>
+                        <span class="difficulty easy">Fácil</span>
+                    </div>
+                    <h2>Contar Elementos Mayores que X</h2>
+                    <p>Cuenta cuántos elementos en un array son mayores que un valor umbral dado.</p>
+                    <div class="example-io">
+                        <div class="io-box">
+                            <h4>Ejemplo:</h4>
+                            <p><strong>Entrada:</strong> contarMayores([1, 5, 8, 3, 9], 5, 0)</p>
+                            <p><strong>Salida:</strong> 2 (8 y 9)</p>
+                        </div>
+                    </div>
+                    <div class="hint-section">
+                        <button class="hint-toggle" onclick="toggleHint(this)">Mostrar pista</button>
+                        <div class="hint-content">
+                            <p>Caso base: fin del array. Compara arr[indice] > x. Suma 1 si es verdadero.</p>
+                        </div>
+                    </div>
+                    <div class="solution-section">
+                        <button class="solution-toggle" onclick="toggleSolution(this)">Mostrar solución</button>
+                        <div class="solution-content">
+                            <pre><code>function contarMayores(arr, x, indice) {
+    // Caso base
+    if (indice >= arr.length) {
+        return 0;
+    }
+    
+    const cuentaActual = (arr[indice] > x) ? 1 : 0;
+    return cuentaActual + contarMayores(arr, x, indice + 1);
+}
+
+function mayores(arr, x) {
+    return contarMayores(arr, x, 0);
+}
+
+// Ejemplos
+console.log(mayores([1, 5, 8, 3, 9], 5)); // 2
+console.log(mayores([10, 20, 30], 15));   // 2
+console.log(mayores([1, 2, 3], 10));      // 0</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ejercicio 5 -->
+                <div class="exercise-card" data-exercise="5">
+                    <div class="exercise-header-bar">
+                        <span class="exercise-number">Ejercicio 5</span>
+                        <span class="difficulty easy">Fácil</span>
+                    </div>
+                    <h2>Filtrar Números Pares</h2>
+                    <p>Crea <code>filtrarPares(arr, indice)</code> que retorne un nuevo array solo con los números pares.</p>
+                    <div class="example-io">
+                        <div class="io-box">
+                            <h4>Ejemplo:</h4>
+                            <p><strong>Entrada:</strong> filtrarPares([1, 2, 3, 4, 5, 6], 0)</p>
+                            <p><strong>Salida:</strong> [2, 4, 6]</p>
+                        </div>
+                    </div>
+                    <div class="hint-section">
+                        <button class="hint-toggle" onclick="toggleHint(this)">Mostrar pista</button>
+                        <div class="hint-content">
+                            <p>Caso base: array vacío. Si arr[indice] es par, inclúyelo en el resultado.</p>
+                        </div>
+                    </div>
+                    <div class="solution-section">
+                        <button class="solution-toggle" onclick="toggleSolution(this)">Mostrar solución</button>
+                        <div class="solution-content">
+                            <pre><code>function filtrarPares(arr, indice) {
+    // Caso base
+    if (indice >= arr.length) {
+        return [];
+    }
+    
+    const resto = filtrarPares(arr, indice + 1);
+    
+    // Si el actual es par, incluirlo al inicio
+    if (arr[indice] % 2 === 0) {
+        return [arr[indice], ...resto];
+    } else {
+        return resto;
+    }
+}
+
+function soloPares(arr) {
+    return filtrarPares(arr, 0);
+}
+
+// Ejemplos
+console.log(soloPares([1, 2, 3, 4, 5, 6])); // [2,4,6]
+console.log(soloPares([1, 3, 5]));          // []
+console.log(soloPares([2, 4, 6]));          // [2,4,6]</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ejercicio 6 -->
+                <div class="exercise-card" data-exercise="6">
+                    <div class="exercise-header-bar">
+                        <span class="exercise-number">Ejercicio 6</span>
+                        <span class="difficulty easy">Fácil</span>
+                    </div>
+                    <h2>Concatenar Strings de Array</h2>
+                    <p>Junta todos los strings de un array en un solo string separado por espacios.</p>
+                    <div class="example-io">
+                        <div class="io-box">
+                            <h4>Ejemplo:</h4>
+                            <p><strong>Entrada:</strong> unirStrings(["Hola", "mundo", "desde", "JS"], 0)</p>
+                            <p><strong>Salida:</strong> "Hola mundo desde JS"</p>
+                        </div>
+                    </div>
+                    <div class="hint-section">
+                        <button class="hint-toggle" onclick="toggleHint(this)">Mostrar pista</button>
+                        <div class="hint-content">
+                            <p>Caso base: fin del array retorna string vacío. Concatenar con espacio entre palabras.</p>
+                        </div>
+                    </div>
+                    <div class="solution-section">
+                        <button class="solution-toggle" onclick="toggleSolution(this)">Mostrar solución</button>
+                        <div class="solution-content">
+                            <pre><code>function unirStrings(arr, indice) {
+    // Caso base
+    if (indice >= arr.length) {
+        return "";
+    }
+    
+    const resto = unirStrings(arr, indice + 1);
+    
+    // Si hay más elementos, agregar espacio
+    if (resto.length > 0) {
+        return arr[indice] + " " + resto;
+    } else {
+        return arr[indice];
+    }
+}
+
+// Versión más elegante
+function unirStrings2(arr, indice) {
+    if (indice >= arr.length) return "";
+    
+    const actual = arr[indice];
+    const resto = unirStrings2(arr, indice + 1);
+    
+    return resto ? actual + " " + resto : actual;
+}
+
+// Ejemplos
+console.log(unirStrings(["Hola", "mundo", "desde", "JS"], 0)); // "Hola mundo desde JS"
+console.log(unirStrings(["uno"], 0));                              // "uno"
+console.log(unirStrings([], 0));                                   // ""</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ejercicio 7 -->
+                <div class="exercise-card" data-exercise="7">
+                    <div class="exercise-header-bar">
+                        <span class="exercise-number">Ejercicio 7</span>
+                        <span class="difficulty easy">Fácil</span>
+                    </div>
+                    <h2>Todos Positivos</h2>
+                    <p>Verifica si todos los números en un array son positivos (> 0).</p>
+                    <div class="example-io">
+                        <div class="io-box">
+                            <h4>Ejemplo:</h4>
+                            <p><strong>Entrada:</strong> todosPositivos([1, 5, 3, 8], 0)</p>
+                            <p><strong>Salida:</strong> true</p>
+                        </div>
+                    </div>
+                    <div class="hint-section">
+                        <button class="hint-toggle" onclick="toggleHint(this)">Mostrar pista</button>
+                        <div class="hint-content">
+                            <p>Caso base: fin del array retorna true (todos los anteriores eran positivos). Si encuentras uno ≤ 0, retorna false.</p>
+                        </div>
+                    </div>
+                    <div class="solution-section">
+                        <button class="solution-toggle" onclick="toggleSolution(this)">Mostrar solución</button>
+                        <div class="solution-content">
+                            <pre><code>function todosPositivos(arr, indice) {
+    // Caso base: verificamos todos
+    if (indice >= arr.length) {
+        return true;
+    }
+    
+    // Si el actual no es positivo, retornar false inmediatamente
+    if (arr[indice] <= 0) {
+        return false;
+    }
+    
+    // Continuar verificando el resto
+    return todosPositivos(arr, indice + 1);
+}
+
+function esTodosPositivos(arr) {
+    return todosPositivos(arr, 0);
+}
+
+// Ejemplos
+console.log(esTodosPositivos([1, 5, 3, 8])); // true
+console.log(esTodosPositivos([1, -2, 3]));   // false
+console.log(esTodosPositivos([]));           // true (vacuamente)</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ejercicio 8 -->
+                <div class="exercise-card" data-exercise="8">
+                    <div class="exercise-header-bar">
+                        <span class="exercise-number">Ejercicio 8</span>
+                        <span class="difficulty medium">Medio</span>
+                    </div>
+                    <h2>Buscar Primer Índice que Cumple Condición</h2>
+                    <p>Encuentra el primer índice donde un elemento cumple una condición (o -1 si ninguno).</p>
+                    <div class="example-io">
+                        <div class="io-box">
+                            <h4>Ejemplo:</h4>
+                            <p><strong>Entrada:</strong> buscarIndice([1, 4, 6, 3, 8], x => x > 5, 0)</p>
+                            <p><strong>Salida:</strong> 2 (porque arr[2] = 6 &gt; 5)</p>
+                        </div>
+                    </div>
+                    <div class="hint-section">
+                        <button class="hint-toggle" onclick="toggleHint(this)">Mostrar pista</button>
+                        <div class="hint-content">
+                            <p>Verifica condición en indice actual. Si cumple, retorna indice. Si no, busca en indice+1.</p>
+                        </div>
+                    </div>
+                    <div class="solution-section">
+                        <button class="solution-toggle" onclick="toggleSolution(this)">Mostrar solución</button>
+                        <div class="solution-content">
+                            <pre><code>function buscarIndice(arr, condicion, indice) {
+    // Caso base: fin del array, no encontrado
+    if (indice >= arr.length) {
+        return -1;
+    }
+    
+    // Si el elemento actual cumple, retornar este índice
+    if (condicion(arr[indice])) {
+        return indice;
+    }
+    
+    // Buscar en el resto
+    return buscarIndice(arr, condicion, indice + 1);
+}
+
+// Ejemplos
+const arr = [1, 4, 6, 3, 8];
+console.log(buscarIndice(arr, x => x > 5, 0));      // 2
+console.log(buscarIndice(arr, x => x === 10, 0));   // -1
+console.log(buscarIndice(arr, x => x < 0, 0));      // -1</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ejercicio 9 -->
+                <div class="exercise-card" data-exercise="9">
+                    <div class="exercise-header-bar">
+                        <span class="exercise-number">Ejercicio 9</span>
+                        <span class="difficulty medium">Medio</span>
+                    </div>
+                    <h2>Calcular Promedio Recursivamente</h2>
+                    <p>Calcula el promedio de un array recursivamente (sin usar length inicial).</p>
+                    <div class="example-io">
+                        <div class="io-box">
+                            <h4>Ejemplo:</h4>
+                            <p><strong>Entrada:</strong> promedioRecursivo([2, 4, 6], 0, 0, 0)</p>
+                            <p><strong>Salida:</strong> 4</p>
+                        </div>
+                    </div>
+                    <div class="hint-section">
+                        <button class="hint-toggle" onclick="toggleHint(this)">Mostrar pista</button>
+                        <div class="hint-content">
+                            <p>Necesitas acumular suma y conteo. Caso base: fin del array retorna suma/conteo.</p>
+                        </div>
+                    </div>
+                    <div class="solution-section">
+                        <button class="solution-toggle" onclick="toggleSolution(this)">Mostrar solución</button>
+                        <div class="solution-content">
+                            <pre><code>function promedioRecursivo(arr, indice, suma, conteo) {
+    // Caso base
+    if (indice >= arr.length) {
+        return conteo === 0 ? 0 : suma / conteo;
+    }
+    
+    // Acumular
+    return promedioRecursivo(arr, indice + 1, suma + arr[indice], conteo + 1);
+}
+
+function promedio(arr) {
+    return promedioRecursivo(arr, 0, 0, 0);
+}
+
+// Ejemplos
+console.log(promedio([2, 4, 6]));     // 4
+console.log(promedio([1, 2, 3, 4])); // 2.5
+console.log(promedio([]));           // 0</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ejercicio 10 -->
+                <div class="exercise-card" data-exercise="10">
+                    <div class="exercise-header-bar">
+                        <span class="exercise-number">Ejercicio 10</span>
+                        <span class="difficulty medium">Medio</span>
+                    </div>
+                    <h2>Aplanar Array (1 Nivel)</h2>
+                    <p>Convierte un array anidado en un array plano (solo un nivel de profundidad).</p>
+                    <div class="example-io">
+                        <div class="io-box">
+                            <h4>Ejemplo:</h4>
+                            <p><strong>Entrada:</strong> aplanar([1, [2, 3], [4], 5], 0)</p>
+                            <p><strong>Salida:</strong> [1, 2, 3, 4, 5]</p>
+                        </div>
+                    </div>
+                    <div class="hint-section">
+                        <button class="hint-toggle" onclick="toggleHint(this)">Mostrar pista</button>
+                        <div class="hint-content">
+                            <p>Verifica si arr[indice] es array con Array.isArray(). Si lo es, expande sus elementos.</p>
+                        </div>
+                    </div>
+                    <div class="solution-section">
+                        <button class="solution-toggle" onclick="toggleSolution(this)">Mostrar solución</button>
+                        <div class="solution-content">
+                            <pre><code>function aplanar(arr, indice) {
+    // Caso base
+    if (indice >= arr.length) {
+        return [];
+    }
+    
+    const elemento = arr[indice];
+    const resto = aplanar(arr, indice + 1);
+    
+    // Si el elemento es un array, concatenar sus elementos
+    if (Array.isArray(elemento)) {
+        return [...elemento, ...resto];
+    } else {
+        return [elemento, ...resto];
+    }
+}
+
+function plano(arr) {
+    return aplanar(arr, 0);
+}
+
+// Ejemplos
+console.log(plano([1, [2, 3], [4], 5]));     // [1,2,3,4,5]
+console.log(plano([1, 2, [3, [4, 5]]]));   // [1,2,3,[4,5]] (solo 1 nivel)
+console.log(plano([]));                      // []</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="exercise-summary">
+                <h3>Resumen de la Sesión</h3>
+                <div class="summary-stats">
+                    <div class="stat-item">
+                        <span class="stat-label">Total:</span>
+                        <span class="stat-value">10 ejercicios</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Fáciles:</span>
+                        <span class="stat-value">7</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Medios:</span>
+                        <span class="stat-value">3</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="navigation">
+                <a href="../lessons/lesson2.html" class="nav-btn prev-btn">← Volver a la Lección</a>
+                <a href="../exercises/exercises3.html" class="nav-btn next-btn">Ejercicios 3 →</a>
+            </div>
+        </div>
+    </main>
+
+    <script src="../exercise.js"></script>
+</body>
+</html>

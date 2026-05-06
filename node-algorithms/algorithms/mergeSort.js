@@ -18,13 +18,7 @@ const merge = (L, R) => {
     let result = [], i = 0, j = 0
 
     while (i < L.length && j < R.length) {
-        console.log(
-            'L[i]', L[i],
-            'R[j]', R[j],
-            'L[i++]', L[i++],
-            'R[j++]', R[j++]
-        );
-
+      
         result.push(L[i] <= R[j] ? L[i++] : R[j++])
         console.log(result);
 

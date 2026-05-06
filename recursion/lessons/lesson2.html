@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Curso de Recursividad - Lección 2: Análisis de Problemas</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <h2>Curso de Recursividad</h2>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="../index.html" class="nav-link">Inicio</a></li>
+                <li><a href="../lessons/lesson1.html" class="nav-link">Lección 1</a></li>
+                <li><a href="#" class="nav-link active">Lección 2</a></li>
+                <li><a href="../exercises/exercises1.html" class="nav-link">Ejercicios 1</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="container">
+        <div class="lesson-container">
+            <header class="lesson-header">
+                <h1>Lección 2: Metodología para Analizar Problemas Recursivos</h1>
+                <p class="subtitle">Aprendiendo a pensar de manera recursiva</p>
+                <div class="lesson-meta">
+                    <span class="badge">Nivel Básico-Intermedio</span>
+                    <span class="badge">45 minutos estimados</span>
+                </div>
+            </header>
+
+            <section class="content-section">
+                <h2>El Arte de Pensar Recursivamente</h2>
+                <div class="definition-box">
+                    <p>Pensar recursivamente es una habilidad que se desarrolla con práctica. No es natural al principio,
+                    pero con un enfoque sistemático, cualquier problema puede descomponerse.</p>
+                </div>
+
+                <div class="framework-box">
+                    <h3>El Framework de 4 Pasos</h3>
+                    <p>Sigue estos pasos cada vez que te enfrentes a un problema recursivo:</p>
+                    <ol class="framework-steps">
+                        <li><strong>Identificar el caso base</strong> (¿Cuándo paramos?)</li>
+                        <li><strong>Identificar el caso recursivo</strong> (¿Cómo reducimos el problema?)</li>
+                        <li><strong>Verificar que avanza hacia el caso base</strong> (¿Cada llamada se acerca al final?)</li>
+                        <li><strong>Probar con ejemplos pequeños</strong> (¿Funciona para n=1, n=2?)</li>
+                    </ol>
+                </div>
+            </section>
+
+            <section class="content-section">
+                <h2>Paso 1: Identificar el Caso Base</h2>
+                <p>El caso base es tu punto de detención. Es la condición más simple que puedes resolver SIN recursividad.</p>
+
+                <div class="base-types">
+                    <div class="base-card">
+                        <h4>Tipos comunes de casos base:</h4>
+                        <ul>
+                            <li><strong>Números:</strong> n = 0, n = 1, n ≤ 0</li>
+                            <li><strong>Strings:</strong> longitud = 0 o 1</li>
+                            <li><strong>Arrays:</strong> longitud = 0 o 1</li>
+                            <li><strong>Árboles:</strong> nodo es null</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="example-walkthrough">
+                    <h3>Ejemplo: Encontrar el Caso Base</h3>
+                    <p><strong>Problema:</strong> Calcular la suma de los primeros n números naturales.</p>
+                    <div class="qa-box">
+                        <p><strong>Pregunta:</strong> ¿Cuál es la situación más simple posible?</p>
+                        <p><strong>Respuesta:</strong> Si n = 1, la suma es simplemente 1.</p>
+                        
+                        <p><strong>Pregunta:</strong> ¿Y si n = 0?</p>
+                        <p><strong>Respuesta:</strong> La suma de los primeros 0 números es 0.</p>
+                    </div>
+                    <div class="success-note">
+                        <p>✓ <strong>Caso base:</strong> n ≤ 1 (retornar n)</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="content-section">
+                <h2>Paso 2: Identificar el Caso Recursivo</h2>
+                <p>El caso recursivo es donde ocurre la "magia". Aquí divides el problema en versiones más pequeñas del mismo problema.</p>
+
+                <div class="decomposition-box">
+                    <h3>Técnica: "Un paso a la vez"</h3>
+                    <p>Resuelve UNA instancia del problema ahora, y delega el resto a una llamada recursiva.</p>
+                    
+                    <div class="example">
+                        <p><strong>Suma(n) =</strong></p>
+                        <ol>
+                            <li>Resuelve <strong>n</strong> ahora mismo (no es recursivo)</li>
+                            <li>Llama a <strong>Suma(n-1)</strong> para el resto (sí es recursivo)</li>
+                        </ol>
+                    </div>
+                </div>
+
+                <div class="pattern-box">
+                    <h3>Patrones Comunes de Descomposición</h3>
+                    <table class="patterns-table">
+                        <thead>
+                            <tr>
+                                <th>Patrón</th>
+                                <th>Ejemplo</th>
+                                <th>Fórmula</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Decrecer de 1</td>
+                                <td>Factorial, suma</td>
+                                <td>f(n) = operación + f(n-1)</td>
+                            </tr>
+                            <tr>
+                                <td>Partir a la mitad</td>
+                                <td>Búsqueda binaria</td>
+                                <td>f(n) = f(n/2) + ...</td>
+                            </tr>
+                            <tr>
+                                <td>Dividir en N partes</td>
+                                <td>Fibonacci</td>
+                                <td>f(n) = f(a) + f(b)</td>
+                            </tr>
+                            <tr>
+                                <td>Procesar primero/último</td>
+                                <td>String reverso</td>
+                                <td>f(arr) = [último] + f(resto)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section class="content-section">
+                <h2>Paso 3: ¿Avanza Hacia el Caso Base?</h2>
+                <p>Un error común es crear una recursión que no se acerca al caso base, causando infinite recursion.</p>
+
+                <div class="correct-incorrect">
+                    <div class="correct-box">
+                        <h4>✓ CORRECTO: Se acerca al caso base</h4>
+                        <pre><code>function decrecer(n) {
+    if (n === 0) return;
+    console.log(n);
+    decrecer(n - 1); // ← Disminuye n, se acerca a 0
+}</code></pre>
+                    </div>
+                    <div class="incorrect-box">
+                        <h4>✗ INCORRECTO: No se acerca</h4>
+                        <pre><code>function error(n) {
+    if (n === 0) return;
+    console.log(n);
+    error(n); // ← Mismo valor, infinito
+}</code></pre>
+                    </div>
+                </div>
+
+                <div class="question-box">
+                    <h3>Pregunta de Verificación</h3>
+                    <p>Para cada llamada recursiva, pregunta: <strong>"¿Este argumento está más cerca del caso base que el anterior?"</strong></p>
+                </div>
+            </section>
+
+            <section class="content-section">
+                <h2>Paso 4: Probar con Casos Pequeños</h3>
+                <p>Nunca asumas que tu solución funciona. Pruébala manualmente con valores pequeños.</p>
+
+                <div class="testing-process">
+                    <h3>Proceso de Validación</h3>
+                    <ol class="validation-steps">
+                        <li><strong>n = 0:</strong> ¿Maneja el caso base correctamente?</li>
+                        <li><strong>n = 1:</strong> ¿Funciona la primera llamada recursiva?</li>
+                        <li><strong>n = 2:</strong> ¿Dos niveles de recursión funcionan?</li>
+                        <li><strong>n = 3:</strong> ¿El patrón es consistente?</li>
+                    </ol>
+                </div>
+
+                <div class="trace-example">
+                    <h3>Ejemplo Completo: factorial(3)</h3>
+                    <div class="trace-diagram">
+                        <pre>factorial(3)
+  → return 3 * factorial(2)
+    → return 2 * factorial(1)
+      → return 1  [CASO BASE]
+    ← return 2 * 1 = 2
+  ← return 3 * 2 = 6
+← return 6</pre>
+                    </div>
+                    <div class="trace-analysis">
+                        <p><strong>Análisis:</strong> Cada retorno desenreda la pila. El caso base (factorial(1) = 1) inicia el proceso inverso.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="content-section">
+                <h2>Ejemplo Guiado: Suma de Pares</h2>
+                <p>Vamos a resolver un problema paso a paso usando nuestro framework.</p>
+
+                <div class="problem-box">
+                    <h3>Problema: Sumar todos los números pares desde 1 hasta n</h3>
+                    <p>Ejemplo: sumaPares(6) = 2 + 4 + 6 = 12</p>
+                </div>
+
+                <div class="analysis-steps">
+                    <div class="step-item">
+                        <span class="step-number">1</span>
+                        <div class="step-content">
+                            <h4>Identificar el Caso Base</h4>
+                            <p>Si n &lt; 2, no hay pares, retornar 0.</p>
+                            <div class="code-mini">
+                                <pre><code>if (n < 2) return 0;</code></pre>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="step-item">
+                        <span class="step-number">2</span>
+                        <div class="step-content">
+                            <h4>Identificar el Caso Recursivo</h4>
+                            <p>¿Es n par? Si sí, agregar n y procesar n-1. Si no, solo procesar n-1.</p>
+                            <div class="code-mini">
+                                <pre><code>if (n % 2 === 0) {
+    return n + sumaPares(n - 1);
+} else {
+    return sumaPares(n - 1);
+}</code></pre>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="step-item">
+                        <span class="step-number">3</span>
+                        <div class="step-content">
+                            <h4>Verificar Avance</h4>
+                            <p>Cada llamada decrece n en 1 → se acerca al caso base (n &lt; 2). ✓</p>
+                        </div>
+                    </div>
+
+                    <div class="step-item">
+                        <span class="step-number">4</span>
+                        <div class="step-content">
+                            <h4>Probar Manualmente</h4>
+                            <div class="manual-test">
+                                <p><strong>sumaPares(4):</strong></p>
+                                <ul>
+                                    <li>n=4 (par) → 4 + sumaPares(3)</li>
+                                    <li>n=3 (impar) → sumaPares(2)</li>
+                                    <li>n=2 (par) → 2 + sumaPares(1)</li>
+                                    <li>n=1 (<2) → 0 [BASE]</li>
+                                    <li>Desenrollar: 2+0=2, luego 4+2=6 ✓</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="final-code">
+                    <h3>Código Final</h3>
+                    <pre><code>function sumaPares(n) {
+    // Caso base
+    if (n < 2) {
+        return 0;
+    }
+    
+    // n es par?
+    if (n % 2 === 0) {
+        return n + sumaPares(n - 1);
+    } else {
+        return sumaPares(n - 1);
+    }
+}
+
+// Versión más concisa
+function sumaPares2(n) {
+    if (n < 2) return 0;
+    return (n % 2 === 0 ? n : 0) + sumaPares2(n - 1);
+}
+
+// Pruebas
+console.log(sumaPares(6));  // 12 (2+4+6)
+console.log(sumaPares(10)); // 30 (2+4+6+8+10)</code></pre>
+                </div>
+            </section>
+
+            <section class="content-section">
+                <h2>Errores Comunes y Cómo Evitarlos</h2>
+                <div class="errors-grid">
+                    <div class="error-card">
+                        <div class="error-icon">⚠️</div>
+                        <h4>Falta de Caso Base</h4>
+                        <p>Síntoma: Stack overflow error. Solución: Siempre define el caso base PRIMERO.</p>
+                    </div>
+                    <div class="error-card">
+                        <div class="error-icon">⚠️</div>
+                        <h4>No Acercarse al Caso Base</h4>
+                        <p>Síntoma: Recursión infinita. Solución: Verifica que cada llamada modifique los parámetros.</p>
+                    </div>
+                    <div class="error-card">
+                        <div class="error-icon">⚠️</div>
+                        <h4>Múltiples Llamadas Ineficientes</h4>
+                        <p>Síntoma: Muy lento para n grande. Solución: Usa memoización (lección futura).</p>
+                    </div>
+                    <div class="error-card">
+                        <div class="error-icon">⚠️</div>
+                        <h4>Off-by-One Errors</h4>
+                        <p>Síntoma: Resultados incorrectos por 1. Solución: Traza manualmente con valores pequeños.</p>
+                    </div>
+                </div>
+
+                <div class="debug-checklist">
+                    <h3>Checklist de Debugging</h3>
+                    <ul>
+                        <li>¿El caso base retorna el valor correcto?</li>
+                        <li>¿La llamada recursiva usa argumentos modificados?</li>
+                        <li>¿El resultado de la llamada recursiva se usa correctamente?</li>
+                        <li>¿Hay return en el caso recursivo?</li>
+                        <li>¿El control fluye correctamente (no se ejecutan ambos casos)?</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section class="content-section">
+                <h2>Ejercicio de Análisis: Strings Palíndromos</h2>
+                <p>Vamos a analizar este problema paso a paso.</p>
+
+                <div class="problem-box">
+                    <h3>Problema</h3>
+                    <p>Determinar si un string es un palíndromo (se lee igual al derecho y al revés).</p>
+                    <p>Ejemplos: "ana" → true, "hola" → false</p>
+                </div>
+
+                <div class="analysis-grid">
+                    <div class="analysis-column">
+                        <h4>Preguntas de Análisis</h4>
+                        <ol>
+                            <li>¿Cuál es la versión más simple del problema?</li>
+                            <li>¿Cómo comparar primer y último carácter?</li>
+                            <li>¿Qué hacemos con el resto del string?</li>
+                        </ol>
+                    </div>
+                    <div class="analysis-column">
+                        <h4>Respuestas</h4>
+                        <ol>
+                            <li>String vacío o de 1 carácter → siempre es palíndromo</li>
+                            <li>Comparar str[0] con str[str.length-1]</li>
+                            <li>Llamada recursiva con str.slice(1, -1)</li>
+                        </ol>
+                    </div>
+                </div>
+
+                <div class="code-complete">
+                    <pre><code>function esPalindrome(str) {
+    // Caso base: 0 o 1 carácter
+    if (str.length <= 1) {
+        return true;
+    }
+    
+    // Comparar extremos
+    if (str[0] !== str[str.length - 1]) {
+        return false;
+    }
+    
+    // Caso recursivo: verificar substring interno
+    return esPalindrome(str.slice(1, -1));
+}</code></pre>
+                </div>
+            </section>
+
+            <div class="key-takeaways">
+                <h3>Aprendizajes Clave de Esta Lección</h3>
+                <ul>
+                    <li>Usa el <strong>framework de 4 pasos</strong> para cualquier problema recursivo.</li>
+                    <li>El caso base es la condición más simple que resuelves SIN recursión.</li>
+                    <li>El caso recursivo debe <strong>disminuir</strong> el problema hacia el caso base.</li>
+                    <li>Siempre prueba manualmente con casos pequeños antes de codificar.</li>
+                    <li>Piensa en "<strong>un paso a la vez</strong>": resuelve una parte y delega el resto.</li>
+                </ul>
+            </div>
+
+            <div class="navigation">
+                <a href="../index.html" class="nav-btn prev-btn">← Volver al Curso</a>
+                <a href="../exercises/exercises2.html" class="nav-btn next-btn">Ejercicios 2 →</a>
+            </div>
+        </div>
+    </main>
+
+    <script src="../scripts/script.js"></script>
+    <script src="../exercise.js"></script>
+</body>
+</html>

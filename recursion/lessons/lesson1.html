@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Curso de Recursividad - Introducción</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <h2>Curso de Recursividad</h2>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="../index.html" class="nav-link">Inicio</a></li>
+                <li><a href="#" class="nav-link active">Lección 1</a></li>
+                <li><a href="../exercises/exercises1.html" class="nav-link">Ejercicios 1</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="container">
+        <div class="lesson-container">
+            <header class="lesson-header">
+                <h1>Lección 1: El Concepto de Recursividad</h1>
+                <p class="subtitle">Entendiendo la magia de "llamarse a uno mismo"</p>
+                <div class="lesson-meta">
+                    <span class="badge">Nivel Básico</span>
+                    <span class="badge">30 minutos estimados</span>
+                </div>
+            </header>
+
+            <section class="content-section">
+                <h2>¿Qué es la Recursividad?</h2>
+                <div class="definition-box">
+                    <p><strong>Recursividad</strong> es un concepto de programación donde una función se llama a sí misma para resolver un problema,
+                    descomponiéndolo en problemas más pequeños del mismo tipo.</p>
+                </div>
+
+                <div class="analogy-box">
+                    <h3>Analogía: Los Espejos Infinitos</h3>
+                    <p>Imagina que estás entre dos espejos paralelos. Verás tu reflejo, y en ese reflejo verás otro reflejo, y así
+                    infinitamente. Cada reflejo es más pequeño y es una versión del mismo patrón.</p>
+                    <p>Así funciona la recursividad: un problema se resuelve llamándose a sí mismo con una versión más pequeña del problema.</p>
+                </div>
+            </section>
+
+            <section class="content-section">
+                <h2>Los Dos Componentes Esenciales</h2>
+                <div class="components-grid">
+                    <div class="component-card">
+                        <div class="component-icon">🎯</div>
+                        <h3>Caso Base</h3>
+                        <p>Es la condición que detiene la recursividad. Sin un caso base, la función se llamaría infinitamente y causaría un stack overflow.</p>
+                        <div class="code-example">
+                            <pre><code>if (n === 0) {
+    return; // Aquí paramos
+}</code></pre>
+                        </div>
+                    </div>
+                    <div class="component-card">
+                        <div class="component-icon">🔄</div>
+                        <h3>Caso Recursivo</h3>
+                        <p>Es donde la función se llama a sí misma con un argumento modificado que se acerca al caso base.</p>
+                        <div class="code-example">
+                            <pre><code>return factorial(n - 1) * n;</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="content-section">
+                <h2>Ejemplo 1: Contar hacia Atrás</h2>
+                <p>Vamos a crear una función que cuente desde un número hasta 1.</p>
+                
+                <div class="example-walkthrough">
+                    <h3>Análisis del Problema</h3>
+                    <ol class="analysis-steps">
+                        <li><strong>Entrada:</strong> Un número entero positivo (ej: 5)</li>
+                        <li><strong>Salida:</strong> Los números desde ese número hasta 1</li>
+                        <li><strong>Patrón:</strong> Para n=5: 5, 4, 3, 2, 1</li>
+                    </ol>
+
+                    <h3>Preguntas de Análisis</h3>
+                    <div class="questions-box">
+                        <p>¿Cuál es el <strong>caso base</strong>?</p>
+                        <p class="answer">Cuando n sea 1 o menor, solo mostramos ese número y paramos.</p>
+                        
+                        <p>¿Cuál es el <strong>paso recursivo</strong>?</p>
+                        <p class="answer">Mostrar el número actual, luego llamar a la función con (n-1).</p>
+                    </div>
+
+                    <h3>Implementación</h3>
+                    <div class="code-container">
+                        <div class="code-header">
+                            <span>JavaScript</span>
+                        </div>
+                        <pre><code>function contarAtras(n) {
+    // Caso base
+    if (n <= 0) {
+        return;
+    }
+    
+    console.log(n);
+    
+    // Paso recursivo
+    contarAtras(n - 1);
+}
+
+// Ejecución
+contarAtras(5);
+// Salida: 5, 4, 3, 2, 1</code></pre>
+                    </div>
+
+                    <div class="visualization">
+                        <h3>Visualización de la Llamada Recursiva</h3>
+                        <div class="call-stack">
+                            <div class="stack-frame">contarAtras(5) → imprime 5 → contarAtras(4)</div>
+                            <div class="stack-frame">contarAtras(4) → imprime 4 → contarAtras(3)</div>
+                            <div class="stack-frame">contarAtras(3) → imprime 3 → contarAtras(2)</div>
+                            <div class="stack-frame">contarAtras(2) → imprime 2 → contarAtras(1)</div>
+                            <div class="stack-frame highlight">contarAtras(1) → imprime 1 → return (caso base)</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="content-section">
+                <h2>Ejemplo 2: Factorial</h2>
+                <p>El factorial de un número n (representado como n!) es el producto de todos los números enteros positivos desde 1 hasta n.</p>
+                
+                <div class="formula-box">
+                    <p>n! = n × (n-1) × (n-2) × ... × 2 × 1</p>
+                    <p>Ejemplo: 5! = 5 × 4 × 3 × 2 × 1 = 120</p>
+                </div>
+
+                <div class="example-walkthrough">
+                    <h3>Análisis Matemático</h3>
+                    <div class="math-breakdown">
+                        <p>5! = 5 × 4!</p>
+                        <p>4! = 4 × 3!</p>
+                        <p>3! = 3 × 2!</p>
+                        <p>2! = 2 × 1!</p>
+                        <p><strong>1! = 1</strong> ← Caso base</p>
+                    </div>
+
+                    <h3>Implementación</h3>
+                    <div class="code-container">
+                        <div class="code-header">
+                            <span>JavaScript</span>
+                        </div>
+                        <pre><code>function factorial(n) {
+    // Caso base
+    if (n === 1 || n === 0) {
+        return 1;
+    }
+    
+    // Paso recursivo
+    return n * factorial(n - 1);
+}
+
+// Ejemplos
+console.log(factorial(5)); // 120
+console.log(factorial(3)); // 6</code></pre>
+                    </div>
+
+                    <div class="trace-section">
+                        <h3>Seguimiento Paso a Paso: factorial(4)</h3>
+                        <table class="trace-table">
+                            <thead>
+                                <tr>
+                                    <th>Llamada</th>
+                                    <th>n</th>
+                                    <th>Return expression</th>
+                                    <th>Valor retornado</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>factorial(4)</td>
+                                    <td>4</td>
+                                    <td>4 × factorial(3)</td>
+                                    <td class="pending">↳ esperando</td>
+                                </tr>
+                                <tr>
+                                    <td>factorial(3)</td>
+                                    <td>3</td>
+                                    <td>3 × factorial(2)</td>
+                                    <td class="pending">↳ esperando</td>
+                                </tr>
+                                <tr>
+                                    <td>factorial(2)</td>
+                                    <td>2</td>
+                                    <td>2 × factorial(1)</td>
+                                    <td class="pending">↳ esperando</td>
+                                </tr>
+                                <tr>
+                                    <td>factorial(1)</td>
+                                    <td>1</td>
+                                    <td><strong>return 1</strong></td>
+                                    <td class="success">1</td>
+                                </tr>
+                                <tr>
+                                    <td>factorial(2)</td>
+                                    <td>2</td>
+                                    <td>2 × 1</td>
+                                    <td class="success">2</td>
+                                </tr>
+                                <tr>
+                                    <td>factorial(3)</td>
+                                    <td>3</td>
+                                    <td>3 × 2</td>
+                                    <td class="success">6</td>
+                                </tr>
+                                <tr>
+                                    <td>factorial(4)</td>
+                                    <td>4</td>
+                                    <td>4 × 6</td>
+                                    <td class="success">24</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <section class="content-section">
+                <h2>Ejemplo 3: Suma de Números Naturales</h2>
+                <p>Calcular la suma de todos los números desde 1 hasta n.</p>
+                
+                <div class="formula-box">
+                    <p>Suma(1, 2, ..., n) = 1 + 2 + 3 + ... + n</p>
+                    <p>Fórmula directa: n(n+1)/2</p>
+                </div>
+
+                <div class="example-walkthrough">
+                    <h3>Enfoque Recursivo</h3>
+                    <div class="analysis-steps">
+                        <li><strong>Caso base:</strong> Si n = 1, la suma es 1.</li>
+                        <li><strong>Paso recursivo:</strong> suma(n) = n + suma(n-1)</li>
+                    </div>
+
+                    <div class="code-container">
+                        <div class="code-header">
+                            <span>JavaScript</span>
+                        </div>
+                        <pre><code>function sumaNaturales(n) {
+    // Caso base
+    if (n === 1) {
+        return 1;
+    }
+    
+    // Paso recursivo
+    return n + sumaNaturales(n - 1);
+}
+
+// Ejemplos
+console.log(sumaNaturales(5)); // 15 (1+2+3+4+5)
+console.log(sumaNaturales(10)); // 55</code></pre>
+                    </div>
+                </div>
+            </section>
+
+            <section class="content-section">
+                <h2>Ejemplo 4: Serie de Fibonacci</h2>
+                <p>La secuencia de Fibonacci es una serie donde cada número es la suma de los dos anteriores:</p>
+                <p class="formula-inline">0, 1, 1, 2, 3, 5, 8, 13, 21, 34, ...</p>
+                
+                <div class="formula-box">
+                    <p>F(0) = 0</p>
+                    <p>F(1) = 1</p>
+                    <p>F(n) = F(n-1) + F(n-2) para n > 1</p>
+                </div>
+
+                <div class="example-walkthrough">
+                    <h3>Análisis</h3>
+                    <ul class="analysis-steps">
+                        <li><strong>Caso base 1:</strong> Si n = 0, retornar 0</li>
+                        <li><strong>Caso base 2:</strong> Si n = 1, retornar 1</li>
+                        <li><strong>Caso recursivo:</strong> fibonacci(n) = fibonacci(n-1) + fibonacci(n-2)</li>
+                    </ul>
+
+                    <div class="warning-box">
+                        <p><strong>⚠️ Advertencia:</strong> Esta implementación es ineficiente para valores grandes de n debido a cálculos repetidos.
+                        La veremos en lecciones avanzadas.</p>
+                    </div>
+
+                    <div class="code-container">
+                        <div class="code-header">
+                            <span>JavaScript</span>
+                        </div>
+                        <pre><code>function fibonacci(n) {
+    // Caso base 1
+    if (n === 0) {
+        return 0;
+    }
+    // Caso base 2
+    if (n === 1) {
+        return 1;
+    }
+    
+    // Caso recursivo
+    return fibonacci(n - 1) + fibonacci(n - 2);
+}
+
+// Ejemplos
+console.log(fibonacci(0)); // 0
+console.log(fibonacci(1)); // 1
+console.log(fibonacci(6)); // 8
+console.log(fibonacci(10)); // 55</code></pre>
+                    </div>
+
+                    <div class="tree-visualization">
+                        <h3>Árbol de Llamadas: fibonacci(4)</h3>
+                        <pre class="tree-code">                    fib(4)
+                   /        \
+              fib(3)        fib(2)
+             /      \       /     \
+         fib(2)   fib(1)  fib(1)  fib(0)
+        /      \
+    fib(1)   fib(0)</pre>
+                        <p>Nota cómo fib(2) y fib(1) se calculan múltiples veces.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="content-section">
+                <h2>Ejemplo 5: Imprimir en Reversa</h2>
+                <p>Una función que imprime un string en orden inverso usando recursividad.</p>
+
+                <div class="example-walkthrough">
+                    <h3>Análisis</h3>
+                    <div class="analysis-steps">
+                        <li><strong>Entrada:</strong> Un string (ej: "Hola")</li>
+                        <li><strong>Salida:</strong> El string en reversa (ej: "aloH")</li>
+                        <li><strong>Estrategia:</strong> Procesar el último carácter primero, luego el resto</li>
+                    </ol>
+
+                    <h3>Pensamiento Recursivo</h3>
+                    <div class="questions-box">
+                        <p>¿Cómo descomponemos el problema?</p>
+                        <p class="answer">"Hola" → imprimir última letra 'a' + reversa de "Hol"</p>
+                    </div>
+
+                    <div class="code-container">
+                        <div class="code-header">
+                            <span>JavaScript</span>
+                        </div>
+                        <pre><code>function reversa(str) {
+    // Caso base: string vacío o de un carácter
+    if (str.length <= 1) {
+        return str;
+    }
+    
+    // Paso recursivo: último carácter + reversa del resto
+    return str[str.length - 1] + reversa(str.slice(0, -1));
+}
+
+// Ejemplos
+console.log(reversa("Hola"));      // "aloH"
+console.log(reversa("recursión")); // "noisrucer"
+console.log(reversa(""));          // ""</code></pre>
+                    </div>
+
+                    <div class="alternate-solution">
+                        <h3>Solución Alternativa: Usando Índices</h3>
+                        <pre><code>function reversa2(str, indice) {
+    // Si el índice es -1, hemos llegado al inicio
+    if (indice < 0) {
+        return "";
+    }
+    
+    return str[indice] + reversa2(str, indice - 1);
+}
+
+// Llamada: reversa2("Hola", str.length - 1)</code></pre>
+                    </div>
+                </div>
+            </section>
+
+            <div class="key-takeaways">
+                <h3>Aprendizajes Clave de Esta Lección</h3>
+                <ul>
+                    <li>La recursividad es una función que se llama a sí misma.</li>
+                    <li>Siempre debe tener un <strong>caso base</strong> que detenga la recursión.</li>
+                    <li>El paso recursivo debe acercarse al caso base.</li>
+                    <li>Pensar en términos de "divide y vencerás": resolver un problema pequeño del mismo tipo.</li>
+                    <li>La pila de llamadas (call stack) es fundamental para entender cómo funciona.</li>
+                </ul>
+            </div>
+
+            <div class="navigation">
+                <a href="../index.html" class="nav-btn prev-btn">← Volver al Curso</a>
+                <a href="../exercises/exercises1.html" class="nav-btn next-btn">Ejercicios 1 →</a>
+            </div>
+        </div>
+    </main>
+
+    <script src="../scripts/script.js"></script>
+</body>
+</html>

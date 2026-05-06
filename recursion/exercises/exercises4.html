@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicios de Recursividad - Lección 4: Arrays</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="../styles-exercises.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <h2>Curso de Recursividad</h2>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="../index.html" class="nav-link">Inicio</a></li>
+                <li><a href="../lessons/lesson4.html" class="nav-link">Lección 4</a></li>
+                <li><a href="#" class="nav-link active">Ejercicios 4</a></li>
+                <li><a href="../exercises/exercises5.html" class="nav-link">Ejercicios 5</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="container">
+        <div class="exercise-container">
+            <header class="exercise-header">
+                <h1>Ejercicios - Lección 4: Recursión con Arrays</h1>
+                <p class="subtitle">10 problemas para manipular arrays recursivamente</p>
+                <div class="progress-container">
+                    <div class="progress-bar" id="progressBar"></div>
+                </div>
+                <p class="progress-text">Progreso: <span id="progressText">0/10</span></p>
+            </header>
+
+            <div class="exercise-list" id="exerciseList">
+                <!-- Ejercicio 1 -->
+                <div class="exercise-card" data-exercise="1">
+                    <div class="exercise-header-bar">
+                        <span class="exercise-number">Ejercicio 1</span>
+                        <span class="difficulty easy">Fácil</span>
+                    </div>
+                    <h2>Encontrar Máximo en Array</h2>
+                    <p>Escribe <code>maxRec(arr, idx)</code> que retorne el valor máximo del array usando recursión.</p>
+                    <div class="example-io">
+                        <div class="io-box">
+                            <h4>Ejemplo:</h4>
+                            <p><strong>Entrada:</strong> maxRec([5, 2, 9, 1, 7], 0)</p>
+                            <p><strong>Salida:</strong> 9</p>
+                        </div>
+                    </div>
+                    <div class="hint-section">
+                        <button class="hint-toggle" onclick="toggleHint(this)">Mostrar pista</button>
+                        <div class="hint-content">
+                            <p>Caso base: idx == arr.length-1 retorna arr[idx]. Compara arr[idx] con max del resto.</p>
+                        </div>
+                    </div>
+                    <div class="solution-section">
+                        <button class="solution-toggle" onclick="toggleSolution(this)">Mostrar solución</button>
+                        <div class="solution-content">
+                            <pre><code>function maxRec(arr, idx) {
+    // Caso base: último elemento
+    if (idx === arr.length - 1) {
+        return arr[idx];
+    }
+    
+    const maxResto = maxRec(arr, idx + 1);
+    return Math.max(arr[idx], maxResto);
+}
+
+function maxArray(arr) {
+    if (arr.length === 0) return undefined;
+    return maxRec(arr, 0);
+}
+
+// Ejemplos
+console.log(maxArray([5, 2, 9, 1, 7])); // 9
+console.log(maxArray([-1, -5, -3]));    // -1
+console.log(maxArray([42]));            // 42</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ejercicio 2 -->
+                <div class="exercise-card" data-exercise="2">
+                    <div class="exercise-header-bar">
+                        <span class="exercise-number">Ejercicio 2</span>
+                        <span class="difficulty easy">Fácil</span>
+                    </div>
+                    <h2>Encontrar Mínimo en Array</h2>
+                    <p>Crea <code>minRec(arr, idx)</code> para encontrar el valor mínimo.</p>
+                    <div class="example-io">
+                        <div class="io-box">
+                            <h4>Ejemplo:</h4>
+                            <p><strong>Entrada:</strong> minRec([8, 3, 11, 1, 6], 0)</p>
+                            <p><strong>Salida:</strong> 1</p>
+                        </div>
+                    </div>
+                    <div class="hint-section">
+                        <button class="hint-toggle" onclick="toggleHint(this)">Mostrar pista</button>
+                        <div class="hint-content">
+                            <p>Igual que máximo pero con Math.min. Caso base retorna arr[idx].</p>
+                        </div>
+                    </div>
+                    <div class="solution-section">
+                        <button class="solution-toggle" onclick="toggleSolution(this)">Mostrar solución</button>
+                        <div class="solution-content">
+                            <pre><code>function minRec(arr, idx) {
+    if (idx === arr.length - 1) {
+        return arr[idx];
+    }
+    
+    const minResto = minRec(arr, idx + 1);
+    return Math.min(arr[idx], minResto);
+}
+
+function minArray(arr) {
+    if (arr.length === 0) return undefined;
+    return minRec(arr, 0);
+}
+
+// Ejemplos
+console.log(minArray([8, 3, 11, 1, 6])); // 1
+console.log(minArray([-3, -1, -7]));    // -7
+console.log(minArray([99]));            // 99</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ejercicio 3 -->
+                <div class="exercise-card" data-exercise="3">
+                    <div class="exercise-header-bar">
+                        <span class="exercise-number">Ejercicio 3</span>
+                        <span class="difficulty easy">Fácil</span>
+                    </div>
+                    <h2>Suma de Elementos del Array</h2>
+                    <p>Calcula la suma de todos los elementos de un array recursivamente.</p>
+                    <div class="example-io">
+                        <div class="io-box">
+                            <h4>Ejemplo:</h4>
+                            <p><strong>Entrada:</strong> sumaArr([1, 2, 3, 4, 5], 0)</p>
+                            <p><strong>Salida:</strong> 15</p>
+                        </div>
+                    </div>
+                    <div class="hint-section">
+                        <button class="hint-toggle" onclick="toggleHint(this)">Mostrar pista</button>
+                        <div class="hint-content">
+                            <p>Caso base: idx >= length retorna 0. Paso: arr[idx] + sumaArr(idx+1).</p>
+                        </div>
+                    </div>
+                    <div class="solution-section">
+                        <button class="solution-toggle" onclick="toggleSolution(this)">Mostrar solución</button>
+                        <div class="solution-content">
+                            <pre><code>function sumaArr(arr, idx) {
+    if (idx >= arr.length) return 0;
+    return arr[idx] + sumaArr(arr, idx + 1);
+}
+
+function sumarArray(arr) {
+    return sumaArr(arr, 0);
+}
+
+// Ejemplos
+console.log(sumarArray([1, 2, 3, 4, 5])); // 15
+console.log(sumarArray([10, 20, 30]));    // 60
+console.log(sumarArray([]));              // 0</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ejercicio 4 -->
+                <div class="exercise-card" data-exercise="4">
+                    <div class="exercise-header-bar">
+                        <span class="exercise-number">Ejercicio 4</span>
+                        <span class="difficulty easy">Fácil</span>
+                    </div>
+                    <h2>Contar Elementos Mayores que X</h2>
+                    <p>Cuenta cuántos elementos en un array son mayores que un valor dado.</p>
+                    <div class="example-io">
+                        <div class="io-box">
+                            <h4>Ejemplo:</h4>
+                            <p><strong>Entrada:</strong> mayorQue([5, 1, 8, 3, 9], 5, 0)</p>
+                            <p><strong>Salida:</strong> 2</p>
+                        </div>
+                    </div>
+                    <div class="hint-section">
+                        <button class="hint-toggle" onclick="toggleHint(this)">Mostrar pista</button>
+                        <div class="hint-content">
+                            <p>Compara arr[idx] > x, suma 1 si true. Caso base: idx >= length retorna 0.</p>
+                        </div>
+                    </div>
+                    <div class="solution-section">
+                        <button class="solution-toggle" onclick="toggleSolution(this)">Mostrar solución</button>
+                        <div class="solution-content">
+                            <pre><code>function mayorQue(arr, x, idx) {
+    if (idx >= arr.length) return 0;
+    
+    const cuenta = (arr[idx] > x) ? 1 : 0;
+    return cuenta + mayorQue(arr, x, idx + 1);
+}
+
+function mayoresQue(arr, x) {
+    return mayorQue(arr, x, 0);
+}
+
+// Ejemplos
+console.log(mayoresQue([5, 1, 8, 3, 9], 5)); // 2
+console.log(mayoresQue([1, 2, 3], 5));       // 0
+console.log(mayoresQue([10, 20, 30], 15));  // 2</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ejercicio 5 -->
+                <div class="exercise-card" data-exercise="5">
+                    <div class="exercise-header-bar">
+                        <span class="exercise-number">Ejercicio 5</span>
+                        <span class="difficulty easy">Fácil</span>
+                    </div>
+                    <h2>Filtrar Números Pares</h2>
+                    <p>Crea <code>filtrarPares(arr, idx)</code> que retorne array solo con pares.</p>
+                    <div class="example-io">
+                        <div class="io-box">
+                            <h4>Ejemplo:</h4>
+                            <p><strong>Entrada:</strong> filtrarPares([1, 2, 3, 4, 5, 6], 0)</p>
+                            <p><strong>Salida:</strong> [2, 4, 6]</p>
+                        </div>
+                    </div>
+                    <div class="hint-section">
+                        <button class="hint-toggle" onclick="toggleHint(this)">Mostrar pista</button>
+                        <div class="hint-content">
+                            <p>Caso base retorna []. Si arr[idx] es par, inclúyelo con spread operator.</p>
+                        </div>
+                    </div>
+                    <div class="solution-section">
+                        <button class="solution-toggle" onclick="toggleSolution(this)">Mostrar solución</button>
+                        <div class="solution-content">
+                            <pre><code>function filtrarPares(arr, idx) {
+    if (idx >= arr.length) return [];
+    
+    const resto = filtrarPares(arr, idx + 1);
+    
+    if (arr[idx] % 2 === 0) {
+        return [arr[idx], ...resto];
+    } else {
+        return resto;
+    }
+}
+
+function soloPares(arr) {
+    return filtrarPares(arr, 0);
+}
+
+// Ejemplos
+console.log(soloPares([1, 2, 3, 4, 5, 6])); // [2,4,6]
+console.log(soloPares([1, 3, 5]));          // []
+console.log(soloPares([2, 4, 6]));          // [2,4,6]</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ejercicio 6 -->
+                <div class="exercise-card" data-exercise="6">
+                    <div class="exercise-header-bar">
+                        <span class="exercise-number">Ejercicio 6</span>
+                        <span class="difficulty easy">Fácil</span>
+                    </div>
+                    <h2>Concatenar Strings de Array</h2>
+                    <p>Junta todos los strings de un array en un solo string separado por espacios.</p>
+                    <div class="example-io">
+                        <div class="io-box">
+                            <h4>Ejemplo:</h4>
+                            <p><strong>Entrada:</strong> unirStrings(["Hola", "mundo", "JS"], 0)</p>
+                            <p><strong>Salida:</strong> "Hola mundo JS"</p>
+                        </div>
+                    </div>
+                    <div class="hint-section">
+                        <button class="hint-toggle" onclick="toggleHint(this)">Mostrar pista</button>
+                        <div class="hint-content">
+                            <p>Caso base retorna "". Concatena con espacio si hay elementos restantes.</p>
+                        </div>
+                    </div>
+                    <div class="solution-section">
+                        <button class="solution-toggle" onclick="toggleSolution(this)">Mostrar solución</button>
+                        <div class="solution-content">
+                            <pre><code>function unirStrings(arr, idx) {
+    if (idx >= arr.length) return "";
+    
+    const actual = arr[idx];
+    const resto = unirStrings(arr, idx + 1);
+    
+    return resto ? actual + " " + resto : actual;
+}
+
+// Ejemplos
+console.log(unirStrings(["Hola", "mundo", "JS"], 0)); // "Hola mundo JS"
+console.log(unirStrings(["uno"], 0));                 // "uno"
+console.log(unirStrings([], 0));                     // ""</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ejercicio 7 -->
+                <div class="exercise-card" data-exercise="7">
+                    <div class="exercise-header-bar">
+                        <span class="exercise-number">Ejercicio 7</span>
+                        <span class="difficulty easy">Fácil</span>
+                    </div>
+                    <h2>Verificar Todos Positivos</h2>
+                    <p>Verifica si todos los números en un array son positivos (> 0).</p>
+                    <div class="example-io">
+                        <div class="io-box">
+                            <h4>Ejemplo:</h4>
+                            <p><strong>Entrada:</strong> todosPos([1, 5, 3, 8], 0)</p>
+                            <p><strong>Salida:</strong> true</p>
+                        </div>
+                    </div>
+                    <div class="hint-section">
+                        <button class="hint-toggle" onclick="toggleHint(this)">Mostrar pista</button>
+                        <div class="hint-content">
+                            <p>Caso base: fin del array retorna true (ninguno violó condición). Si arr[idx] ≤ 0, retorna false.</p>
+                        </div>
+                    </div>
+                    <div class="solution-section">
+                        <button class="solution-toggle" onclick="toggleSolution(this)">Mostrar solución</button>
+                        <div class="solution-content">
+                            <pre><code>function todosPos(arr, idx) {
+    if (idx >= arr.length) return true;
+    
+    if (arr[idx] <= 0) return false;
+    
+    return todosPos(arr, idx + 1);
+}
+
+function todosPositivos(arr) {
+    return todosPos(arr, 0);
+}
+
+// Ejemplos
+console.log(todosPositivos([1, 5, 3, 8])); // true
+console.log(todosPositivos([1, -2, 3]));   // false
+console.log(todosPositivos([]));           // true</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ejercicio 8 -->
+                <div class="exercise-card" data-exercise="8">
+                    <div class="exercise-header-bar">
+                        <span class="exercise-number">Ejercicio 8</span>
+                        <span class="difficulty medium">Medio</span>
+                    </div>
+                    <h2>Buscar Primer Índice que Cumple Condición</h2>
+                    <p>Encuentra el primer índice donde un elemento cumple una condición (o -1).</p>
+                    <div class="example-io">
+                        <div class="io-box">
+                            <h4>Ejemplo:</h4>
+                            <p><strong>Entrada:</strong> buscarIdx([1, 4, 6, 3, 8], x => x > 5, 0)</p>
+                            <p><strong>Salida:</strong> 2</p>
+                        </div>
+                    </div>
+                    <div class="hint-section">
+                        <button class="hint-toggle" onclick="toggleHint(this)">Mostrar pista</button>
+                        <div class="hint-content">
+                            <p>Si condición(arr[idx]) se cumple, retorna idx. Si no, busca en idx+1. Caso base retorna -1.</p>
+                        </div>
+                    </div>
+                    <div class="solution-section">
+                        <button class="solution-toggle" onclick="toggleSolution(this)">Mostrar solución</button>
+                        <div class="solution-content">
+                            <pre><code>function buscarIdx(arr, cond, idx) {
+    if (idx >= arr.length) return -1;
+    
+    if (cond(arr[idx])) return idx;
+    
+    return buscarIdx(arr, cond, idx + 1);
+}
+
+function buscarIndice(arr, condicion) {
+    return buscarIdx(arr, condicion, 0);
+}
+
+// Ejemplos
+const arr = [1, 4, 6, 3, 8];
+console.log(buscarIndice(arr, x => x > 5));      // 2
+console.log(buscarIndice(arr, x => x === 10));   // -1
+console.log(buscarIndice(arr, x => x < 0));      // -1</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ejercicio 9 -->
+                <div class="exercise-card" data-exercise="9">
+                    <div class="exercise-header-bar">
+                        <span class="exercise-number">Ejercicio 9</span>
+                        <span class="difficulty medium">Medio</span>
+                    </div>
+                    <h2>Calcular Promedio Recursivamente</h2>
+                    <p>Calcula el promedio de un array recursivamente (acumulando suma y conteo).</p>
+                    <div class="example-io">
+                        <div class="io-box">
+                            <h4>Ejemplo:</h4>
+                            <p><strong>Entrada:</strong> promedioRec([2, 4, 6], 0, 0, 0)</p>
+                            <p><strong>Salida:</strong> 4</p>
+                        </div>
+                    </div>
+                    <div class="hint-section">
+                        <button class="hint-toggle" onclick="toggleHint(this)">Mostrar pista</button>
+                        <div class="hint-content">
+                            <p>Parámetros: arr, idx, suma, conteo. Caso base: idx >= length retorna suma/conteo.</p>
+                        </div>
+                    </div>
+                    <div class="solution-section">
+                        <button class="solution-toggle" onclick="toggleSolution(this)">Mostrar solución</button>
+                        <div class="solution-content">
+                            <pre><code>function promedioRec(arr, idx, suma, conteo) {
+    if (idx >= arr.length) {
+        return conteo === 0 ? 0 : suma / conteo;
+    }
+    
+    return promedioRec(arr, idx + 1, suma + arr[idx], conteo + 1);
+}
+
+function promedio(arr) {
+    return promedioRec(arr, 0, 0, 0);
+}
+
+// Ejemplos
+console.log(promedio([2, 4, 6]));     // 4
+console.log(promedio([1, 2, 3, 4])); // 2.5
+console.log(promedio([]));           // 0</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ejercicio 10 -->
+                <div class="exercise-card" data-exercise="10">
+                    <div class="exercise-header-bar">
+                        <span class="exercise-number">Ejercicio 10</span>
+                        <span class="difficulty medium">Medio</span>
+                    </div>
+                    <h2>Aplanar Array (1 Nivel)</h2>
+                    <p>Convierte un array anidado en plano (solo un nivel de profundidad).</p>
+                    <div class="example-io">
+                        <div class="io-box">
+                            <h4>Ejemplo:</h4>
+                            <p><strong>Entrada:</strong> aplanar([1, [2, 3], [4], 5], 0)</p>
+                            <p><strong>Salida:</strong> [1, 2, 3, 4, 5]</p>
+                        </div>
+                    </div>
+                    <div class="hint-section">
+                        <button class="hint-toggle" onclick="toggleHint(this)">Mostrar pista</button>
+                        <div class="hint-content">
+                            <p>Si Array.isArray(arr[idx]), expande con spread operator: [...arr[idx], ...resto].</p>
+                        </div>
+                    </div>
+                    <div class="solution-section">
+                        <button class="solution-toggle" onclick="toggleSolution(this)">Mostrar solución</button>
+                        <div class="solution-content">
+                            <pre><code>function aplanar(arr, idx) {
+    if (idx >= arr.length) return [];
+    
+    const elem = arr[idx];
+    const resto = aplanar(arr, idx + 1);
+    
+    if (Array.isArray(elem)) {
+        return [...elem, ...resto];
+    } else {
+        return [elem, ...resto];
+    }
+}
+
+function plano(arr) {
+    return aplanar(arr, 0);
+}
+
+// Ejemplos
+console.log(plano([1, [2, 3], [4], 5]));          // [1,2,3,4,5]
+console.log(plano([1, 2, [3, [4, 5]], 6]));     // [1,2,3,[4,5],6] (1 nivel)
+console.log(plano([]));                           // []</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="exercise-summary">
+                <h3>Resumen de la Sesión</h3>
+                <div class="summary-stats">
+                    <div class="stat-item">
+                        <span class="stat-label">Total:</span>
+                        <span class="stat-value">10 ejercicios</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Fáciles:</span>
+                        <span class="stat-value">7</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Medios:</span>
+                        <span class="stat-value">3</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="navigation">
+                <a href="../lessons/lesson4.html" class="nav-btn prev-btn">← Volver a la Lección</a>
+                <a href="../exercises/exercises5.html" class="nav-btn next-btn">Ejercicios 5 →</a>
+            </div>
+        </div>
+    </main>
+
+    <script src="../exercise.js"></script>
+</body>
+</html>

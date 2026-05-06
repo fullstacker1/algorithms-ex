@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Curso de Recursividad - Lección 4: Recursión con Arrays</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <h2>Curso de Recursividad</h2>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="../index.html" class="nav-link">Inicio</a></li>
+                <li><a href="lesson1.html" class="nav-link">Lección 1</a></li>
+                <li><a href="lesson2.html" class="nav-link">Lección 2</a></li>
+                <li><a href="lesson3.html" class="nav-link">Lección 3</a></li>
+                <li><a href="#" class="nav-link active">Lección 4</a></li>
+                <li><a href="../exercises/exercises4.html" class="nav-link">Ejercicios 4</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="container">
+        <div class="lesson-container">
+            <header class="lesson-header">
+                <h1>Lección 4: Recursión con Arrays</h1>
+                <p class="subtitle">Procesando secuencias de datos de forma recursiva</p>
+                <div class="lesson-meta">
+                    <span class="badge">Nivel Intermedio</span>
+                    <span class="badge">50 minutos estimados</span>
+                </div>
+            </header>
+
+            <section class="content-section">
+                <h2>¿Por qué Recursión con Arrays?</h2>
+                <div class="definition-box">
+                    <p>Los arrays (arreglos) son estructuras lineales perfectas para la recursión. Al igual que con los strings, podemos procesar un array mirando el <strong>primer elemento</strong> y luego <strong>recursivamente procesando el resto</strong>.</p>
+                </div>
+                <div class="analogy-box">
+                    <h3>Analogía: La Línea de Producción</h3>
+                    <p>Imagina una línea de ensamblaje donde cada trabajador toma un producto, le hace una operación, y pasa el resto de la línea al siguiente trabajador. El primer trabajador ve el elemento 0 y pasa la fila sin ese elemento. El último trabajador recibe una fila vacía y simplemente devuelve el resultado final.</p>
+                </div>
+            </section>
+
+            <section class="content-section">
+                <h2>Estrategia General</h2>
+                <div class="framework-box">
+                    <h3>El Patrón de Índice</h3>
+                    <p>La forma más común de recursión con arrays usa un <strong>parámetro índice</strong> que nos dice qué posición estamos procesando:</p>
+                    <ol class="framework-steps">
+                        <li><strong>Caso base:</strong> Cuando el índice llega al final del array (índice >= array.length)</li>
+                        <li><strong>Caso recursivo:</strong> Procesamos el elemento en el índice actual, luego llamamos recursivamente con índice + 1</li>
+                        <li><strong>Combinación:</strong> Combinamos el resultado del elemento actual con el resultado del resto del array</li>
+                    </ol>
+                </div>
+            </section>
+
+            <section class="content-section">
+                <h2>Ejemplo 1: Encontrar el Máximo</h2>
+                <p>Dado un array de números, encontrar el valor máximo usando recursión.</p>
+                
+                <div class="code-container">
+                    <div class="code-header">JavaScript - Máximo Recursivo</div>
+                    <pre><code>function encontrarMaximo(arr, indice = 0) {
+    // Caso base: si llegamos al final, devolvemos -Infinity
+    if (indice === arr.length) {
+        return -Infinity;
+    }
+    
+    // Caso recursivo: máximo entre elemento actual y el máximo del resto
+    const maxDelResto = encontrarMaximo(arr, indice + 1);
+    return Math.max(arr[indice], maxDelResto);
+}
+
+// Ejemplo: encontrarMaximo([3, 7, 2, 9, 1])
+// - Comparar 3 con max([7,2,9,1]) = 9 → resultado: 9
+// - Comparar 7 con max([2,9,1]) = 9 → resultado: 9
+// - Comparar 2 con max([9,1]) = 9 → resultado: 9
+// - Comparar 9 con max([1]) = 1 → resultado: 9
+// - Comparar 1 con max([]) = -Infinity → resultado: 1
+// Resultado final: 9</code></pre>
+                </div>
+
+                <div class="example-walkthrough">
+                    <h3>Visualización de la Recursión</h3>
+                    <div class="call-stack">
+                        <div class="stack-frame highlight">encontrarMaximo([3,7,2,9,1], 0) = max(3, 9) = 9</div>
+                        <div class="stack-frame">encontrarMaximo([7,2,9,1], 1) = max(7, 9) = 9</div>
+                        <div class="stack-frame">encontrarMaximo([2,9,1], 2) = max(2, 9) = 9</div>
+                        <div class="stack-frame">encontrarMaximo([9,1], 3) = max(9, 1) = 9</div>
+                        <div class="stack-frame">encontrarMaximo([1], 4) = max(1, -∞) = 1</div>
+                        <div class="stack-frame">encontrarMaximo([], 5) = -∞</div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="content-section">
+                <h2>Ejemplo 2: Suma de Elementos</h2>
+                <p>Calcular la suma de todos los elementos en un array.</p>
+                
+                <div class="code-container">
+                    <div class="code-header">JavaScript - Suma Recursiva</div>
+                    <pre><code>function sumaArray(arr, indice = 0) {
+    // Caso base: array vacío o fin del array
+    if (indice === arr.length) {
+        return 0;
+    }
+    
+    // Caso recursivo: elemento actual + suma del resto
+    return arr[indice] + sumaArray(arr, indice + 1);
+}
+
+// Ejemplo: sumaArray([1, 2, 3, 4])
+// 1 + sumaArray([2,3,4], 1)
+// 1 + 2 + sumaArray([3,4], 2)
+// 1 + 2 + 3 + sumaArray([4], 3)
+// 1 + 2 + 3 + 4 + sumaArray([], 4)
+// 1 + 2 + 3 + 4 + 0 = 10</code></pre>
+                </div>
+            </section>
+
+            <section class="content-section">
+                <h2>Ejemplo 3: Invertir Array</h2>
+                <p>Devolver un nuevo array con los elementos en orden inverso.</p>
+                
+                <div class="code-container">
+                    <div class="code-header">JavaScript - Invertir Array Recursivo</div>
+                    <pre><code>function invertirArray(arr) {
+    // Caso base: array vacío o un solo elemento
+    if (arr.length <= 1) {
+        return arr;
+    }
+    
+    // Caso recursivo: último elemento + invertir el resto (sin último)
+    const ultimo = arr[arr.length - 1];
+    const resto = arr.slice(0, -1);
+    return [ultimo].concat(invertirArray(resto));
+}
+
+// Variante usando índices (más eficiente):
+function invertirArrayIndice(arr, inicio = 0, fin = arr.length - 1) {
+    if (inicio >= fin) {
+        return arr.slice(); // Devolver copia
+    }
+    
+    const resultado = arr.slice();
+    [resultado[inicio], resultado[fin]] = [resultado[fin], resultado[inicio]];
+    
+    // Invertir el interior recursivamente
+    invertirArrayIndice(resultado, inicio + 1, fin - 1);
+    return resultado;
+}
+
+// Ejemplo: invertirArray([1, 2, 3, 4])
+// [4] + invertirArray([1,2,3])
+// [4] + [3] + invertirArray([1,2])
+// [4] + [3] + [2] + invertirArray([1])
+// [4] + [3] + [2] + [1]
+// Resultado: [4, 3, 2, 1]</code></pre>
+                </div>
+            </section>
+
+            <section class="content-section">
+                <h2>Ejemplo 4: Filtrar Elementos</h2>
+                <p>Devolver un nuevo array con solo los elementos que cumplen una condición.</p>
+                
+                <div class="code-container">
+                    <div class="code-header">JavaScript - Filtrar Recursivo</div>
+                    <pre><code>function filtrarArray(arr, condicion, indice = 0) {
+    // Caso base: fin del array
+    if (indice === arr.length) {
+        return [];
+    }
+    
+    // Caso recursivo: procesar elemento actual
+    const restoFiltrado = filtrarArray(arr, condicion, indice + 1);
+    
+    if (condicion(arr[indice])) {
+        return [arr[indice]].concat(restoFiltrado);
+    } else {
+        return restoFiltrado;
+    }
+}
+
+// Ejemplo: filtrar pares
+const esPar = n => n % 2 === 0;
+filtrarArray([1, 2, 3, 4, 5, 6], esPar);
+// esPar(1)? no → filtrarArray([2,3,4,5,6], 1)
+// esPar(2)? sí → [2] + filtrarArray([3,4,5,6], 2)
+// esPar(3)? no → [2] + filtrarArray([4,5,6], 3)
+// esPar(4)? sí → [2] + [4] + filtrarArray([5,6], 4)
+// esPar(5)? no → [2,4] + filtrarArray([6], 5)
+// esPar(6)? sí → [2,4] + [6] + filtrarArray([], 6)
+// Resultado: [2, 4, 6]</code></pre>
+                </div>
+            </section>
+
+            <section class="content-section">
+                <h2>Ejemplo 5: Contar Ocurrencias</h2>
+                <p>Contar cuántas veces aparece un valor específico en un array.</p>
+                
+                <div class="code-container">
+                    <div class="code-header">JavaScript - Contar Ocurrencias Recursivo</div>
+                    <pre><code>function contarOcurrencias(arr, valor, indice = 0) {
+    // Caso base: fin del array
+    if (indice === arr.length) {
+        return 0;
+    }
+    
+    // Caso recursivo: contar actual + contar en el resto
+    const coincidenciaActual = (arr[indice] === valor) ? 1 : 0;
+    return coincidenciaActual + contarOcurrencias(arr, valor, indice + 1);
+}
+
+// Ejemplo: contarOcurrencias([1, 2, 3, 2, 4, 2], 2)
+// (1==2?0:1) + contarOcurrencias([2,3,2,4,2], 2, 1)
+// 0 + (2==2?1:1) + contarOcurrencias([3,2,4,2], 2, 2)
+// 0 + 1 + (3==2?0:1) + contarOcurrencias([2,4,2], 2, 3)
+// 0 + 1 + 0 + (2==2?1:1) + contarOcurrencias([4,2], 2, 4)
+// 0 + 1 + 0 + 1 + (4==2?0:1) + contarOcurrencias([2], 2, 5)
+// 0 + 1 + 0 + 1 + 0 + (2==2?1:1) + contarOcurrencias([], 2, 6)
+// 0 + 1 + 0 + 1 + 0 + 1 + 0 = 3</code></pre>
+                </div>
+            </section>
+
+            <section class="content-section">
+                <h2>Estrategia con Slice vs Índices</h2>
+                <div class="alternate-solution">
+                    <h3>Diferencias Importantes</h3>
+                    <p><strong>Usando slice/array.slice():</strong> Crea un nuevo array en cada llamada. Más intuitivo pero menos eficiente en memoria (O(n²) en espacio debido a copias).</p>
+                    <p><strong>Usando índice:</strong> No crea copias del array. Más eficiente (O(n) en tiempo, O(n) en pila). <em>Recomendado para arrays grandes.</em></p>
+                </div>
+            </section>
+
+            <section class="content-section">
+                <h2>Análisis de Complejidad</h2>
+                <div class="trace-section">
+                    <table class="trace-table">
+                        <thead>
+                            <tr>
+                                <th>Operación</th>
+                                <th>Complejidad Temporal</th>
+                                <th>Complejidad Espacial</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Con índice (eficiente)</td>
+                                <td class="success">O(n)</td>
+                                <td class="success">O(n) - pila</td>
+                            </tr>
+                            <tr>
+                                <td>Con slice (copias)</td>
+                                <td class="success">O(n)</td>
+                                <td class="pending">O(n²) - copias + pila</td>
+                            </tr>
+                            <tr>
+                                <td>Iterativo (comparación)</td>
+                                <td class="success">O(n)</td>
+                                <td class="success">O(1) - constante</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section class="content-section">
+                <h2>Preguntas de Reflexión</h2>
+                <div class="questions-box">
+                    <p>¿Por qué usamos <code>-Infinity</code> como caso base en encontrarMáximo?</p>
+                    <p class="answer">Porque cualquier número comparado con -Infinity será mayor, asegurando que el primer elemento válido se convierta en el máximo inicial.</p>
+                </div>
+                <div class="questions-box">
+                    <p>¿Qué pasa si el array está vacío en <code>encontrarMaximo</code>?</p>
+                    <p class="answer">Devuelve -Infinity. En la práctica, podrías querer lanzar un error o devolver undefined/null en vez de -Infinity.</p>
+                </div>
+                <div class="questions-box">
+                    <p>¿Por qué la versión con índices es más eficiente en espacio que usar <code>slice</code>?</p>
+                    <p class="answer">Porque <code>slice</code> crea una copia del array en cada llamada recursiva. Con n elementos, se crean n copias parciales, resultando en O(n²) espacio total. Con índices, solo pasamos referencias y un número, usando solo O(n) espacio en la pila.</p>
+                </div>
+                <div class="questions-box">
+                    <p>¿Podríamos procesar arrays bidimensionales con este enfoque?</p>
+                    <p class="answer">Sí, usando recursión anidada: un nivel para filas y otro para columnas. Útil para problemas como búsqueda en matrices o backtracking en grids.</p>
+                </div>
+            </section>
+
+            <div class="key-takeaways">
+                <h3>💡 Aprendizajes Clave</h3>
+                <ul>
+                    <li>Los arrays se pueden procesar recursivamente usando un índice que avanza hacia el final</li>
+                    <li>El caso base típico es cuando el índice alcanza la longitud del array</li>
+                    <li>Usar índices es más eficiente que slice para arrays grandes</li>
+                    <li>La recursión con arrays sigue el mismo patrón: procesar elemento actual + recursión sobre el resto</li>
+                </ul>
+            </div>
+
+            <div class="navigation">
+                <a href="lesson3.html" class="nav-btn">← Lección Anterior</a>
+                <a href="../exercises/exercises4.html" class="nav-btn">Ejercicios 4 →</a>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Toggle simple para cualquier expansión futura
+        function toggleContent(btn) {
+            const content = btn.nextElementSibling;
+            content.classList.toggle('show');
+            btn.textContent = content.classList.contains('show') ? 'Ocultar' : 'Mostrar';
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicios de Recursividad - Lección 6: Backtracking</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="../styles-exercises.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <h2>Curso de Recursividad</h2>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="../index.html" class="nav-link">Inicio</a></li>
+                <li><a href="../lessons/lesson6.html" class="nav-link">Lección 6</a></li>
+                <li><a href="#" class="nav-link active">Ejercicios 6</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="container">
+        <div class="exercise-container">
+            <header class="exercise-header">
+                <h1>Ejercicios - Lección 6: Backtracking</h1>
+                <p class="subtitle">10 problemas de exploración y retroceso</p>
+                <div class="progress-container">
+                    <div class="progress-bar" id="progressBar"></div>
+                </div>
+                <p class="progress-text">Progreso: <span id="progressText">0/10</span></p>
+            </header>
+
+            <div class="exercise-list" id="exerciseList">
+                <!-- Ejercicio 1 -->
+                <div class="exercise-card" data-exercise="1">
+                    <div class="exercise-header-bar">
+                        <span class="exercise-number">Ejercicio 1</span>
+                        <span class="difficulty medium">Medio</span>
+                    </div>
+                    <h2>Generar Todos los Subsets</h2>
+                    <p>Genera todos los subconjuntos (power set) de un array dado.</p>
+                    <div class="example-io">
+                        <div class="io-box">
+                            <h4>Ejemplo:</h4>
+                            <p><strong>Entrada:</strong> subsets([1,2,3])</p>
+                            <p><strong>Salida:</strong> [[],[1],[2],[3],[1,2],[1,3],[2,3],[1,2,3]]</p>
+                        </div>
+                    </div>
+                    <div class="hint-section">
+                        <button class="hint-toggle" onclick="toggleHint(this)">Mostrar pista</button>
+                        <div class="hint-content">
+                            <p>Para cada elemento, dos opciones: incluirlo o no. Usa backtracking: explora ambas ramas.</p>
+                        </div>
+                    </div>
+                    <div class="solution-section">
+                        <button class="solution-toggle" onclick="toggleSolution(this)">Mostrar solución</button>
+                        <div class="solution-content">
+                            <pre><code>function subsets(arr, idx, actual, resultado) {
+    // Caso base: llegamos al final
+    if (idx === arr.length) {
+        resultado.push([...actual]);
+        return;
+    }
+    
+    // Opción 1: NO incluir arr[idx]
+    subsets(arr, idx + 1, actual, resultado);
+    
+    // Opción 2: SÍ incluir arr[idx]
+    actual.push(arr[idx]);
+    subsets(arr, idx + 1, actual, resultado);
+    actual.pop(); // backtrack
+}
+
+function generarSubsets(arr) {
+    const resultado = [];
+    subsets(arr, 0, [], resultado);
+    return resultado;
+}
+
+// Ejemplos
+console.log(generarSubsets([1,2,3]));
+// [[],[3],[2],[2,3],[1],[1,3],[1,2],[1,2,3]] (orden variable)</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ejercicio 2 -->
+                <div class="exercise-card" data-exercise="2">
+                    <div class="exercise-header-bar">
+                        <span class="exercise-number">Ejercicio 2</span>
+                        <span class="difficulty medium">Medio</span>
+                    </div>
+                    <h2>Permutaciones de un Array</h2>
+                    <p>Genera todas las permutaciones posibles de los elementos de un array.</p>
+                    <div class="example-io">
+                        <div class="io-box">
+                            <h4>Ejemplo:</h4>
+                            <p><strong>Entrada:</strong> permutaciones([1,2,3])</p>
+                            <p><strong>Salida:</strong> [[1,2,3],[1,3,2],[2,1,3],[2,3,1],[3,1,2],[3,2,1]]</p>
+                        </div>
+                    </div>
+                    <div class="hint-section">
+                        <button class="hint-toggle" onclick="toggleHint(this)">Mostrar pista</button>
+                        <div class="hint-content">
+                            <p>Intercambia cada elemento con cada posición. Para i desde idx hasta final: swap, recursion, swap back.</p>
+                        </div>
+                    </div>
+                    <div class="solution-section">
+                        <button class="solution-toggle" onclick="toggleSolution(this)">Mostrar solución</button>
+                        <div class="solution-content">
+                            <pre><code>function permutaciones(arr, idx, resultado) {
+    // Caso base
+    if (idx === arr.length) {
+        resultado.push([...arr]);
+        return;
+    }
+    
+    for (let i = idx; i < arr.length; i++) {
+        // Intercambiar
+        [arr[idx], arr[i]] = [arr[i], arr[idx]];
+        
+        // Recursión
+        permutaciones(arr, idx + 1, resultado);
+        
+        // Backtrack: deshacer intercambio
+        [arr[idx], arr[i]] = [arr[i], arr[idx]];
+    }
+}
+
+function getPermutaciones(arr) {
+    const resultado = [];
+    permutaciones(arr, 0, resultado);
+    return resultado;
+}
+
+// Ejemplos
+console.log(getPermutaciones([1,2,3]));
+// [[1,2,3],[1,3,2],[2,1,3],[2,3,1],[3,2,1],[3,1,2]]</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ejercicio 3 -->
+                <div class="exercise-card" data-exercise="3">
+                    <div class="exercise-header-bar">
+                        <span class="exercise-number">Ejercicio 3</span>
+                        <span class="difficulty medium">Medio</span>
+                    </div>
+                    <h2>Combinaciones de k Elementos</h2>
+                    <p>Genera todas las combinaciones de k elementos de un array (sin repetición, orden no importa).</p>
+                    <div class="example-io">
+                        <div class="io-box">
+                            <h4>Ejemplo:</h4>
+                            <p><strong>Entrada:</strong> combinaciones([1,2,3,4], 2)</p>
+                            <p><strong>Salida:</strong> [[1,2],[1,3],[1,4],[2,3],[2,4],[3,4]]</p>
+                        </div>
+                    </div>
+                    <div class="hint-section">
+                        <button class="hint-toggle" onclick="toggleHint(this)">Mostrar pista</button>
+                        <div class="hint-content">
+                            <p>Similar a subsets pero solo agregar combinaciones cuando actual.length === k.</p>
+                        </div>
+                    </div>
+                    <div class="solution-section">
+                        <button class="solution-toggle" onclick="toggleSolution(this)">Mostrar solución</button>
+                        <div class="solution-content">
+                            <pre><code>function combinaciones(arr, k, idx, actual, resultado) {
+    // Caso base: combinación de tamaño k
+    if (actual.length === k) {
+        resultado.push([...actual]);
+        return;
+    }
+    
+    // Si no quedan suficientes elementos, salir
+    if (idx >= arr.length) return;
+    
+    // Opción 1: incluir arr[idx]
+    actual.push(arr[idx]);
+    combinaciones(arr, k, idx + 1, actual, resultado);
+    actual.pop(); // backtrack
+    
+    // Opción 2: no incluir arr[idx]
+    combinaciones(arr, k, idx + 1, actual, resultado);
+}
+
+function getCombinaciones(arr, k) {
+    const resultado = [];
+    combinaciones(arr, k, 0, [], resultado);
+    return resultado;
+}
+
+// Ejemplos
+console.log(getCombinaciones([1,2,3,4], 2));
+// [[1,2],[1,3],[1,4],[2,3],[2,4],[3,4]]</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ejercicio 4 -->
+                <div class="exercise-card" data-exercise="4">
+                    <div class="exercise-header-bar">
+                        <span class="exercise-number">Ejercicio 4</span>
+                        <span class="difficulty hard">Difícil</span>
+                    </div>
+                    <h2>Generar Paréntesis Válidos</h2>
+                    <p>Genera todas las combinaciones de n pares de paréntesis bien formados.</p>
+                    <div class="example-io">
+                        <div class="io-box">
+                            <h4>Ejemplo:</h4>
+                            <p><strong>Entrada:</strong> generarParentesis(3)</p>
+                            <p><strong>Salida:</strong> ["((()))","(()())","(())()","()(())","()()()"]</p>
+                        </div>
+                    </div>
+                    <div class="hint-section">
+                        <button class="hint-toggle" onclick="toggleHint(this)">Mostrar pista</button>
+                        <div class="hint-content">
+                            <p>Lleva contadores de abiertos y cerrados. Puedes abrir si abiertos < n. Puedes cerrar si cerrados < abiertos.</p>
+                        </div>
+                    </div>
+                    <div class="solution-section">
+                        <button class="solution-toggle" onclick="toggleSolution(this)">Mostrar solución</button>
+                        <div class="solution-content">
+                            <pre><code>function generarParentesis(n, abiertos, cerrados, actual, resultado) {
+    // Caso base: cadena completa
+    if (actual.length === n * 2) {
+        resultado.push(actual);
+        return;
+    }
+    
+    // Puedo abrir si hay abiertos disponibles
+    if (abiertos < n) {
+        generarParentesis(n, abiertos + 1, cerrados, actual + '(', resultado);
+    }
+    
+    // Puedo cerrar si hay más abiertos que cerrados
+    if (cerrados < abiertos) {
+        generarParentesis(n, abiertos, cerrados + 1, actual + ')', resultado);
+    }
+}
+
+function parentesisValidos(n) {
+    const resultado = [];
+    generarParentesis(n, 0, 0, '', resultado);
+    return resultado;
+}
+
+// Ejemplos
+console.log(parentesisValidos(3));
+// ["((()))","(()())","(())()","()(())","()()()"]
+console.log(parentesisValidos(2));
+// ["(())","()()"]</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ejercicio 5 -->
+                <div class="exercise-card" data-exercise="5">
+                    <div class="exercise-header-bar">
+                        <span class="exercise-number">Ejercicio 5</span>
+                        <span class="difficulty hard">Difícil</span>
+                    </div>
+                    <h2>Combinación de Suma (Target Sum)</h2>
+                    <p>Encuentra todas las combinaciones de números que sumen exactamente un target.</p>
+                    <div class="example-io">
+                        <div class="io-box">
+                            <h4>Ejemplo:</h4>
+                            <p><strong>Entrada:</strong> comboSum([2,3,6,7], 7)</p>
+                            <p><strong>Salida:</strong> [[7],[2,2,3]]</p>
+                        </div>
+                    </div>
+                    <div class="hint-section">
+                        <button class="hint-toggle" onclick="toggleHint(this)">Mostrar pista</button>
+                        <div class="hint-content">
+                            <p>Puedes usar cada número múltiples veces. Backtrack: intenta con cada candidato, resta del target, recursión.</p>
+                        </div>
+                    </div>
+                    <div class="solution-section">
+                        <button class="solution-toggle" onclick="toggleSolution(this)">Mostrar solución</button>
+                        <div class="solution-content">
+                            <pre><code>function comboSum(candidatos, target, idx, actual, suma, resultado) {
+    // Caso base: suma alcanzada
+    if (suma === target) {
+        resultado.push([...actual]);
+        return;
+    }
+    
+    // Si suma excede target
+    if (suma > target || idx >= candidatos.length) {
+        return;
+    }
+    
+    // Opción 1: incluir candidato actual (puedes usarlo múltiples veces)
+    actual.push(candidatos[idx]);
+    comboSum(candidatos, target, idx, actual, suma + candidatos[idx], resultado);
+    actual.pop();
+    
+    // Opción 2: no incluir, pasar al siguiente
+    comboSum(candidatos, target, idx + 1, actual, suma, resultado);
+}
+
+function combinationSum(arr, target) {
+    const resultado = [];
+    comboSum(arr, target, 0, [], 0, resultado);
+    return resultado;
+}
+
+// Ejemplos
+console.log(combinationSum([2,3,6,7], 7)); // [[2,2,3],[7]]
+console.log(combinationSum([2,3,5], 8));  // [[2,2,2,2],[2,3,3],[3,5]]</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ejercicio 6 -->
+                <div class="exercise-card" data-exercise="6">
+                    <div class="exercise-header-bar">
+                        <span class="exercise-number">Ejercicio 6</span>
+                        <span class="difficulty hard">Difícil</span>
+                    </div>
+                    <h2>Combinaciones de Teléfono</h2>
+                    <p>Dado un string de dígitos (2-9), retorna todas las combinaciones de letras posibles.</p>
+                    <div class="example-io">
+                        <div class="io-box">
+                            <h4>Ejemplo:</h4>
+                            <p><strong>Entrada:</strong> letterCombinations("23")</p>
+                            <p><strong>Salida:</strong> ["ad","ae","af","bd","be","bf","cd","ce","cf"]</p>
+                        </div>
+                    </div>
+                    <div class="hint-section">
+                        <button class="hint-toggle" onclick="toggleHint(this)">Mostrar pista</button>
+                        <div class="hint-content">
+                            <p>Mapea cada dígito a letras. Para cada dígito, itera sobre sus letras y recursiona al siguiente dígito.</p>
+                        </div>
+                    </div>
+                    <div class="solution-section">
+                        <button class="solution-toggle" onclick="toggleSolution(this)">Mostrar solución</button>
+                        <div class="solution-content">
+                            <pre><code>const teclado = {
+    '2': 'abc', '3': 'def', '4': 'ghi', '5': 'jkl',
+    '6': 'mno', '7': 'pqrs', '8': 'tuv', '9': 'wxyz'
+};
+
+function letterCombinations(digitos, idx, actual, resultado) {
+    // Caso base: procesamos todos los dígitos
+    if (idx === digitos.length) {
+        resultado.push(actual);
+        return;
+    }
+    
+    const letras = teclado[digitos[idx]];
+    
+    for (let i = 0; i < letras.length; i++) {
+        // Incluir letra actual
+        letterCombinations(digitos, idx + 1, actual + letras[i], resultado);
+    }
+}
+
+function combinacionesTelefono(digitos) {
+    if (digitos.length === 0) return [];
+    
+    const resultado = [];
+    letterCombinations(digitos, 0, '', resultado);
+    return resultado;
+}
+
+// Ejemplos
+console.log(combinacionesTelefono("23"));
+// ["ad","ae","af","bd","be","bf","cd","ce","cf"]
+console.log(combinacionesTelefono("2"));
+// ["a","b","c"]</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ejercicio 7 -->
+                <div class="exercise-card" data-exercise="7">
+                    <div class="exercise-header-bar">
+                        <span class="exercise-number">Ejercicio 7</span>
+                        <span class="difficulty hard">Difícil</span>
+                    </div>
+                    <h2>Problema de las N Reinas (Verificación)</h2>
+                    <p>Dado un tablero NxN con reinas colocadas, verifica si es una solución válida.</p>
+                    <div class="example-io">
+                        <div class="io-box">
+                            <h4>Ejemplo:</h4>
+                            <p><strong>Entrada:</strong> esValido([[1,0,0],[0,1,0],[0,0,1]])</p>
+                            <p><strong>Salida:</strong> true (diagonales también)</p>
+                        </div>
+                    </div>
+                    <div class="hint-section">
+                        <button class="hint-toggle" onclick="toggleHint(this)">Mostrar pista</button>
+                        <div class="hint-content">
+                            <p>Verifica que no haya dos reinas en misma fila, columna o diagonal (fila-columna iguales en valor absoluto).</p>
+                        </div>
+                    </div>
+                    <div class="solution-section">
+                        <button class="solution-toggle" onclick="toggleSolution(this)">Mostrar solución</button>
+                        <div class="solution-content">
+                            <pre><code>function esValido(tablero) {
+    const n = tablero.length;
+    const reinas = [];
+    
+    // Extraer posiciones de reinas
+    for (let i = 0; i < n; i++) {
+        for (let j = 0; j < n; j++) {
+            if (tablero[i][j] === 1) {
+                reinas.push([i, j]);
+            }
+        }
+    }
+    
+    // Verificar conflictos
+    for (let i = 0; i < reinas.length; i++) {
+        for (let j = i + 1; j < reinas.length; j++) {
+            const [f1, c1] = reinas[i];
+            const [f2, c2] = reinas[j];
+            
+            // Misma fila o columna
+            if (f1 === f2 || c1 === c2) return false;
+            
+            // Misma diagonal
+            if (Math.abs(f1 - f2) === Math.abs(c1 - c2)) return false;
+        }
+    }
+    
+    return true;
+}
+
+// Alternativa recursiva para verificación
+function esValidoRec(tablero, fila, columnasUsadas, diag1Usadas, diag2Usadas) {
+    if (fila === tablero.length) return true;
+    
+    for (let col = 0; col < tablero.length; col++) {
+        if (tablero[fila][col] === 1) {
+            const d1 = fila - col;  // diagonal \
+            const d2 = fila + col;  // diagonal /
+            
+            if (columnasUsadas.has(col) || diag1Usadas.has(d1) || diag2Usadas.has(d2)) {
+                return false;
+            }
+            
+            columnasUsadas.add(col);
+            diag1Usadas.add(d1);
+            diag2Usadas.add(d2);
+            
+            if (!esValidoRec(tablero, fila + 1, columnasUsadas, diag1Usadas, diag2Usadas)) {
+                return false;
+            }
+            
+            // backtrack
+            columnasUsadas.delete(col);
+            diag1Usadas.delete(d1);
+            diag2Usadas.delete(d2);
+        }
+    }
+    
+    return true;
+}
+
+// Ejemplos
+const tablero1 = [
+    [1,0,0],
+    [0,1,0],
+    [0,0,1]
+];
+console.log(esValido(tablero1)); // true
+
+const tablero2 = [
+    [1,0,0],
+    [0,0,1],
+    [0,1,0]
+];
+console.log(esValido(tablero2)); // true también?</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ejercicio 8 -->
+                <div class="exercise-card" data-exercise="8">
+                    <div class="exercise-header-bar">
+                        <span class="exercise-number">Ejercicio 8</span>
+                        <span class="difficulty hard">Difícil</span>
+                    </div>
+                    <h2>Suma de Subconjuntos (Todos los que Suman)</h2>
+                    <p>Encuentra TODOS los subconjuntos que sumen exactamente un target.</p>
+                    <div class="example-io">
+                        <div class="io-box">
+                            <h4>Ejemplo:</h4>
+                            <p><strong>Entrada:</strong> subsetSumAll([2,5,3], 8, 0, [], [])</p>
+                            <p><strong>Salida:</strong> [[3,5]]</p>
+                        </div>
+                    </div>
+                    <div class="hint-section">
+                        <button class="hint-toggle" onclick="toggleHint(this)">Mostrar pista</button>
+                        <div class="hint-content">
+                            <p>Similar al Ejercicio 9 anterior, pero en lugar de retornar booleano, guarda cada combinación que suma target.</p>
+                        </div>
+                    </div>
+                    <div class="solution-section">
+                        <button class="solution-toggle" onclick="toggleSolution(this)">Mostrar solución</button>
+                        <div class="solution-content">
+                            <pre><code>function subsetSumAll(arr, target, idx, actual, resultado) {
+    // Caso base
+    if (target === 0) {
+        resultado.push([...actual]);
+        return;
+    }
+    
+    if (idx >= arr.length || target < 0) return;
+    
+    // Incluir arr[idx]
+    actual.push(arr[idx]);
+    subsetSumAll(arr, target - arr[idx], idx + 1, actual, resultado);
+    actual.pop();
+    
+    // Excluir arr[idx]
+    subsetSumAll(arr, target, idx + 1, actual, resultado);
+}
+
+function todosLosSubsets(arr, target) {
+    const resultado = [];
+    subsetSumAll(arr, target, 0, [], resultado);
+    return resultado;
+}
+
+// Ejemplos
+console.log(todosLosSubsets([2,5,3], 8)); // [[3,5]] (o [[5,3]])
+console.log(todosLosSubsets([1,2,3,4], 5));
+// [[1,4],[2,3]] (diferentes órdenes)</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ejercicio 9 -->
+                <div class="exercise-card" data-exercise="9">
+                    <div class="exercise-header-bar">
+                        <span class="exercise-number">Ejercicio 9</span>
+                        <span class="difficulty medium">Medio</span>
+                    </div>
+                    <h2>Laberinto Simple</h2>
+                    <p>Determina si existe un camino de (0,0) a (N-1,M-1) en una grilla donde 0=libre, 1=muro.</p>
+                    <div class="example-io">
+                        <div class="io-box">
+                            <h4>Ejemplo:</h4>
+                            <p><strong>Entrada:</strong> laberinto([[0,0,1],[0,0,0],[1,0,0]], 0, 0)</p>
+                            <p><strong>Salida:</strong> true</p>
+                        </div>
+                    </div>
+                    <div class="hint-section">
+                        <button class="hint-toggle" onclick="toggleHint(this)">Mostrar pista</button>
+                        <div class="hint-content">
+                            <p>Desde (fila,col), prueba mover: abajo y derecha. Caso base: (N-1,M-1) retorna true. Si fuera de límites o muro, false.</p>
+                        </div>
+                    </div>
+                    <div class="solution-section">
+                        <button class="solution-toggle" onclick="toggleSolution(this)">Mostrar solución</button>
+                        <div class="solution-content">
+                            <pre><code>function laberinto(grid, fila, col) {
+    const n = grid.length;
+    const m = grid[0].length;
+    
+    // Caso base: llegó al final
+    if (fila === n - 1 && col === m - 1) {
+        return grid[fila][col] === 0;
+    }
+    
+    // Fuera de límites o muro
+    if (fila >= n || col >= m || grid[fila][col] === 1) {
+        return false;
+    }
+    
+    // Probar: abajo y derecha
+    return laberinto(grid, fila + 1, col) || laberinto(grid, fila, col + 1);
+}
+
+function existeCamino(grid) {
+    return laberinto(grid, 0, 0);
+}
+
+// Ejemplos
+const lab = [
+    [0, 0, 1],
+    [0, 0, 0],
+    [1, 0, 0]
+];
+console.log(existeCamino(lab)); // true
+
+const lab2 = [
+    [0, 1],
+    [1, 0]
+];
+console.log(existeCamino(lab2)); // false</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ejercicio 10 -->
+                <div class="exercise-card" data-exercise="10">
+                    <div class="exercise-header-bar">
+                        <span class="exercise-number">Ejercicio 10</span>
+                        <span class="difficulty hard">Difícil</span>
+                    </div>
+                    <h2>Permutaciones con Duplicados</h2>
+                    <p>Genera permutaciones únicas de un array que puede tener elementos duplicados.</p>
+                    <div class="example-io">
+                        <div class="io-box">
+                            <h4>Ejemplo:</h4>
+                            <p><strong>Entrada:</strong> permutacionesUnicas([1,1,2])</p>
+                            <p><strong>Salida:</strong> [[1,1,2],[1,2,1],[2,1,1]]</p>
+                        </div>
+                    </div>
+                    <div class="hint-section">
+                        <button class="hint-toggle" onclick="toggleHint(this)">Mostrar pista</button>
+                        <div class="hint-content">
+                            <p>Ordena el array primero. En el backtrack, evita usar el mismo elemento en la misma posición si ya usaste uno igual.</p>
+                        </div>
+                    </div>
+                    <div class="solution-section">
+                        <button class="solution-toggle" onclick="toggleSolution(this)">Mostrar solución</button>
+                        <div class="solution-content">
+                            <pre><code>function permutacionesUnicas(nums) {
+    nums.sort((a, b) => a - b);
+    const resultado = [];
+    
+    function backtrack(actual, usado) {
+        if (actual.length === nums.length) {
+            resultado.push([...actual]);
+            return;
+        }
+        
+        for (let i = 0; i < nums.length; i++) {
+            if (usado[i]) continue;
+            
+            // Evitar duplicados: si el actual es igual al anterior y el anterior no fue usado
+            if (i > 0 && nums[i] === nums[i - 1] && !usado[i - 1]) {
+                continue;
+            }
+            
+            usado[i] = true;
+            actual.push(nums[i]);
+            backtrack(actual, usado);
+            actual.pop();
+            usado[i] = false;
+        }
+    }
+    
+    backtrack([], new Array(nums.length).fill(false));
+    return resultado;
+}
+
+// Ejemplos
+console.log(permutacionesUnicas([1,1,2]));
+// [[1,1,2],[1,2,1],[2,1,1]]
+console.log(permutacionesUnicas([1,2,2]));
+// [[1,2,2],[2,1,2],[2,2,1]]</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="exercise-summary">
+                <h3>Resumen de la Sesión</h3>
+                <div class="summary-stats">
+                    <div class="stat-item">
+                        <span class="stat-label">Total:</span>
+                        <span class="stat-value">10 ejercicios</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Medios:</span>
+                        <span class="stat-value">2</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Difíciles:</span>
+                        <span class="stat-value">8</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="navigation">
+                <a href="../lessons/lesson6.html" class="nav-btn prev-btn">← Volver a la Lección</a>
+                <a href="../index.html" class="nav-btn next-btn">Volver al Inicio</a>
+            </div>
+        </div>
+    </main>
+
+    <script src="../exercise.js"></script>
+</body>
+</html>

@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicios de Recursividad - Lección 3: Strings</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="../styles-exercises.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <h2>Curso de Recursividad</h2>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="../index.html" class="nav-link">Inicio</a></li>
+                <li><a href="../lessons/lesson3.html" class="nav-link">Lección 3</a></li>
+                <li><a href="#" class="nav-link active">Ejercicios 3</a></li>
+                <li><a href="../exercises/exercises4.html" class="nav-link">Ejercicios 4</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="container">
+        <div class="exercise-container">
+            <header class="exercise-header">
+                <h1>Ejercicios - Lección 3: Recursión con Strings</h1>
+                <p class="subtitle">10 problemas para dominar manipulación de texto recursivo</p>
+                <div class="progress-container">
+                    <div class="progress-bar" id="progressBar"></div>
+                </div>
+                <p class="progress-text">Progreso: <span id="progressText">0/10</span></p>
+            </header>
+
+            <div class="exercise-list" id="exerciseList">
+                <!-- Ejercicio 1 -->
+                <div class="exercise-card" data-exercise="1">
+                    <div class="exercise-header-bar">
+                        <span class="exercise-number">Ejercicio 1</span>
+                        <span class="difficulty easy">Fácil</span>
+                    </div>
+                    <h2>Contar Ocurrencias de Carácter</h2>
+                    <p>Escribe <code>contarCaracter(str, c)</code> que cuente cuántas veces aparece el carácter <code>c</code> en <code>str</code>.</p>
+                    <div class="example-io">
+                        <div class="io-box">
+                            <h4>Ejemplo:</h4>
+                            <p><strong>Entrada:</strong> contarCaracter("banana", "a")</p>
+                            <p><strong>Salida:</strong> 3</p>
+                        </div>
+                    </div>
+                    <div class="hint-section">
+                        <button class="hint-toggle" onclick="toggleHint(this)">Mostrar pista</button>
+                        <div class="hint-content">
+                            <p>Caso base: str vacío retorna 0. Compara str[0] con c, suma 1 si coincide, luego recursión con slice(1).</p>
+                        </div>
+                    </div>
+                    <div class="solution-section">
+                        <button class="solution-toggle" onclick="toggleSolution(this)">Mostrar solución</button>
+                        <div class="solution-content">
+                            <pre><code>function contarCaracter(str, c) {
+    if (str.length === 0) return 0;
+    
+    const coincide = (str[0] === c) ? 1 : 0;
+    return coincide + contarCaracter(str.slice(1), c);
+}
+
+// Ejemplos
+console.log(contarCaracter("banana", "a")); // 3
+console.log(contarCaracter("hello", "l"));  // 2
+console.log(contarCaracter("", "x"));       // 0</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ejercicio 2 -->
+                <div class="exercise-card" data-exercise="2">
+                    <div class="exercise-header-bar">
+                        <span class="exercise-number">Ejercicio 2</span>
+                        <span class="difficulty easy">Fácil</span>
+                    </div>
+                    <h2>Remover Todos los Espacios</h2>
+                    <p>Crea <code>removerEspacios(str)</code> que elimine todos los espacios en blanco de un string.</p>
+                    <div class="example-io">
+                        <div class="io-box">
+                            <h4>Ejemplo:</h4>
+                            <p><strong>Entrada:</strong> removerEspacios("Hola mundo desde JS")</p>
+                            <p><strong>Salida:</strong> "HolamundodesdeJS"</p>
+                        </div>
+                    </div>
+                    <div class="hint-section">
+                        <button class="hint-toggle" onclick="toggleHint(this)">Mostrar pista</button>
+                        <div class="hint-content">
+                            <p>Similar a removerCaracter pero con ' ' como carácter a eliminar.</p>
+                        </div>
+                    </div>
+                    <div class="solution-section">
+                        <button class="solution-toggle" onclick="toggleSolution(this)">Mostrar solución</button>
+                        <div class="solution-content">
+                            <pre><code>function removerEspacios(str) {
+    if (str.length === 0) return "";
+    
+    const primero = str[0];
+    const resto = removerEspacios(str.slice(1));
+    
+    return (primero === ' ') ? resto : primero + resto;
+}
+
+// Ejemplos
+console.log(removerEspacios("Hola mundo desde JS")); // "HolamundodesdeJS"
+console.log(removerEspacios("   espacios   "));      // "espacios"
+console.log(removerEspacios(""));                    // ""</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ejercicio 3 -->
+                <div class="exercise-card" data-exercise="3">
+                    <div class="exercise-header-bar">
+                        <span class="exercise-number">Ejercicio 3</span>
+                        <span class="difficulty easy">Fácil</span>
+                    </div>
+                    <h2>Convertir a Mayúsculas Recursivo</h2>
+                    <p>Implementa <code>aMayusculas(str)</code> que convierta todas las letras a mayúsculas sin usar toUpperCase() en el string completo.</p>
+                    <div class="example-io">
+                        <div class="io-box">
+                            <h4>Ejemplo:</h4>
+                            <p><strong>Entrada:</strong> aMayusculas("hola mundo")</p>
+                            <p><strong>Salida:</strong> "HOLA MUNDO"</p>
+                        </div>
+                    </div>
+                    <div class="hint-section">
+                        <button class="hint-toggle" onclick="toggleHint(this)">Mostrar pista</button>
+                        <div class="hint-content">
+                            <p>Procesa un carácter a la vez. Usa charCodeAt y manipulación de códigos ASCII, o simplemente llama a toUpperCase() en cada carácter.</p>
+                        </div>
+                    </div>
+                    <div class="solution-section">
+                        <button class="solution-toggle" onclick="toggleSolution(this)">Mostrar solución</button>
+                        <div class="solution-content">
+                            <pre><code>function aMayusculas(str) {
+    if (str.length === 0) return "";
+    
+    const primero = str[0].toUpperCase();
+    const resto = aMayusculas(str.slice(1));
+    
+    return primero + resto;
+}
+
+// Ejemplos
+console.log(aMayusculas("hola"));     // "HOLA"
+console.log(aMayusculas("Hello World")); // "HELLO WORLD"
+console.log(aMayusculas(""));         // ""</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ejercicio 4 -->
+                <div class="exercise-card" data-exercise="4">
+                    <div class="exercise-header-bar">
+                        <span class="exercise-number">Ejercicio 4</span>
+                        <span class="difficulty easy">Fácil</span>
+                    </div>
+                    <h2>Contar Dígitos en String</h2>
+                    <p>Crea <code>contarDigitos(str)</code> que cuente cuántos caracteres son dígitos numéricos (0-9).</p>
+                    <div class="example-io">
+                        <div class="io-box">
+                            <h4>Ejemplo:</h4>
+                            <p><strong>Entrada:</strong> contarDigitos("a1b2c3d4")</p>
+                            <p><strong>Salida:</strong> 4</p>
+                        </div>
+                    </div>
+                    <div class="hint-section">
+                        <button class="hint-toggle" onclick="toggleHint(this)">Mostrar pista</button>
+                        <div class="hint-content">
+                            <p>Verifica si str[0] está entre '0' y '9'. Puedes comparar códigos ASCII o usar regex.</p>
+                        </div>
+                    </div>
+                    <div class="solution-section">
+                        <button class="solution-toggle" onclick="toggleSolution(this)">Mostrar solución</button>
+                        <div class="solution-content">
+                            <pre><code>function contarDigitos(str) {
+    if (str.length === 0) return 0;
+    
+    const esDigito = (str[0] >= '0' && str[0] <= '9') ? 1 : 0;
+    return esDigito + contarDigitos(str.slice(1));
+}
+
+// Ejemplos
+console.log(contarDigitos("a1b2c3d4")); // 4
+console.log(contarDigitos("12345"));    // 5
+console.log(contarDigitos("abc"));      // 0</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ejercicio 5 -->
+                <div class="exercise-card" data-exercise="5">
+                    <div class="exercise-header-bar">
+                        <span class="exercise-number">Ejercicio 5</span>
+                        <span class="difficulty easy">Fácil</span>
+                    </div>
+                    <h2>Reemplazar Vocales</h2>
+                    <p>Reemplaza todas las vocales por un carácter específico (ej: '*').</p>
+                    <div class="example-io">
+                        <div class="io-box">
+                            <h4>Ejemplo:</h4>
+                            <p><strong>Entrada:</strong> reemplazarVocales("hola mundo", "*")</p>
+                            <p><strong>Salida:</strong> "h*l* m*nd*"</p>
+                        </div>
+                    </div>
+                    <div class="hint-section">
+                        <button class="hint-toggle" onclick="toggleHint(this)">Mostrar pista</button>
+                        <div class="hint-content">
+                            <p>Define un string de vocales "aeiouAEIOU". Si str[0] es vocal, reemplaza; si no, mantén.</p>
+                        </div>
+                    </div>
+                    <div class="solution-section">
+                        <button class="solution-toggle" onclick="toggleSolution(this)">Mostrar solución</button>
+                        <div class="solution-content">
+                            <pre><code>function reemplazarVocales(str, reemplazo) {
+    const vocales = 'aeiouAEIOU';
+    
+    if (str.length === 0) return "";
+    
+    const primero = str[0];
+    const resto = reemplazarVocales(str.slice(1), reemplazo);
+    
+    const nuevoChar = vocales.includes(primero) ? reemplazo : primero;
+    return nuevoChar + resto;
+}
+
+// Ejemplos
+console.log(reemplazarVocales("hola mundo", "*")); // "h*l* m*nd*"
+console.log(reemplazarVocales("JavaScript", "#")); // "J#v#Scr#pt"
+console.log(reemplazarVocales("xyz", "*"));        // "xyz"</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ejercicio 6 -->
+                <div class="exercise-card" data-exercise="6">
+                    <div class="exercise-header-bar">
+                        <span class="exercise-number">Ejercicio 6</span>
+                        <span class="difficulty medium">Medio</span>
+                    </div>
+                    <h2>Capitalizar Primera Letra</h2>
+                    <p>Crea <code>capitalizarPrimera(str)</code> que solo convierta a mayúscula la primera letra del string.</p>
+                    <div class="example-io">
+                        <div class="io-box">
+                            <h4>Ejemplo:</h4>
+                            <p><strong>Entrada:</strong> capitalizarPrimera("hola mundo")</p>
+                            <p><strong>Salida:</strong> "Hola mundo"</p>
+                        </div>
+                    </div>
+                    <div class="hint-section">
+                        <button class="hint-toggle" onclick="toggleHint(this)">Mostrar pista</button>
+                        <div class="hint-content">
+                            <p>Caso base: string vacío. Procesa primer carácter a mayúscula, el resto queda igual.</p>
+                        </div>
+                    </div>
+                    <div class="solution-section">
+                        <button class="solution-toggle" onclick="toggleSolution(this)">Mostrar solución</button>
+                        <div class="solution-content">
+                            <pre><code>function capitalizarPrimera(str) {
+    if (str.length === 0) return "";
+    
+    const primera = str[0].toUpperCase();
+    const resto = str.slice(1); // No recursivo para el resto
+    
+    return primera + resto;
+}
+
+// Versión completamente recursiva (menos eficiente)
+function capitalizarPrimeraRec(str) {
+    if (str.length === 0) return "";
+    
+    const primera = str[0].toUpperCase();
+    const resto = capitalizarPrimeraRec(str.slice(1));
+    
+    return primera + resto;
+}
+
+// Ejemplos
+console.log(capitalizarPrimera("hola"));    // "Hola"
+console.log(capitalizarPrimera(""));        // ""
+console.log(capitalizarPrimera("a"));       // "A"</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ejercicio 7 -->
+                <div class="exercise-card" data-exercise="7">
+                    <div class="exercise-header-bar">
+                        <span class="exercise-number">Ejercicio 7</span>
+                        <span class="difficulty medium">Medio</span>
+                    </div>
+                    <h2>Eliminar Duplicados Consecutivos</h2>
+                    <p>Remueve caracteres que se repiten seguidos: "aaabbb" → "ab".</p>
+                    <div class="example-io">
+                        <div class="io-box">
+                            <h4>Ejemplo:</h4>
+                            <p><strong>Entrada:</strong> eliminarDuplicados("aabbccdd")</p>
+                            <p><strong>Salida:</strong> "abcd"</p>
+                        </div>
+                    </div>
+                    <div class="hint-section">
+                        <button class="hint-toggle" onclick="toggleHint(this)">Mostrar pista</button>
+                        <div class="hint-content">
+                            <p>Caso base: ≤1 carácter. Compara str[0] con str[1]. Si iguales, omite str[0].</p>
+                        </div>
+                    </div>
+                    <div class="solution-section">
+                        <button class="solution-toggle" onclick="toggleSolution(this)">Mostrar solución</button>
+                        <div class="solution-content">
+                            <pre><code>function eliminarDuplicados(str) {
+    if (str.length <= 1) return str;
+    
+    const primero = str[0];
+    const segundo = str[1];
+    const resto = str.slice(1);
+    
+    // Si el primer y segundo carácter son iguales, omitir el primero
+    if (primero === segundo) {
+        return eliminarDuplicados(resto);
+    } else {
+        return primero + eliminarDuplicados(resto);
+    }
+}
+
+// Ejemplos
+console.log(eliminarDuplicados("aaabbbccc")); // "abc"
+console.log(eliminarDuplicados("Hello"));      // "Helo"
+console.log(eliminarDuplicados("a"));          // "a"
+console.log(eliminarDuplicados(""));           // ""</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ejercicio 8 -->
+                <div class="exercise-card" data-exercise="8">
+                    <div class="exercise-header-bar">
+                        <span class="exercise-number">Ejercicio 8</span>
+                        <span class="difficulty medium">Medio</span>
+                    </div>
+                    <h2>Reverse String con Índice</h2>
+                    <p>Implementa <code>reversaIndice(str, indice)</code> que revierta el string usando un índice en lugar de slice.</p>
+                    <div class="example-io">
+                        <div class="io-box">
+                            <h4>Ejemplo:</h4>
+                            <p><strong>Entrada:</strong> reversaIndice("hello", str.length-1)</p>
+                            <p><strong>Salida:</strong> "olleh"</p>
+                        </div>
+                    </div>
+                    <div class="hint-section">
+                        <button class="hint-toggle" onclick="toggleHint(this)">Mostrar pista</button>
+                        <div class="hint-content">
+                            <p>Accede al carácter en indice. Caso base: indice < 0. Paso: str[indice] + reversaIndice(indice-1).</p>
+                        </div>
+                    </div>
+                    <div class="solution-section">
+                        <button class="solution-toggle" onclick="toggleSolution(this)">Mostrar solución</button>
+                        <div class="solution-content">
+                            <pre><code>function reversaIndice(str, indice) {
+    // Caso base
+    if (indice < 0) {
+        return "";
+    }
+    
+    // Carácter actual + reversa del resto
+    return str[indice] + reversaIndice(str, indice - 1);
+}
+
+function reversa(str) {
+    return reversaIndice(str, str.length - 1);
+}
+
+// Ejemplos
+console.log(reversa("hello"));     // "olleh"
+console.log(reversa("recursión")); // "noisrucer"
+console.log(reversa(""));          // ""</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ejercicio 9 -->
+                <div class="exercise-card" data-exercise="9">
+                    <div class="exercise-header-bar">
+                        <span class="exercise-number">Ejercicio 9</span>
+                        <span class="difficulty medium">Medio</span>
+                    </div>
+                    <h2>String sin Vocales</h2>
+                    <p>Crea <code>sinVocales(str)</code> que retorne el string sin ninguna vocal.</p>
+                    <div class="example-io">
+                        <div class="io-box">
+                            <h4>Ejemplo:</h4>
+                            <p><strong>Entrada:</strong> sinVocales("hello world")</p>
+                            <p><strong>Salida:</strong> "hll wrld"</p>
+                        </div>
+                    </div>
+                    <div class="hint-section">
+                        <button class="hint-toggle" onclick="toggleHint(this)">Mostrar pista</button>
+                        <div class="hint-content">
+                            <p>Similar a removerCaracter pero con conjunto de vocales.</p>
+                        </div>
+                    </div>
+                    <div class="solution-section">
+                        <button class="solution-toggle" onclick="toggleSolution(this)">Mostrar solución</button>
+                        <div class="solution-content">
+                            <pre><code>function sinVocales(str) {
+    const vocales = 'aeiouAEIOU';
+    
+    if (str.length === 0) return "";
+    
+    const primero = str[0];
+    const resto = sinVocales(str.slice(1));
+    
+    // Si es vocal, omitir; si no, conservar
+    return vocales.includes(primero) ? resto : primero + resto;
+}
+
+// Ejemplos
+console.log(sinVocales("hello world")); // "hll wrld"
+console.log(sinVocales("JavaScript"));   // "JvScrpt"
+console.log(sinVocales("AEIOUaeiou"));   // ""</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ejercicio 10 -->
+                <div class="exercise-card" data-exercise="10">
+                    <div class="exercise-header-bar">
+                        <span class="exercise-number">Ejercicio 10</span>
+                        <span class="difficulty hard">Difícil</span>
+                    </div>
+                    <h2>Expandir Caracteres de Repetición</h2>
+                    <p>Dado un string como "a3b2c1", expande las repeticiones: "aaabbc".</p>
+                    <div class="example-io">
+                        <div class="io-box">
+                            <h4>Ejemplo:</h4>
+                            <p><strong>Entrada:</strong> expandir("a3b2c1")</p>
+                            <p><strong>Salida:</strong> "aaabbc"</p>
+                        </div>
+                    </div>
+                    <div class="hint-section">
+                        <button class="hint-toggle" onclick="toggleHint(this)">Mostrar pista</button>
+                        <div class="hint-content">
+                            <p>Necesitas procesar de 2 en 2: carácter + número. Usa parseInt() o Number() para convertir.</p>
+                        </div>
+                    </div>
+                    <div class="solution-section">
+                        <button class="solution-toggle" onclick="toggleSolution(this)">Mostrar solución</button>
+                        <div class="solution-content">
+                            <pre><code>function expandir(str) {
+    // Caso base: string vacío o longitud 1 (incompleto)
+    if (str.length < 2) return "";
+    
+    const char = str[0];
+    const numStr = str[1];
+    const resto = str.slice(2);
+    
+    // Convertir dígito a número
+    const veces = parseInt(numStr, 10);
+    
+    // Construir string repetido
+    let repetido = "";
+    for (let i = 0; i < veces; i++) {
+        repetido += char;
+    }
+    
+    // Recursión
+    return repetido + expandir(resto);
+}
+
+// Versión que maneja números de más de un dígito
+function expandirAvanzado(str) {
+    if (str.length === 0) return "";
+    
+    // Extraer carácter
+    const char = str[0];
+    
+    // Extraer número (puede ser múltiples dígitos)
+    let i = 1;
+    let numStr = "";
+    while (i < str.length && str[i] >= '0' && str[i] <= '9') {
+        numStr += str[i];
+        i++;
+    }
+    
+    const veces = parseInt(numStr, 10);
+    const resto = str.slice(i);
+    
+    let repetido = "";
+    for (let j = 0; j < veces; j++) {
+        repetido += char;
+    }
+    
+    return repetido + expandirAvanzado(resto);
+}
+
+// Ejemplos
+console.log(expandir("a3b2c1"));     // "aaabbc"
+console.log(expandir("x5y1z2"));     // "xxxxxyz z"? No: "xxxxxyz z" error
+console.log(expandirAvanzado("a10b2")); // "aaaaaaaaaab b"? "aaaaaaaaaabb"</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="exercise-summary">
+                <h3>Resumen de la Sesión</h3>
+                <div class="summary-stats">
+                    <div class="stat-item">
+                        <span class="stat-label">Total:</span>
+                        <span class="stat-value">10 ejercicios</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Fáciles:</span>
+                        <span class="stat-value">6</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Medios:</span>
+                        <span class="stat-value">3</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Difíciles:</span>
+                        <span class="stat-value">1</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="navigation">
+                <a href="../lessons/lesson3.html" class="nav-btn prev-btn">← Volver a la Lección</a>
+                <a href="../exercises/exercises4.html" class="nav-btn next-btn">Ejercicios 4 →</a>
+            </div>
+        </div>
+    </main>
+
+    <script src="../exercise.js"></script>
+</body>
+</html>

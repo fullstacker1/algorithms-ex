@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Curso de Recursividad - Lección 6: Backtracking</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <h2>Curso de Recursividad</h2>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="../index.html" class="nav-link">Inicio</a></li>
+                <li><a href="../lessons/lesson5.html" class="nav-link">Lección 5</a></li>
+                <li><a href="#" class="nav-link active">Lección 6</a></li>
+                <li><a href="../exercises/exercises6.html" class="nav-link">Ejercicios 6</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="container">
+        <div class="lesson-container">
+            <header class="lesson-header">
+                <h1>Lección 6: Backtracking</h1>
+                <p class="subtitle">La técnica de exploración y retroceso</p>
+                <div class="lesson-meta">
+                    <span class="badge">Nivel Avanzado</span>
+                    <span class="badge">50 minutos estimados</span>
+                </div>
+            </header>
+
+            <section class="content-section">
+                <h2>¿Qué es Backtracking?</h2>
+                <div class="definition-box">
+                    <p><strong>Backtracking</strong> ("volver atrás") es una técnica recursiva que explora sistemáticamente
+                    todas las posibles soluciones de un problema, "retrocediendo" cuando un camino no conduce a una solución válida.</p>
+                </div>
+
+                <div class="analogy-box">
+                    <h3>Analogía: Laberinto</h3>
+                    <p>Imagina que estás en un laberinto. En cada cruce, eliges un camino. Si llegas a un callejón sin salida,
+                    regresas (backtrack) al último cruce y pruebas otra ruta. Sigues hasta encontrar la salida o agotar todas las opciones.</p>
+                </div>
+            </section>
+
+            <section class="content-section">
+                <h2>Backtracking vs Recursión Simple</h2>
+                <div class="comparison-grid">
+                    <div class="compare-card simple">
+                        <h3>Recursión Simple</h3>
+                        <ul>
+                            <li>Una sola llamada recursiva</li>
+                            <li>Divide el problema en UN subproblema</li>
+                            <li>Ejemplo: factorial(n) = n × factorial(n-1)</li>
+                            <li>Camino único</li>
+                        </ul>
+                    </div>
+                    <div class="compare-card backtrack">
+                        <h3>Backtracking</h3>
+                        <ul>
+                            <li>Múltiples llamadas recursivas por nivel</li>
+                            <li>Explora MÚLTIPLES opciones en cada paso</li>
+                            <li>Ejemplo: subsets → incluir o no incluir</li>
+                            <li>Árbol de decisiones</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <section class="content-section">
+                <h2>La Plantilla Universal</h2>
+                <div class="template-box">
+                    <h3>Estructura Básica</h3>
+                    <div class="code-container">
+                        <pre><code>function backtrack(solucionParcial, decisiones) {
+    // 1. CASO BASE: ¿Llegamos a una solución completa?
+    if (esSolucionCompleta(solucionParcial)) {
+        guardarSolucion(solucionParcial);
+        return;
+    }
+    
+    // 2. OPCIONES: Iterar sobre todas las posibles decisiones
+    for (cada opcion in opcionesDisponibles) {
+        // 3. ELEGIR: Aplicar la opción
+        aplicarOpcion(opcion);
+        
+        // 4. EXPLORAR: Recursión
+        backtrack(solucionParcial, decisiones);
+        
+        // 5. DESHACER (Backtrack): Eliminar la opción
+        deshacerOpcion(opcion);
+    }
+}</code></pre>
+                    </div>
+                </div>
+
+                <div class="steps-breakdown">
+                    <h3>Los 5 Pasos del Backtracking</h3>
+                    <div class="step-item">
+                        <span class="step-number">1</span>
+                        <div class="step-content">
+                            <h4>Identificar Estado</h4>
+                            <p>¿Qué información necesitas llevar en cada llamada? (array actual, posición, etc.)</p>
+                        </div>
+                    </div>
+                    <div class="step-item">
+                        <span class="step-number">2</span>
+                        <div class="step-content">
+                            <h4>Definir Caso Base</h4>
+                            <p>¿Cuándo una solución está completa y es válida? (longitud alcanzada, suma exacta, etc.)</p>
+                        </div>
+                    </div>
+                    <div class="step-item">
+                        <span class="step-number">3</span>
+                        <div class="step-content">
+                            <h4>Generar Opciones</h4>
+                            <p>¿Qué decisiones puedes tomar en este punto? (incluir/no incluir, elegir elemento, dirección)</p>
+                        </div>
+                    </div>
+                    <div class="step-item">
+                        <span class="step-number">4</span>
+                        <div class="step-content">
+                            <h4>Explorar</h4>
+                            <p>Para cada opción: aplicarla, llamar recursivamente, deshacerla.</p>
+                        </div>
+                    </div>
+                    <div class="step-item">
+                        <span class="step-number">5</span>
+                        <div class="step-content">
+                            <h4>Podar (Opcional)</h4>
+                            <p>¿Hay condiciones que inmediatamente descarten una rama? (límite superado, inválido)</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="content-section">
+                <h2>Ejemplo 1: Generar Subsets</h2>
+                <p>El power set: todos los subconjuntos posibles de un conjunto.</p>
+
+                <div class="example-walkthrough">
+                    <h3>Análisis del Problema</h3>
+                    <div class="analysis-columns">
+                        <div class="analysis-column">
+                            <h4>Estado:</h4>
+                            <ul>
+                                <li>índice actual</li>
+                                <li>subconjunto actual</li>
+                                <li>resultado acumulado</li>
+                            </ul>
+                            <h4>Casos base:</h4>
+                            <p>índice == longitud → guardar subset</p>
+                        </div>
+                        <div class="analysis-column">
+                            <h4>Opciones por elemento:</h4>
+                            <p>1. Incluir elemento</p>
+                            <p>2. No incluir elemento</p>
+                            <h4>Complejidad:</h4>
+                            <p>O(2^n) subsets posibles</p>
+                        </div>
+                    </div>
+
+                    <div class="code-container">
+                        <div class="code-header">
+                            <span>JavaScript</span>
+                        </div>
+                        <pre><code>function subsets(arr, idx, actual, resultado) {
+    // Caso base: fin del array
+    if (idx === arr.length) {
+        resultado.push([...actual]);
+        return;
+    }
+    
+    // Opción 1: NO incluir arr[idx]
+    subsets(arr, idx + 1, actual, resultado);
+    
+    // Opción 2: SÍ incluir arr[idx]
+    actual.push(arr[idx]);
+    subsets(arr, idx + 1, actual, resultado);
+    actual.pop(); // ← BACKTRACK: deshacer elección
+}
+
+function generarSubsets(arr) {
+    const resultado = [];
+    subsets(arr, 0, [], resultado);
+    return resultado;
+}
+
+// Visualización para [1,2]
+//                    []
+//                   /   \
+//              [1]       []          (decisión: incluir 1 o no)
+//             /   \    /   \
+//        [1,2]  [1]  [2]   []       (decisión: incluir 2 o no)
+//</code></pre>
+                    </div>
+
+                    <div class="tree-visualization">
+                        <h3>Árbol de Decisión</h3>
+                        <pre>                     []
+                    /           \
+                 [1]            []
+                /     \        /     \
+            [1,2]    [1]    [2]    []
+           (aceptar) (no)  (acept.) (no)</pre>
+                        <p>Cada nodo es una llamada recursiva. Las hojas son subsets completos.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="content-section">
+                <h2>Ejemplo 2: Permutaciones</h2>
+                <p>Generar todos los ordenamientos posibles de N elementos.</p>
+
+                <div class="example-walkthrough">
+                    <h3>Enfoque con Swap</h3>
+                    <p>Para permutar, intercambiamos cada elemento con cada posición desde el índice actual.</p>
+
+                    <div class="code-container">
+                        <div class="code-header">
+                            <span>JavaScript</span>
+                        </div>
+                        <pre><code>function permutaciones(arr, idx, resultado) {
+    // Caso base
+    if (idx === arr.length) {
+        resultado.push([...arr]);
+        return;
+    }
+    
+    for (let i = idx; i < arr.length; i++) {
+        // ELEGIR: intercambiar arr[idx] con arr[i]
+        [arr[idx], arr[i]] = [arr[i], arr[idx]];
+        
+        // EXPLORAR: recursión con siguiente posición
+        permutaciones(arr, idx + 1, resultado);
+        
+        // DESHACER (backtrack): volver al estado original
+        [arr[idx], arr[i]] = [arr[i], arr[idx]];
+    }
+}
+
+function getPermutaciones(arr) {
+    const resultado = [];
+    permutaciones(arr, 0, resultado);
+    return resultado;
+}
+
+// Para [1,2,3]:
+// idx=0: i=0→[1], i=1→[2], i=2→[3] (3 ramas)
+// Cada rama genera 2! = 2 permutaciones más
+// Total: 3 × 2 = 6 permutaciones</code></pre>
+                    </div>
+                </div>
+            </section>
+
+            <section class="content-section">
+                <h2>Ejemplo 3: Paréntesis Válidos</h2>
+                <p>Generar todas las combinaciones de N pares de paréntesis bien formados.</p>
+
+                <div class="example-walkthrough">
+                    <h3>Condiciones de Validez</h3>
+                    <ul class="rules-list">
+                        <li>No puedes cerrar un paréntesis que no abriste</li>
+                        <li>En cualquier punto: #abiertos ≥ #cerrados</li>
+                        <li>Al final: #abiertos = #cerrados = N</li>
+                    </ul>
+
+                    <div class="code-container">
+                        <div class="code-header">
+                            <span>JavaScript</span>
+                        </div>
+                        <pre><code>function generarParentesis(n, abiertos, cerrados, actual, resultado) {
+    // Caso base: string completo
+    if (actual.length === n * 2) {
+        resultado.push(actual);
+        return;
+    }
+    
+    // Puedo abrir si aún no llegué al límite
+    if (abiertos < n) {
+        generarParentesis(n, abiertos + 1, cerrados, actual + '(', resultado);
+    }
+    
+    // Puedo cerrar solo si hay más abiertos que cerrados
+    if (cerrados < abiertos) {
+        generarParentesis(n, abiertos, cerrados + 1, actual + ')', resultado);
+    }
+}
+
+function parentesisValidos(n) {
+    const resultado = [];
+    generarParentesis(n, 0, 0, '', resultado);
+    return resultado;
+}
+
+// Para n=2:
+//                      ""
+//                    /      \
+//                 "("        ""
+//               /    \       \
+//            "(("    "()"     "" (no puede cerrar porque abiertos=0)
+//            /  \      \
+//         "(((" "(()"  ... → al final达成"()" y "(())"</code></pre>
+                    </div>
+                </div>
+            </section>
+
+            <section class="content-section">
+                <h2>Poda de Ramas (Pruning)</h2>
+                <p>Optimización: no explorar ramas que sabemos no llevan a solución.</p>
+
+                <div class="pruning-examples">
+                    <div class="prune-card">
+                        <h4>Subset Sum</h4>
+                        <p>Si la suma parcial ya supera el target, no sigas.</p>
+                        <code>if (sumaActual > target) return;</code>
+                    </div>
+                    <div class="prune-card">
+                        <h4>N-Reinas</h4>
+                        <p>Si una reina amenaza a otra, no continúes esa rama.</p>
+                        <code>if (hayConflicto()) return;</code>
+                    </div>
+                    <div class="prune-card">
+                        <h4>Combinación Sum</h4>
+                        <p>Ordena candidatos y evita duplicados.</p>
+                        <code>if (i > 0 && arr[i] === arr[i-1] && !usado[i-1]) continue;</code>
+                    </div>
+                </div>
+            </section>
+
+            <section class="content-section">
+                <h2>Complexidad en Backtracking</h2>
+                <p>El backtracking puede ser costoso, pero a menudo es la única solución exacta.</p>
+                <table class="complexity-table">
+                    <thead>
+                        <tr>
+                            <th>Problema</th>
+                            <th>Complejidad Peor Caso</th>
+                            <th>Espacio</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Subsets</td>
+                            <td>O(2^n × n) - 2^n subsets, cada uno length n</td>
+                            <td>O(n)</td>
+                        </tr>
+                        <tr>
+                            <td>Permutaciones</td>
+                            <td>O(n! × n)</td>
+                            <td>O(n)</td>
+                        </tr>
+                        <tr>
+                            <td>Combinaciones C(n,k)</td>
+                            <td>O(C(n,k) × k)</td>
+                            <td>O(k)</td>
+                        </tr>
+                        <tr>
+                            <td>N-Reinas</td>
+                            <td>O(n!) aproximadamente</td>
+                            <td>O(n)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <section class="content-section">
+                <h2>Errores Comunes</h2>
+                <div class="errors-grid large">
+                    <div class="error-card">
+                        <h4>Olvidar el Backtrack (pop/remove)</h4>
+                        <p>Síntoma: todos los resultados son iguales o incompletos. Solución: SIEMPRE deshace la acción después de la recursión.</p>
+                    </div>
+                    <div class="error-card">
+                        <h4>No validar estado antes de profundizar</h4>
+                        <p>Síntoma: exploras caminos inválidos innecesariamente. Solución: verifica condiciones ANTES de llamar recursión.</p>
+                    </div>
+                    <div class="error-card">
+                        <h4>Copiar arrays incorrectamente</h4>
+                        <p>Síntoma: las soluciones se modifican después de guardarlas. Solución: usa spread operator [...arr] al guardar.</p>
+                    </div>
+                    <div class="error-card">
+                        <h4>Condiciones de terminación confusas</h4>
+                        <p>Síntoma: recursión infinita o resultados perdidos. Solución: traza el árbol de decisiones en papel.</p>
+                    </div>
+                </div>
+            </section>
+
+            <div class="key-takeaways">
+                <h3>Aprendizajes Clave de Esta Lección</h3>
+                <ul>
+                    <li>Backtracking explora múltiples caminos en árbol de decisiones.</li>
+                    <li>Siempre sigue el ciclo: <strong>Elegir → Explorar → Deshacer</strong>.</li>
+                    <li>El estado (parámetros) debe capturar toda la información necesaria.</li>
+                    <li>El caso base reconoce soluciones completas y válidas.</li>
+                    <li>La poda (pruning) mejora significativamente el rendimiento.</li>
+                    <li>Común en: subsets, permutaciones, combinaciones, problemas de restricción.</li>
+                </ul>
+            </div>
+
+            <div class="navigation">
+                <a href="../lessons/lesson5.html" class="nav-btn prev-btn">← Lección Anterior</a>
+                <a href="../exercises/exercises6.html" class="nav-btn next-btn">Ejercicios 6 →</a>
+            </div>
+        </div>
+    </main>
+
+    <script src="../scripts/script.js"></script>
+</body>
+</html>

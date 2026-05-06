@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Curso de Recursividad - Lección 3: Recursión con Strings</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <h2>Curso de Recursividad</h2>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="../index.html" class="nav-link">Inicio</a></li>
+                <li><a href="../lessons/lesson1.html" class="nav-link">Lección 1</a></li>
+                <li><a href="../lessons/lesson2.html" class="nav-link">Lección 2</a></li>
+                <li><a href="#" class="nav-link active">Lección 3</a></li>
+                <li><a href="../exercises/exercises3.html" class="nav-link">Ejercicios 3</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="container">
+        <div class="lesson-container">
+            <header class="lesson-header">
+                <h1>Lección 3: Recursión con Strings</h1>
+                <p class="subtitle">Dominando la manipulación de texto de forma recursiva</p>
+                <div class="lesson-meta">
+                    <span class="badge">Nivel Básico-Intermedio</span>
+                    <span class="badge">40 minutos estimados</span>
+                </div>
+            </header>
+
+            <section class="content-section">
+                <h2>¿Por qué Strings?</h2>
+                <p>Los strings son ideales para aprender recursión porque:</p>
+                <ul class="reason-list">
+                    <li>Son secuencias lineales (fáciles de recorrer)</li>
+                    <li>Pueden dividirse en partes <code>primero + resto</code> o <code>primero + medio + último</code></li>
+                    <li>Son inmutables en JavaScript (cada "modificación" crea un string nuevo)</li>
+                    <li>Tienen una propiedad <code>length</code> clara que sirve como caso base</li>
+                </ul>
+
+                <div class="key-insight">
+                    <p><strong>Insight clave:</strong> Un string de longitud N puede verse como:</p>
+                    <ul>
+                        <li><code>primerCaracter + subString(1)</code></li>
+                        <li><code>subString(0, -1) + últimoCaracter</code></li>
+                        <li><code>primerCaracter + subString(1, -1) + últimoCaracter</code></li>
+                    </ul>
+                </div>
+            </section>
+
+            <section class="content-section">
+                <h2>Ejemplo 1: Contar Caracteres Específicos</h2>
+                <p>Contar cuántas veces aparece un carácter específico en un string.</p>
+
+                <div class="example-walkthrough">
+                    <h3>Análisis</h3>
+                    <div class="analysis-columns">
+                        <div class="analysis-column">
+                            <h4>Entrada:</h4>
+                            <p>String <code>str</code> y carácter <code>c</code></p>
+                            <h4>Salida:</h4>
+                            <p>Número de ocurrencias de <code>c</code> en <code>str</code></p>
+                        </div>
+                        <div class="analysis-column">
+                            <h4>Caso base:</h4>
+                            <p>String vacío → retornar 0</p>
+                            <h4>Paso recursivo:</h4>
+                            <p>Comparar primer carácter + contar en resto</p>
+                        </div>
+                    </div>
+
+                    <div class="code-container">
+                        <div class="code-header">
+                            <span>JavaScript</span>
+                        </div>
+                        <pre><code>function contarCaracter(str, c) {
+    // Caso base: string vacío
+    if (str.length === 0) {
+        return 0;
+    }
+    
+    // ¿El primer carácter es el que buscamos?
+    const coincide = (str[0] === c) ? 1 : 0;
+    
+    // Paso recursivo: coincidencia actual + contar en el resto
+    return coincide + contarCaracter(str.slice(1), c);
+}
+
+// Ejemplos
+console.log(contarCaracter("banana", "a")); // 3
+console.log(contarCaracter("Hello World", "l")); // 3
+console.log(contarCaracter("", "x")); // 0</code></pre>
+                    </div>
+                </div>
+            </section>
+
+            <section class="content-section">
+                <h2>Ejemplo 2: Remover Todos los Caracteres</h2>
+                <p>Eliminar todas las ocurrencias de un carácter específico de un string.</p>
+
+                <div class="example-walkthrough">
+                    <h3>Enfoque</h3>
+                    <div class="questions-box">
+                        <p><strong>¿Cómo eliminar un carácter?</strong></p>
+                        <p>No modificamos el string original, construimos uno nuevo.</p>
+                        
+                        <p><strong>Pregunta:</strong> Si queremos remover 'x' de "axbx", ¿cómo lo hacemos?</p>
+                        <p class="answer">Si el primer carácter NO es 'x', lo mantenemos. Si SÍ es 'x', lo omitimos.</p>
+                    </div>
+
+                    <div class="code-container">
+                        <div class="code-header">
+                            <span>JavaScript</span>
+                        </div>
+                        <pre><code>function removerCaracter(str, c) {
+    // Caso base: string vacío
+    if (str.length === 0) {
+        return "";
+    }
+    
+    const primero = str[0];
+    const resto = str.slice(1);
+    
+    // Si el primer carácter NO es el que queremos eliminar, lo conservamos
+    if (primero !== c) {
+        return primero + removerCaracter(resto, c);
+    } else {
+        // Si SÍ es, lo omitimos
+        return removerCaracter(resto, c);
+    }
+}
+
+// Versión más concisa
+function removerCaracter2(str, c) {
+    if (str.length === 0) return "";
+    
+    const primero = str[0];
+    const resto = removerCaracter2(str.slice(1), c);
+    
+    return (primero === c) ? resto : primero + resto;
+}
+
+// Ejemplos
+console.log(removerCaracter("banana", "a")); // "bnn"
+console.log(removerCaracter("Hello World", " ")); // "HelloWorld"
+console.log(removerCaracter("Mississippi", "s")); // "Miiippi"</code></pre>
+                    </div>
+                </div>
+            </section>
+
+            <section class="content-section">
+                <h2>Ejemplo 3: Reemplazo Recursivo</h2>
+                <p>Reemplazar todas las ocurrencias de un carácter por otro.</p>
+
+                <div class="code-container">
+                    <div class="code-header">
+                        <span>JavaScript</span>
+                    </div>
+                    <pre><code>function reemplazar(str, buscar, reemplazarCon) {
+    // Caso base
+    if (str.length === 0) {
+        return "";
+    }
+    
+    const primero = str[0];
+    const resto = reemplazar(str.slice(1), buscar, reemplazarCon);
+    
+    // Si coincide, reemplazar; si no, mantener
+    if (primero === buscar) {
+        return reemplazarCon + resto;
+    } else {
+        return primero + resto;
+    }
+}
+
+// Ejemplos
+console.log(reemplazar("hello", "l", "x")); // "hexxo"
+console.log(reemplazar("banana", "a", "o")); // "bonono"
+console.log(reemplazar("123-456-7890", "-", "")); // "1234567890"</code></pre>
+                </div>
+            </section>
+
+            <section class="content-section">
+                <h2>Ejemplo 4: Primera Mayúscula en Cada Palabra</h2>
+                <p>Convertir la primera letra de cada palabra a mayúscula.</p>
+
+                <div class="example-walkthrough">
+                    <h3>Desafío</h3>
+                    <p>Necesitamos detectar el inicio de una palabra. Una palabra comienza después de un espacio o al inicio del string.</p>
+
+                    <div class="code-container">
+                        <div class="code-header">
+                            <span>JavaScript</span>
+                        </div>
+                        <pre><code>function capitalizeWords(str, indice = 0, anteriorEsEspacio = true) {
+    // Caso base: fin del string
+    if (indice >= str.length) {
+        return "";
+    }
+    
+    const charActual = str[indice];
+    let nuevoChar = charActual;
+    
+    // Si el carácter anterior era espacio, convertir a mayúscula
+    if (anteriorEsEspacio && charActual !== ' ') {
+        nuevoChar = charActual.toUpperCase();
+    }
+    
+    // Determinar si el próximo carácter será después de un espacio
+    const proximoAnteriorEsEspacio = (charActual === ' ');
+    
+    // Recursión: procesar resto del string
+    return nuevoChar + capitalizeWords(str, indice + 1, proximoAnteriorEsEspacio);
+}
+
+// Versión más simple sin índice (procesando caracteres)
+function capitalizeWords2(str) {
+    // Caso base
+    if (str.length === 0) return "";
+    
+    // Procesar primer carácter
+    const primero = str[0];
+    const resto = str.slice(1);
+    
+    const esInicioPalabra = (primero !== ' ' && (resto.length === 0 || str[1] === ' '));
+    
+    let nuevoPrimero = primero;
+    if (esInicioPalabra) {
+        nuevoPrimero = primero.toUpperCase();
+    }
+    
+    return nuevoPrimero + capitalizeWords2(resto);
+}
+
+// Ejemplos
+console.log(capitalizeWords("hola mundo")); // "Hola Mundo"
+console.log(capitalizeWords("  espacios  extra  ")); // "  Espacios  Extra  "</code></pre>
+                    </div>
+                </div>
+            </section>
+
+            <section class="content-section">
+                <h2>Ejemplo 5: Eliminar Caracteres Consecutivos Duplicados</h2>
+                <p>Dado un string, eliminar caracteres duplicados consecutivos.</p>
+
+                <div class="example-walkthrough">
+                    <h3>Problema</h3>
+                    <p><code>"aaabbbccc"</code> → <code>"abc"</code></p>
+                    <p><code>"Hello"</code> → <code>"Helo"</code> (doble 'l' → una 'l')</p>
+
+                    <div class="analysis-steps">
+                        <li><strong>Caso base:</strong> string vacío o de 1 carácter (no hay duplicados)</li>
+                        <li><strong>Lógica:</strong> Comparar primer y segundo carácter</li>
+                        <li><strong>Si son iguales:</strong> omitir el primer carácter, mantener el segundo</li>
+                        <li><strong>Si son diferentes:</strong> mantener el primer carácter</li>
+                    </div>
+
+                    <div class="code-container">
+                        <div class="code-header">
+                            <span>JavaScript</span>
+                        </div>
+                        <pre><code>function eliminarDuplicadosConsecutivos(str) {
+    // Caso base: 0 o 1 carácter
+    if (str.length <= 1) {
+        return str;
+    }
+    
+    const primero = str[0];
+    const segundo = str[1];
+    const resto = str.slice(1);
+    
+    // Si primer == segundo, omitimos el primero
+    if (primero === segundo) {
+        return eliminarDuplicadosConsecutivos(resto);
+    } else {
+        // Si son diferentes, mantenemos el primero
+        return primero + eliminarDuplicadosConsecutivos(resto);
+    }
+}
+
+// Ejemplos
+console.log(eliminarDuplicadosConsecutivos("aaabbbccc")); // "abc"
+console.log(eliminarDuplicadosConsecutivos("Hello")); // "Helo"
+console.log(eliminarDuplicadosConsecutivos("a")); // "a"
+console.log(eliminarDuplicadosConsecutivos("")); // ""</code></pre>
+                    </div>
+                </div>
+            </section>
+
+            <div class="key-takeaways">
+                <h3>Aprendizajes Clave de Esta Lección</h3>
+                <ul>
+                    <li>Los strings pueden procesarse carácter por carácter de forma recursiva.</li>
+                    <li>El caso base típico es <code>str.length === 0</code>.</li>
+                    <li>Tres patrones comunes: <strong>contar</strong>, <strong>eliminar</strong>, <strong>reemplazar</strong>.</li>
+                    <li>Puedes usar un parámetro <code>indice</code> o <code>slice</code> para recorrer.</li>
+                    <li>La recursión con strings es fundamental para problemas de parsing y validación.</li>
+                </ul>
+            </div>
+
+            <div class="navigation">
+                <a href="../lessons/lesson2.html" class="nav-btn prev-btn">← Lección Anterior</a>
+                <a href="../exercises/exercises3.html" class="nav-btn next-btn">Ejercicios 3 →</a>
+            </div>
+        </div>
+    </main>
+
+    <script src="../scripts/script.js"></script>
+</body>
+</html>
