@@ -26,6 +26,8 @@ const twoSum = (arr, target) => {
 // console.log(twoSum(num, 10)); // true (1+9)
 // console.log(twoSum(num, 12)); // true (3+9 o 5+7)
 // console.log(twoSum(num, 20)); // false
+console.log(twoSum([3,2,4]), 6);
+
 
 // palindrome 
 
