@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+
+<style>
+    body {
+        background-color: #212122;
+        color: aliceblue;
+    }
+
+    a {
+        fill: aliceblue;
+        color: aliceblue;
+    }
+</style>
+
+<body>
+
+    <h1>Minicurso: La Magia de Descomponer Antes de Codificar</h1>
+
+    <br>
+
+    <h4>Por un viejo maestro, que ha visto más diagramas de flujo que tazas de café</h4>
+
+    <hr>
+
+    <h6>Introducción: El lápiz es tu mejor depurador</h6>
+
+    <p>
+
+        En 30 años se ha visto a miles de estudiantes (y profesionales) correr al teclado con la mente en blanco. El
+        resultado: código espagueti, horas perdidas y bugs que podrían haberse evitado con 15 minutos de análisis en
+        papel.
+
+    </p>
+
+    <p>
+        La descomposición jerárquica de problemas no es una pérdida de tiempo. Es el arte de dividir un monstruo en
+        moscas. Cada subproblema tiene su propia entrada, proceso y salida. Cuando juntas las piezas, el código fluye
+        como agua de manantial.
+    </p>
+
+    <hr>
+
+    <h3> Metodología: 4 pasos antes de tocar un teclado </h3>
+
+    <ol>
+        <li>
+            Entender el problema – en voz alta, como si se lo explicaras a un niño de 8 años.
+        </li>
+        <li>
+            Identificar macro-subproblemas – ¿qué grandes pasos debo resliver?
+        </li>
+        <li>
+            Dividir cada macro hasta llegar a operaciones atómicas (sumas, comparaciones, lecturas).
+        </li>
+        <li>
+            Ordenar y relacionar – ¿qué subproblemas necesitan resultados de otros?
+        </li>
+    </ol>
+
+    <h5> Herramientas obligatorias: papel cuadriculado, lápiz, goma de borrar y una taza de té. </h5>
+
+    <hr>
+
+    <h3> NIVEL BÁSICO (30 ejercicios) </h3>
+
+    <h6> Objetivo: Dominar la descomposición en tareas secuenciales simples </h6>
+
+    <ol id="lista-ejercicios">
+        <script type="module">
+            import easyProblems from "./problemasBasicos.js"
+
+            const lista = document.getElementById("lista-ejercicios");
+            lista.innerHTML = easyProblems.map(p => ` <li> ${p} </li> <br>`).join(' ');
+
+        </script>
+    </ol>
+
+    <h5>Cada ejercicio básico debe resolverse en papel con pasos: Entrada → Proceso → Salida. Luego escribir
+        pseudocódigo. Después recién código.</h5>
+
+    <hr>
+
+    <h3> NIVEL INTERMEDIO (30 ejercicios)</h3>
+
+    <h5> Aquí los subproblemas se anidan, aparecen condiciones múltiples y bucles anidados</h5>
+
+    <ol id="lista-ejerccios-intermedio">
+        <script type="module">
+            import intermediateProblems from "./intermediateProblems.js"
+
+            const listaIntermedios = document.getElementById("lista-ejerccios-intermedio");
+            listaIntermedios.innerHTML = intermediateProblems.map(p => ` <li> ${p} </li> <br>`).join(' ');
+        </script>
+
+    </ol>
+
+    <h5>En nivel intermedio, los subproblemas se escriben como funciones ficticias en papel. Ejemplo: "Función
+        esBisiesto(año)", "Función diasMes(mes, año)", etc.</h5>
+
+    <hr>
+
+    <h3>NIVEL AVANZADO (30 ejercicios)</h3>
+
+    <h6>Subproblemas recursivos, backtracking, estructuras de datos complejas y algoritmos clásicos</h6>
+
+    <ol id="lista-ejerccios-avanzados">
+        <script type="module">
+            import advancedProblems from "./advancedProblems.js"
+
+            const listaAvanzados = document.getElementById("lista-ejerccios-avanzados");
+            listaAvanzados.innerHTML = advancedProblems.map(p => ` <li> ${p} </li> <br>`).join(' ');
+
+        </script>
+    </ol>
+
+    <h5>Para los avanzados, en papel se construyen diagramas de flujo de datos y árboles de descomposición funcional. No
+        se permite tocar un compilador hasta que cada subproblema tenga su interfaz definida (entrada, salida,
+        precondición, postcondición).</h5>
+
+    <hr>
+
+    <h3>Consejo final del viejo maestro</h3>
+
+    <h4>Cuando un joven me pregunta "¿cuánto tiempo debo planificar antes de programar?", respondo: </h4>
+
+    <p>
+
+        Si el problema cabe en una pantalla de celular, 5 minutos. Si requiere dos monitores, media hora. Si es un
+        sistema completo, una semana. Pero nunca, jamás, escribas una línea de código sin tener en tu cuaderno la
+        jerarquía de subproblemas resuelta con lápiz.
+
+    </p>
+
+    <h4>
+        La computadora ejecuta órdenes, pero tu cerebro resuelve problemas. No delegues el pensamiento al teclado.
+    </h4>
+
+
+    <h3>
+        Ahora ponte a hacer estos ejercicios. El papel te está esperando.
+    </h3>
+
+    <hr>
+</body>
+
+</html>

@@ -8,27 +8,29 @@ class HashTable {
         this.table = new Array(137)
     }
 
-    loseLoseHashCode(key) {
+    encode(key) {
         let hash = 0
+
         for (let i = 0; i < key.length; i++) {
             hash += key.charCodeAt(i)
         }
+
         return hash % 37
 
     }
 
     put(key, value) {
-        let position = this.loseLoseHashCode(key)
+        let position = this.encode(key)
         this.table[position] = value
     }
 
     remove(key) {
-        let position = this.loseLoseHashCode(key)
+        let position = this.encode(key)
         this.table[position] = undefined
     }
 
     get(key) {
-        let position = this.loseLoseHashCode(key)
+        let position = this.encode(key)
         return this.table[position]
     }
 
@@ -48,9 +50,10 @@ class HashTableChaining {
 
     constructor() {
         this.table = new Array(137);
+        
     }
 
-    loseLoseHashCode(key) {
+    encode(key) {
         let hash = 0
         for (let i = 0; i < key.length; i++) {
             hash += key.charCodeAt(i)
@@ -59,8 +62,10 @@ class HashTableChaining {
     }
 
     valuePair = function (key, value) {
+        
         this.key = key
         this.value = value
+
         this.toString = function () {
             return '[' + this.key + ' - ' + this.value + ']'
         }
@@ -76,7 +81,7 @@ class HashTableChaining {
 
     put(key, value) {
 
-        let position = this.loseLoseHashCode(key)
+        let position = this.encode(key)
 
         if (this.table[position] === undefined) {
             this.table[position] = new LinkedList()
@@ -88,7 +93,7 @@ class HashTableChaining {
 
     get(key) {
 
-        var position = this.loseLoseHashCode(key);
+        var position = this.encode(key);
 
         if (this.table[position] !== undefined) {
             //iterate linked list to find key/value
@@ -114,7 +119,7 @@ class HashTableChaining {
     }
 
     remove(key) {
-        var position = this.loseLoseHashCode(key);
+        var position = this.encode(key);
         if (this.table[position] !== undefined) {
             var current = this.table[position].getHead();
 
@@ -143,14 +148,14 @@ class HashTableChaining {
 
 }
 
-//LINEAR PROBING ->
+//LINEAR PROBING -> 
 class HashTableLinear {
 
     constructor() {
         this.table = new Array(137);
     }
 
-    loseLoseHashCode(key) {
+    encode(key) {
         let hash = 5381
         for (let i = 0; i < key.length; i++) {
             hash += hash * 33 +  key.charCodeAt(i)
@@ -169,7 +174,7 @@ class HashTableLinear {
 
     put(key, value) {
 
-        let position = this.loseLoseHashCode(key)
+        let position = this.encode(key)
 
         if (this.table[position] == undefined) {
           
@@ -177,7 +182,7 @@ class HashTableLinear {
         
         } else {
         
-            let index = ++position
+            let index = position + 1
         
             while (this.table[index] != undefined) {
                 index++
@@ -190,7 +195,7 @@ class HashTableLinear {
 
     get(key) {
         
-        let position = this.loseLoseHashCode(key)
+        let position = this.encode(key)
 
         if (this.table[position] !== undefined) {
         
@@ -200,7 +205,7 @@ class HashTableLinear {
         
             } else {
         
-                let index = ++position
+                let index = position + 1
         
                 while (this.table[index] === undefined || this.table[index].key !== key) {
         
@@ -220,10 +225,9 @@ class HashTableLinear {
     
     }
 
-
     remove(key) {
     
-        let position = this.loseLoseHashCode(key)
+        let position = this.encode(key)
 
         if (this.table[position] !== undefined) {
     

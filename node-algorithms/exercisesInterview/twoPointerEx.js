@@ -1,3 +1,4 @@
+// two sum
 const twoSum = (arr, target) => {
 
     let left = 0
@@ -26,11 +27,10 @@ const twoSum = (arr, target) => {
 // console.log(twoSum(num, 10)); // true (1+9)
 // console.log(twoSum(num, 12)); // true (3+9 o 5+7)
 // console.log(twoSum(num, 20)); // false
-console.log(twoSum([3,2,4]), 6);
+// console.log(twoSum([3,2,4]), 6);
 
 
 // palindrome 
-
 const isPalindrome = (word) => {
 
     let left = 0
@@ -50,6 +50,8 @@ const isPalindrome = (word) => {
 // console.log(isPalindrome("reconocer"));
 // console.log(isPalindrome("hello"));
 
+
+// reverse array
 const reverseArray = (arr) => {
     let left = 0
     let right = arr.length - 1
@@ -70,6 +72,8 @@ const reverseArray = (arr) => {
 // console.log(reverseArray([1, 2, 3, 4, 5, 6]));
 // console.log(reverseArray([1, 2, 3, 4, 5, 6, 7]));
 
+
+//max area
 function maxArea(heights) {
     let left = 0;
     let right = heights.length - 1;
@@ -95,6 +99,8 @@ function maxArea(heights) {
 // console.log(maxArea([1, 1])); // 1
 // console.log(maxArea([4, 3, 2, 1, 4])); // 16
 
+
+// remove duplicates
 const deleteDuplicates = (arr) => {
       if (arr.length === 0) return 0;
   let i = 0; // puntero lento (extremo izquierdo)
@@ -108,7 +114,7 @@ const deleteDuplicates = (arr) => {
 
 }
 
-const nums = [0,0,1,1,1,2,2,3,3,4];
-const nuevaLongitud = deleteDuplicates(nums);
-console.log(nuevaLongitud);        // 5
-console.log(nums.slice(0, nuevaLongitud)); // [0,1,2,3,4]
+// const nums = [0,0,1,1,1,2,2,3,3,4];
+// const nuevaLongitud = deleteDuplicates(nums);
+// console.log(nuevaLongitud);        // 5
+// console.log(nums.slice(0, nuevaLongitud)); // [0,1,2,3,4]

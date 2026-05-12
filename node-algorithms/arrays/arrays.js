@@ -20,3 +20,77 @@
  * 
 */
 
+// busqueda binaria
+const binarySearch = (arr, target) => {
+
+    let init = 0
+    let end = arr.length - 1
+
+    while (init < end) {
+        let mid = Math.floor((init + end) / 2)
+
+        if (arr[mid] === target) return true
+
+        if (arr[mid] < target) {
+            init = mid + 1
+        } else {
+            end = mid - 1
+        }
+    }
+    return false
+}
+
+// busqueda binaria bitonica
+const binaryBitonic = (arr, target) => {
+
+    let init = 0
+    let end = arr.length - 1
+
+    while (init < end) {
+
+        let mid = Math.floor((init + end) / 2)
+
+        if (arr[mid] === target    ) return true
+
+        if (arr[mid] < arr[mid + 1]) {
+            init = mid + 1
+        } else {
+            end = mid - 1
+        }
+    }
+    return false
+}
+
+// busqueda en array rotado 
+const rotateArrSearch = (arr, target) => {
+
+    let init = 0
+    let end = arr.length - 1
+
+    while (init <= end) {
+
+        let mid = Math.floor((init + end) / 2)
+
+        if (arr[mid] === target) return true
+
+        if (arr[init] <= arr[mid]) {
+          
+            if (target >= nums[init] && target < nums[mid]) {
+                end = mid - 1
+            } else {
+                init = mid + 1
+            }
+       
+        } else if(target > arr[mid] && target <= arr[end]) {
+            init = mid + 1
+        } else {
+            end = mid - 1
+        }
+    }
+    return -1
+}
+
+// array convexo 
+const convexArr = (arr) => {
+
+}

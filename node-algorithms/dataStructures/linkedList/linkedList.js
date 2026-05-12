@@ -48,10 +48,6 @@ export default class LinkedList {
         }
     };
 
-
-
-
-
     remove = function (element) {
         let index = this.indexOf(element)
         return this.removeAt(index)
@@ -74,8 +70,8 @@ export default class LinkedList {
     isEmpty = function () {
         return this.length === 0
     }
-    size = function () { };
-toString = function () {
+
+    toString = function () {
         let current = this.head
         let string = ''
         while (current) {
@@ -84,11 +80,28 @@ toString = function () {
         }
         return string
     };
+
     print = function () {
         console.log(this.toString())
     }
+
     getHead = function () {
         return this.head
     }
+    
+    size = function () { };
 
 }
+
+let linkedList = new LinkedList();
+
+    
+    linkedList.append(15);
+    linkedList.append(10);
+    linkedList.append(12);
+    linkedList.append(13);
+    linkedList.append(14);
+
+    console.log(linkedList.toString())
+    console.log(linkedList.removeAt(2))
+    console.log(linkedList.toString())
